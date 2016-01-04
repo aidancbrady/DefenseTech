@@ -1,0 +1,15 @@
+!*.*
+/bin
+
+*.classpath
+*.project
+.gradle/
+.settings/
+build/
+eclipse/
+
+
+*.iml
+*.iws
+*.ipr
+*.idea/
