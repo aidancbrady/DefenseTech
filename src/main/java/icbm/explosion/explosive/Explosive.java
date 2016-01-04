@@ -35,7 +35,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
-import net.minecraftforge.client.model.IModelCustom;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -262,7 +261,7 @@ public abstract class Explosive implements IExplosive
 
     @Override
     @SideOnly(Side.CLIENT)
-    public IModelCustom getMissileModel()
+    public ModelICBM getMissileModel()
     {
         return null;
     }

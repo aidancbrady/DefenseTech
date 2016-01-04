@@ -1,25 +1,36 @@
 package icbm.explosion.ex;
 
+import icbm.ModelICBM;
 import icbm.explosion.explosive.Explosive;
 import icbm.explosion.explosive.blast.BlastSonic;
+import icbm.explosion.model.missiles.ModelHypersonicMissile;
+import icbm.explosion.model.missiles.ModelSonicMissile;
 import mekanism.common.recipe.MekanismRecipe;
 import net.minecraft.entity.Entity;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 import cpw.mods.fml.common.registry.GameRegistry;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class ExSonic extends Explosion
 {
     public ExSonic(String mingZi, int tier)
     {
         super(mingZi, tier);
-        if (this.getTier() == 3)
+    }
+    
+    @Override
+    @SideOnly(Side.CLIENT)
+    public ModelICBM getMissileModel()
+    {
+    	if (this.getTier() == 3)
         {
-            this.modelName = "missile_sonic.tcn";
+            return new ModelHypersonicMissile();
         }
         else
         {
-            this.modelName = "missile_ion.tcn";
+            return new ModelSonicMissile();
         }
     }
 

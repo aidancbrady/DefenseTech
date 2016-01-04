@@ -1,5 +1,6 @@
 package icbm.explosion.render.entity;
 
+import icbm.ModelICBM;
 import icbm.api.IExplosive;
 import icbm.explosion.entities.EntityMissile;
 import icbm.explosion.entities.EntityMissile.MissileType;
@@ -10,7 +11,6 @@ import java.util.HashMap;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.client.model.IModelCustom;
 
 import org.lwjgl.opengl.GL11;
 
@@ -22,7 +22,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 /** @author Calclavia */
 public class RenderMissile extends Render
 {
-    public static final HashMap<Explosion, IModelCustom> cache = new HashMap<Explosion, IModelCustom>();
+    public static final HashMap<Explosion, ModelICBM> cache = new HashMap<Explosion, ModelICBM>();
 
     public RenderMissile(float f)
     {
@@ -40,14 +40,13 @@ public class RenderMissile extends Render
             Explosion missile = (Explosion) e;
 
             GL11.glPushMatrix();
-            GL11.glTranslated(x, y - 1, z);
+            GL11.glTranslated(x, y, z);
             GL11.glRotatef(entityMissile.prevRotationYaw + (entityMissile.rotationYaw - entityMissile.prevRotationYaw) * f1 - 90.0F, 0.0F, 1.0F, 0.0F);
-            GL11.glRotatef(entityMissile.prevRotationPitch + (entityMissile.rotationPitch - entityMissile.prevRotationPitch) * f1 - 90, 0.0F, 0.0F, 1.0F);
+            GL11.glRotatef(entityMissile.prevRotationPitch + (entityMissile.rotationPitch - entityMissile.prevRotationPitch) * f1 + 90.0F, 0.0F, 0.0F, 1.0F);
 
             if (entityMissile.missileType == MissileType.CruiseMissile)
             {
                 GL11.glScalef(0.5f, 0.5f, 0.5f);
-                GL11.glTranslated(-2, 0, 0);
             }
 
             FMLClientHandler.instance().getClient().renderEngine.bindTexture(missile.getMissileResource());
@@ -59,7 +58,7 @@ public class RenderMissile extends Render
                     RenderMissile.cache.put(missile, missile.getMissileModel());
 
                 }
-                RenderMissile.cache.get(missile).renderAll();
+                RenderMissile.cache.get(missile).render(0.0625F);
             }
 
             GL11.glPopMatrix();

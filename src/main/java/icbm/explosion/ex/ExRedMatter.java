@@ -1,17 +1,27 @@
 package icbm.explosion.ex;
 
+import icbm.ModelICBM;
 import icbm.explosion.explosive.blast.BlastRedmatter;
+import icbm.explosion.model.missiles.ModelRedMatterMissile;
 import mekanism.common.recipe.MekanismRecipe;
 import net.minecraft.entity.Entity;
 import net.minecraft.world.World;
 import cpw.mods.fml.common.registry.GameRegistry;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class ExRedMatter extends Explosion
 {
     public ExRedMatter()
     {
         super("redMatter", 4);
-        this.modelName = "missile_redmatter.tcn";
+    }
+    
+    @Override
+    @SideOnly(Side.CLIENT)
+    public ModelICBM getMissileModel()
+    {
+    	return new ModelRedMatterMissile();
     }
 
     @Override

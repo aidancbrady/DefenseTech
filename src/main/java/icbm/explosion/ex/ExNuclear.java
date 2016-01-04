@@ -1,26 +1,36 @@
 package icbm.explosion.ex;
 
+import icbm.ModelICBM;
 import icbm.explosion.explosive.Explosive;
 import icbm.explosion.explosive.blast.BlastNuclear;
+import icbm.explosion.model.missiles.MMWenZha;
+import icbm.explosion.model.missiles.MMYuanZi;
 import mekanism.common.recipe.MekanismRecipe;
 import net.minecraft.entity.Entity;
 import net.minecraft.world.World;
 import net.minecraftforge.oredict.OreDictionary;
 import cpw.mods.fml.common.registry.GameRegistry;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class ExNuclear extends Explosion
 {
     public ExNuclear(String mingZi, int tier)
     {
         super(mingZi, tier);
-        if (this.getTier() == 3)
-        {
-            this.modelName = "missile_nuclear.tcn";
-        }
-        else
-        {
-            this.modelName = "missile_conflag.tcn";
-        }
+    }
+    
+    @Override
+    @SideOnly(Side.CLIENT)
+    public ModelICBM getMissileModel()
+    {
+    	if(getTier() == 3)
+    	{
+    		return new MMYuanZi();
+    	}
+    	else {
+    		return new MMWenZha();
+    	}
     }
 
     @Override

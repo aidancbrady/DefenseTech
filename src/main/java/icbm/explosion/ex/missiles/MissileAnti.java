@@ -1,14 +1,18 @@
 package icbm.explosion.ex.missiles;
 
+import icbm.ModelICBM;
 import icbm.Reference;
 import icbm.api.ITarget;
 import icbm.api.ITarget.TargetType;
 import icbm.explosion.entities.EntityMissile;
 import icbm.explosion.explosive.blast.BlastRepulsive;
+import icbm.explosion.model.missiles.ModelAntiMissileMissile;
 import mekanism.api.Pos3D;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.World;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 /** Antiballistic missile.
  * 
@@ -21,7 +25,13 @@ public class MissileAnti extends Missile
     {
         super("antiBallistic", 2);
         this.hasBlock = false;
-        this.modelName = "missile_antimatter.tcn";
+    }
+    
+    @Override
+    @SideOnly(Side.CLIENT)
+    public ModelICBM getMissileModel()
+    {
+    	return new ModelAntiMissileMissile();
     }
 
     @Override

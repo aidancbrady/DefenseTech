@@ -1,11 +1,16 @@
 package icbm.explosion.ex;
 
+import icbm.ModelICBM;
 import icbm.explosion.explosive.Explosive;
 import icbm.explosion.explosive.blast.BlastRepulsive;
+import icbm.explosion.model.missiles.ModelAttractiveMissile;
+import icbm.explosion.model.missiles.ModelRepulsiveMissile;
 import mekanism.common.recipe.MekanismRecipe;
 import net.minecraft.entity.Entity;
 import net.minecraft.world.World;
 import cpw.mods.fml.common.registry.GameRegistry;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class ExRepulsive extends Explosion
 {
@@ -13,16 +18,22 @@ public class ExRepulsive extends Explosion
     {
         super(name, tier);
         this.setFuseTime(120);
-        if (name.equalsIgnoreCase("attractive"))
+    }
+    
+    @Override
+    @SideOnly(Side.CLIENT)
+    public ModelICBM getMissileModel()
+    {
+    	if (getUnlocalizedName().equalsIgnoreCase("attractive"))
         {
-            this.modelName = "missile_attractive.tcn";
+            return new ModelAttractiveMissile();
         }
         else
         {
-            this.modelName = "missile_repulsion .tcn";
+            return new ModelRepulsiveMissile();
         }
     }
-
+    
     @Override
     public void init()
     {

@@ -1,19 +1,29 @@
 package icbm.explosion.ex;
 
+import icbm.ModelICBM;
 import icbm.explosion.explosive.Explosive;
 import icbm.explosion.explosive.blast.BlastChemical;
+import icbm.explosion.model.missiles.ModelDebilitationMissile;
 import mekanism.common.recipe.MekanismRecipe;
 import net.minecraft.entity.Entity;
 import net.minecraft.init.Items;
 import net.minecraft.world.World;
 import cpw.mods.fml.common.registry.GameRegistry;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class ExDebilitation extends Explosion
 {
     public ExDebilitation(String mingZi, int tier)
     {
         super(mingZi, tier);
-        this.modelName = "missle_deblitation.tcn";
+    }
+    
+    @Override
+    @SideOnly(Side.CLIENT)
+    public ModelICBM getMissileModel()
+    {
+    	return new ModelDebilitationMissile();
     }
 
     @Override

@@ -5,9 +5,6 @@ import icbm.explosion.entities.EntityMissile;
 import icbm.explosion.explosive.Explosive;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.client.model.AdvancedModelLoader;
-import net.minecraftforge.client.model.IModelCustom;
-import net.minecraftforge.client.model.ModelFormatException;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -15,11 +12,6 @@ public abstract class Explosion extends Explosive
 {
     @SideOnly(Side.CLIENT)
     private ResourceLocation resourceLocation;
-
-    @SideOnly(Side.CLIENT)
-    private IModelCustom model;
-
-    protected String modelName;
 
     public Explosion(String name, int tier)
     {
@@ -58,23 +50,5 @@ public abstract class Explosion extends Explosive
         }
 
         return this.resourceLocation;
-    }
-
-    @SideOnly(Side.CLIENT)
-    @Override
-    public IModelCustom getMissileModel()
-    {
-        try
-        {
-            if (this.model == null)
-                model = AdvancedModelLoader.loadModel(new ResourceLocation(Reference.DOMAIN, Reference.MODEL_PREFIX + this.modelName));
-        }
-        catch (ModelFormatException e)
-        {
-            System.out.println("Crash  ModelName: " + this.modelName);
-            e.printStackTrace();
-        }
-
-        return model;
     }
 }

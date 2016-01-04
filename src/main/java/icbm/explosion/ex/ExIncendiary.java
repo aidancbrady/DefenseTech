@@ -1,19 +1,29 @@
 package icbm.explosion.ex;
 
+import icbm.ModelICBM;
 import icbm.explosion.explosive.blast.BlastFire;
+import icbm.explosion.model.missiles.ModelIncendiaryMissile;
 import mekanism.api.Pos3D;
 import mekanism.common.recipe.MekanismRecipe;
 import net.minecraft.entity.Entity;
 import net.minecraft.init.Items;
 import net.minecraft.world.World;
 import cpw.mods.fml.common.registry.GameRegistry;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class ExIncendiary extends Explosion
 {
     public ExIncendiary(String mingZi, int tier)
     {
         super(mingZi, tier);
-        this.modelName = "missile_incendiary.tcn";
+    }
+    
+    @Override
+    @SideOnly(Side.CLIENT)
+    public ModelICBM getMissileModel()
+    {
+    	return new ModelIncendiaryMissile();
     }
 
     @Override

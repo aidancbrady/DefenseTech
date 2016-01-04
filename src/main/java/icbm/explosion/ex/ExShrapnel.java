@@ -1,30 +1,41 @@
 package icbm.explosion.ex;
 
+import icbm.ModelICBM;
 import icbm.explosion.explosive.Explosive;
 import icbm.explosion.explosive.blast.BlastShrapnel;
+import icbm.explosion.model.missiles.ModelFragmentationMissile;
+import icbm.explosion.model.missiles.ModelShrapnelMissile;
+import icbm.explosion.model.missiles.ModelAnvilMissile;
 import mekanism.common.recipe.MekanismRecipe;
 import net.minecraft.entity.Entity;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.world.World;
 import cpw.mods.fml.common.registry.GameRegistry;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class ExShrapnel extends Explosion
 {
     public ExShrapnel(String name, int tier)
     {
         super(name, tier);
-        if (name.equalsIgnoreCase("shrapnel"))
+    }
+    
+    @Override
+    @SideOnly(Side.CLIENT)
+    public ModelICBM getMissileModel()
+    {
+    	if (getUnlocalizedName().equalsIgnoreCase("shrapnel"))
         {
-            this.modelName = "missile_shrapnel.tcn";
+            return new ModelShrapnelMissile();
         }
-        else if (name.equalsIgnoreCase("anvil"))
-        {
-            this.modelName = "missile_anvil.tcn";
-        }
-        else if (name.equalsIgnoreCase("fragmentation"))
-        {
-            this.modelName = "missile_fragment.tcn";
+    	else if (getUnlocalizedName().equalsIgnoreCase("anvil"))
+    	{
+    		return new ModelAnvilMissile();
+    	}
+        else {
+            return new ModelFragmentationMissile();
         }
     }
 
@@ -41,7 +52,7 @@ public class ExShrapnel extends Explosion
         }
         else if (this.getID() == Explosive.fragmentation.getID())
         {
-            GameRegistry.addRecipe(new MekanismRecipe(this.getItemStack(), new Object[] { " @ ", "@?@", " @ ", '?', incendiary.getItemStack(), '@', shrapnel.getItemStack() }));
+            GameRegistry.addRecipe(new MekanismRecipe(this.getItemStack(), new Object[] { " @ ", "@?@", " @ ", '?', incendiary.getItemStack(), '@', Explosive.shrapnel.getItemStack() }));
         }
     }
 

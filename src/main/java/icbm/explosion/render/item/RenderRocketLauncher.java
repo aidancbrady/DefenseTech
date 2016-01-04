@@ -18,7 +18,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 public class RenderRocketLauncher implements IItemRenderer
 {
     private static final ResourceLocation TEXTURE = new ResourceLocation(Reference.DOMAIN, Reference.MODEL_PREFIX + "rocketLauncher.png");
-    private static final IModelCustom MODEL = AdvancedModelLoader.loadModel(new ResourceLocation(Reference.DOMAIN, Reference.MODEL_PREFIX + "rocketLauncher.tcn"));
+    private static final IModelCustom MODEL = AdvancedModelLoader.loadModel(new ResourceLocation(Reference.DOMAIN, Reference.MODEL_PREFIX + "rocketLauncher.obj"));
 
     @Override
     public boolean handleRenderType(ItemStack item, ItemRenderType type)

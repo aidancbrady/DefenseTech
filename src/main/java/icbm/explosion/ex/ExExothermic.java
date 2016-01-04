@@ -1,8 +1,10 @@
 package icbm.explosion.ex;
 
+import icbm.ModelICBM;
 import icbm.Settings;
 import icbm.explosion.explosive.Explosive;
 import icbm.explosion.explosive.blast.BlastExothermic;
+import icbm.explosion.model.missiles.ModelExothermicMissile;
 import mekanism.api.Pos3D;
 import mekanism.common.recipe.MekanismRecipe;
 import net.minecraft.entity.Entity;
@@ -10,6 +12,8 @@ import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 import net.minecraftforge.common.config.Configuration;
 import cpw.mods.fml.common.registry.GameRegistry;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class ExExothermic extends Explosion
 {
@@ -19,7 +23,13 @@ public class ExExothermic extends Explosion
     {
         super("exothermic", 3);
         this.createNetherrack = Settings.CONFIGURATION.get(Configuration.CATEGORY_GENERAL, "Exothermic Create Netherrack", createNetherrack).getBoolean(createNetherrack);
-        this.modelName = "missile_endothermic.tcn";
+    }
+    
+    @Override
+    @SideOnly(Side.CLIENT)
+    public ModelICBM getMissileModel()
+    {
+    	return new ModelExothermicMissile();
     }
 
     @Override

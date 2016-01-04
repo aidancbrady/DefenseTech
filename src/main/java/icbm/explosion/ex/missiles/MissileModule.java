@@ -1,8 +1,12 @@
 package icbm.explosion.ex.missiles;
 
+import icbm.ModelICBM;
 import icbm.api.IMissile;
+import icbm.explosion.model.missiles.ModelCondensedMissile;
 import net.minecraft.entity.Entity;
 import net.minecraft.world.World;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class MissileModule extends Missile
 {
@@ -10,7 +14,13 @@ public class MissileModule extends Missile
     {
         super("missileModule", 1);
         this.hasBlock = false;
-        this.modelName = "missile_conventional.tcn";
+    }
+    
+    @Override
+    @SideOnly(Side.CLIENT)
+    public ModelICBM getMissileModel()
+    {
+    	return new ModelCondensedMissile();
     }
 
     @Override

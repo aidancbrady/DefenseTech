@@ -1,11 +1,15 @@
 package icbm.explosion.ex.missiles;
 
+import icbm.ModelICBM;
 import icbm.explosion.entities.EntityMissile;
 import icbm.explosion.entities.EntityMissile.MissileType;
 import icbm.explosion.explosive.blast.BlastRepulsive;
+import icbm.explosion.model.missiles.ModelClusterMissile;
 import mekanism.api.Pos3D;
 import net.minecraft.entity.Entity;
 import net.minecraft.world.World;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 /** @author Calclavia */
 public class MissileCluster extends Missile
@@ -17,7 +21,13 @@ public class MissileCluster extends Missile
     {
         super(name, tier);
         this.hasBlock = false;
-        this.modelName = "missile_cluster.tcn";
+    }
+    
+    @Override
+    @SideOnly(Side.CLIENT)
+    public ModelICBM getMissileModel()
+    {
+    	return new ModelClusterMissile();
     }
 
     @Override

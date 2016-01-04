@@ -1,16 +1,20 @@
 package icbm.explosion.ex.missiles;
 
+import icbm.ModelICBM;
 import icbm.api.IItemTracker;
 import icbm.core.Vector2;
 import icbm.explosion.entities.EntityMissile;
 import icbm.explosion.entities.EntityMissile.MissileType;
 import icbm.explosion.explosive.blast.BlastRepulsive;
+import icbm.explosion.model.missiles.ModelHomingMissile;
 import mekanism.api.Pos3D;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class MissileHoming extends Missile
 {
@@ -18,7 +22,13 @@ public class MissileHoming extends Missile
     {
         super("homing", 1);
         this.hasBlock = false;
-        this.modelName = "missile_homing.tcn";
+    }
+    
+    @Override
+    @SideOnly(Side.CLIENT)
+    public ModelICBM getMissileModel()
+    {
+    	return new ModelHomingMissile();
     }
 
     @Override

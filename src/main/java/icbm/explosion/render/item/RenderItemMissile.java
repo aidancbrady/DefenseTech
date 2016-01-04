@@ -42,53 +42,47 @@ public class RenderItemMissile implements IItemRenderer
             Explosion missile = (Explosion) ExplosiveRegistry.get(item.getItemDamage());
 
             float scale = 0.7f;
-            float right = 0f;
+			float right = 0f;
 
-            if (type == ItemRenderType.INVENTORY)
-            {
-            	GL11.glScalef(0.05F, 0.05F, 0.05F);
-                scale = 0.4f;
-                right = -0.5f;
+			if (type == ItemRenderType.INVENTORY)
+			{
+				scale = 0.4f;
+				right = 0.15f;
 
-                if (missile.getTier() == 2 || !missile.hasBlockForm())
-                {
-                    scale = scale / 1.5f;
-                }
-                else if (missile.getTier() == 3)
-                {
-                    scale = scale / 1.7f;
-                    right = -0.65f;
-                }
-                else if (missile.getTier() == 4)
-                {
-                    scale = scale / 1.4f;
-                    right = -0.45f;
-                }
+				if (missile.getTier() == 2 || !missile.hasBlockForm())
+				{
+					scale = scale / 1.5f;
+				}
+				else if (missile.getTier() == 3)
+				{
+					scale = scale / 1.7f;
+					right = 0.5f;
+				}
+				else if (missile.getTier() == 4)
+				{
+					scale = scale / 1.4f;
+					right = 0.2f;
+				}
 
-                GL11.glTranslatef(right, 0f, 0f);
-            }
+				GL11.glTranslatef(right, 0f, 0f);
+			}
 
-            if (type == ItemRenderType.EQUIPPED)
-            {
-                GL11.glTranslatef(1f, 0.3f, 0.5f);
-                GL11.glRotatef(0, 0, 0, 1f);
-            }
-            else if (type == ItemRenderType.EQUIPPED_FIRST_PERSON)
-            {
-                GL11.glTranslatef(1.15f, -1f, 0.5f);
-                GL11.glRotatef(0, 0, 0, 1f);
-            }
-            else
-            {
-                GL11.glRotatef(-90, 0, 0, 1f);
-            }
+			if (type == ItemRenderType.EQUIPPED_FIRST_PERSON || type == ItemRenderType.EQUIPPED)
+			{
+				GL11.glTranslatef(1.15f, 1f, 0.5f);
+				GL11.glRotatef(180, 0, 0, 1f);
+			}
+			else
+			{
+				GL11.glRotatef(-90, 0, 0, 1f);
+			}
 
-            if (type == ItemRenderType.ENTITY)
-            {
-                scale = scale / 1.5f;
-            }
+			if (type == ItemRenderType.ENTITY)
+			{
+				scale = scale / 1.5f;
+			}
 
-            GL11.glScalef(scale, scale, scale);
+			GL11.glScalef(scale, scale, scale);
 
             FMLClientHandler.instance().getClient().renderEngine.bindTexture(missile.getMissileResource());
 
@@ -99,7 +93,7 @@ public class RenderItemMissile implements IItemRenderer
                     RenderMissile.cache.put(missile, missile.getMissileModel());
                 }
 
-                RenderMissile.cache.get(missile).renderAll();
+                RenderMissile.cache.get(missile).render(0.0625F);
             }
         }
     }

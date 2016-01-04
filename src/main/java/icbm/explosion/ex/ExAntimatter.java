@@ -1,14 +1,18 @@
 package icbm.explosion.ex;
 
+import icbm.ModelICBM;
 import icbm.Reference;
 import icbm.Settings;
 import icbm.explosion.explosive.Explosive;
 import icbm.explosion.explosive.blast.BlastAntimatter;
+import icbm.explosion.model.missiles.ModelAntimatterMissile;
 import mekanism.api.Pos3D;
 import mekanism.common.recipe.MekanismRecipe;
 import net.minecraft.entity.Entity;
 import net.minecraft.world.World;
 import cpw.mods.fml.common.registry.GameRegistry;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class ExAntimatter extends Explosion
 {
@@ -16,7 +20,13 @@ public class ExAntimatter extends Explosion
     {
         super("antimatter", 4);
         this.setFuseTime(300);
-        this.modelName = "missile_antimatter.tcn";
+    }
+    
+    @Override
+    @SideOnly(Side.CLIENT)
+    public ModelICBM getMissileModel()
+    {
+    	return new ModelAntimatterMissile();
     }
 
     /** Called when the explosive is on fuse and going to explode. Called only when the explosive is
