@@ -98,6 +98,7 @@ public class ThreadSky extends ThreadExplosion
                 }
             }
         }
+        
         super.run();
     }
 }

@@ -81,7 +81,7 @@ public abstract class Blast extends Explosion implements IExplosion
     {
         DoExplosionEvent evt = new DoExplosionEvent(worldObj, this);
         MinecraftForge.EVENT_BUS.post(evt);
-
+        
         if (!evt.isCanceled())
         {
             this.doExplode();

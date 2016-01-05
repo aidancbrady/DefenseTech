@@ -8,6 +8,7 @@ import icbm.explosion.explosive.thread.ThreadSky;
 import java.util.HashSet;
 import java.util.Set;
 
+import mekanism.api.Coord4D;
 import mekanism.api.Pos3D;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
@@ -59,7 +60,7 @@ public abstract class BlastBeam extends Blast
 
             if (this.canFocusBeam(this.worldObj, position))
             {
-                Pos3D currentPos;
+                /*Coord4D currentPos; TODO this calculation is the slowest calculation I have ever encountered (aidancbrady)
                 Block block;
                 int metadata;
                 double dist;
@@ -79,29 +80,28 @@ public abstract class BlastBeam extends Blast
                                 continue;
                             }
                             
-                            currentPos = new Pos3D(position.xPos + x, position.yPos + y, position.zPos + z);
-                            block = this.worldObj.getBlock((int)currentPos.xPos, (int)currentPos.yPos, (int)currentPos.zPos);
+                            currentPos = new Coord4D((int)position.xPos + x, (int)position.yPos + y, (int)position.zPos + z);
+                            block = currentPos.getBlock(worldObj);
                             
-                            if (block.isAir(this.worldObj, x, y, z) || block.getBlockHardness(this.worldObj, x, y, x) < 0)
+                            if (currentPos.isAirBlock(worldObj) || block.getBlockHardness(this.worldObj, currentPos.xCoord, currentPos.yCoord, currentPos.zCoord) < 0)
                             {
                                 continue;
                             }
 
-                            metadata = this.worldObj.getBlockMetadata((int)currentPos.xPos, (int)currentPos.yPos, (int)currentPos.zPos);
+                            metadata = currentPos.getMetadata(worldObj);
 
                             if (this.worldObj.rand.nextInt(2) > 0)
                             {
-                                this.worldObj.setBlockToAir((int)currentPos.xPos, (int)currentPos.yPos, (int)currentPos.zPos);
+                                this.worldObj.setBlockToAir(currentPos.xCoord, currentPos.yCoord, currentPos.zCoord);
 
-                                currentPos.translate(0.5D, 0.5D, 0.5D);
-                                EntityFlyingBlock entity = new EntityFlyingBlock(this.worldObj, currentPos, block, metadata);
+                                EntityFlyingBlock entity = new EntityFlyingBlock(this.worldObj, new Pos3D(currentPos).translate(0.5D, 0.5D, 0.5D), block, metadata);
                                 this.worldObj.spawnEntityInWorld(entity);
                                 this.feiBlocks.add(entity);
                                 entity.pitchChange = 50 * this.worldObj.rand.nextFloat();
                             }
                         }
                     }
-                }
+                }*/
             }
             else
             {
