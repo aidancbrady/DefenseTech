@@ -47,7 +47,7 @@ public class BlastFire extends Blast
                                 double distanceFromCenter = position.distance(targetPosition);
                                 Block block = worldObj.getBlock((int)targetPosition.xPos, (int)targetPosition.yPos, (int)targetPosition.zPos);
 
-                                if (block != null)
+                                if (!worldObj.isAirBlock((int)targetPosition.xPos, (int)targetPosition.yPos, (int)targetPosition.zPos))
                                 {
                                     var14 -= (block.getExplosionResistance(this.exploder, worldObj, (int)targetPosition.xPos, (int)targetPosition.yPos, (int)targetPosition.zPos, position.xPos, position.yPos, position.zPos) + 0.3F) * var21;
                                 }

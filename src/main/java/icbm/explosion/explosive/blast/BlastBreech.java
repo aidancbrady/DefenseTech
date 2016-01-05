@@ -46,7 +46,7 @@ public class BlastBreech extends BlastRepulsive
             {
             	Block block = position.getCoord(worldObj.provider.dimensionId).getBlock(worldObj);
             	
-                if (block != null)
+                if (!worldObj.isAirBlock((int)position.xPos, (int)position.yPos, (int)position.zPos))
                 {
                     if (block.getExplosionResistance(this.exploder, worldObj, (int)position.xPos, (int)position.yPos, (int)position.zPos, position.xPos, position.yPos, position.zPos) > Blocks.obsidian.getExplosionResistance(this.exploder))
                     {

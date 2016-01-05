@@ -54,7 +54,7 @@ public class BlastAntiGravitational extends Blast
 
                Block block = worldObj.getBlock((int)targetPosition.xPos, (int)targetPosition.yPos, (int)targetPosition.zPos);
 
-                if (block == null || block.getBlockHardness(worldObj, (int)targetPosition.xPos, (int)targetPosition.yPos, (int)targetPosition.zPos) < 0)
+                if (worldObj.isAirBlock((int)targetPosition.xPos, (int)targetPosition.yPos, (int)targetPosition.zPos) || block.getBlockHardness(worldObj, (int)targetPosition.xPos, (int)targetPosition.yPos, (int)targetPosition.zPos) < 0)
                     continue;
 
                 int metadata = worldObj.getBlockMetadata((int)targetPosition.xPos, (int)targetPosition.yPos, (int)targetPosition.zPos);

@@ -53,7 +53,7 @@ public class BlastAntimatter extends Blast
                         	
                             Block block = coord.getBlock(worldObj);
 
-                            if (block != null && !block.isAir(this.worldObj, x, y, x))
+                            if (!block.isAir(this.worldObj, x, y, x))
                             {
                                 if (!this.destroyBedrock && block.getBlockHardness(this.worldObj, x, y, x) < 0)
                                 {

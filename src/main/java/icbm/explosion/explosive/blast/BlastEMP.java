@@ -78,7 +78,7 @@ public class BlastEMP extends Blast
                         Block block = searchPosition.getCoord(worldObj.provider.dimensionId).getBlock(worldObj);
                         TileEntity tileEntity = searchPosition.getCoord(worldObj.provider.dimensionId).getTileEntity(worldObj);
 
-                        if (block != null)
+                        if (!worldObj.isAirBlock((int)searchPosition.xPos, (int)searchPosition.yPos, (int)searchPosition.zPos))
                         {
                             if (block instanceof IEMPBlock)
                             {

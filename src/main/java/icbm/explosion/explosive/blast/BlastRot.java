@@ -51,7 +51,7 @@ public class BlastRot extends Blast
                     /** Decay the blocks. */
                     Block block = new Coord4D((int)targetPosition.xPos, (int)targetPosition.yPos, (int)targetPosition.zPos).getBlock(worldObj);
 
-                    if (block != null)
+                    if (!worldObj.isAirBlock((int)targetPosition.xPos, (int)targetPosition.yPos, (int)targetPosition.zPos))
                     {
                         if (block == Blocks.grass || block == Blocks.sand)
                         {

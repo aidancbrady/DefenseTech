@@ -75,7 +75,7 @@ public class OreGeneratorSulfur implements IWorldGenerator
         {
             Block block = world.getBlock(x, y, z);
 
-            if (block != null && block.isReplaceableOreGen(world, x, y, z, Blocks.stone))
+            if (!world.isAirBlock(x, y, z) && block.isReplaceableOreGen(world, x, y, z, Blocks.stone))
             {
                 world.setBlock(x, y, z, this.oreBlock, this.oreMeta, 2);
             }

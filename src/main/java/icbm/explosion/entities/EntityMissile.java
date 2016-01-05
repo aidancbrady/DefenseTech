@@ -404,9 +404,9 @@ public class EntityMissile extends Entity implements IChunkLoadHandler, IExplosi
 
                     ((Explosion) ExplosiveRegistry.get(this.explosiveID)).update(this);
 
-                    Block block = worldObj.getBlock((int)this.posX, (int) this.posY, (int) this.posZ);
+                    Block block = worldObj.getBlock((int)this.posX, (int)this.posY, (int)this.posZ);
 
-                    if (this.protectionTime <= 0 && ((block != null && !(block instanceof BlockLiquid)) || this.posY > 1000 || this.isCollided || this.feiXingTick > 20 * 1000 || (this.motionX == 0 && this.motionY == 0 && this.motionZ == 0)))
+                    if (this.protectionTime <= 0 && ((!worldObj.isAirBlock((int)this.posX, (int)this.posY, (int)this.posZ) && !(block instanceof BlockLiquid)) || this.posY > 1000 || this.isCollided || this.feiXingTick > 20 * 1000 || (this.motionX == 0 && this.motionY == 0 && this.motionZ == 0)))
                     {
                         setExplode();
                         return;

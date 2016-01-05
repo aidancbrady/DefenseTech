@@ -101,7 +101,7 @@ public class BlastRedmatter extends Blast
                             block = currentPos.getCoord(worldObj.provider.dimensionId).getBlock(this.worldObj);
                             metadata = currentPos.getCoord(worldObj.provider.dimensionId).getMetadata(this.worldObj);
 
-                            if (block != null && block.getBlockHardness(this.worldObj, (int)currentPos.xPos, (int)currentPos.yPos, (int)currentPos.zPos) >= 0)
+                            if (!worldObj.isAirBlock((int)currentPos.xPos, (int)currentPos.yPos, (int)currentPos.zPos) && block.getBlockHardness(this.worldObj, (int)currentPos.xPos, (int)currentPos.yPos, (int)currentPos.zPos) >= 0)
                             {
                                 this.worldObj.setBlock((int)currentPos.xPos, (int)currentPos.yPos, (int)currentPos.zPos, Blocks.air, 0, block instanceof BlockLiquid ? 0 : 2);
                                 //TODO: render fluid streams

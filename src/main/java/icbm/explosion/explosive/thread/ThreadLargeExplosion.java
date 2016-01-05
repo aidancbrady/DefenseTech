@@ -75,7 +75,7 @@ public class ThreadLargeExplosion extends ThreadExplosion
 
                     Block block = worldObj.getBlock((int)t.xPos, (int)t.yPos, (int)t.zPos);
 
-                    if (block != null)
+                    if (!worldObj.isAirBlock((int)t.xPos, (int)t.yPos, (int)t.zPos))
                     {
                         if (block.getBlockHardness(worldObj, (int)t.xPos, (int)t.yPos, (int)t.zPos) >= 0)
                         {

@@ -72,7 +72,7 @@ public class BlastRepulsive extends Blast
                                 int var24 = MathHelper.floor_double(var19);
                                 Block block = this.worldObj.getBlock(var22, var23, var24);
 
-                                if (block != null)
+                                if (!worldObj.isAirBlock(var22, var23, var24))
                                 {
                                     var14 -= (block.getExplosionResistance(this.exploder, this.worldObj, var22, var23, var24, (int)this.position.xPos, (int)this.position.yPos, (int)this.position.zPos) + 0.3F) * var21;
                                 }
@@ -142,7 +142,7 @@ public class BlastRepulsive extends Blast
                 this.worldObj.spawnParticle("explode", (var9 + this.position.xPos * 1.0D) / 2.0D, (var11 + this.position.yPos * 1.0D) / 2.0D, (var13 + this.position.zPos * 1.0D) / 2.0D, var151, var171, var191);
                 this.worldObj.spawnParticle("smoke", var9, var11, var13, var151, var171, var191);
 
-                if (block != null)
+                if (!worldObj.isAirBlock(var5, var6, var7))
                 {
                     try
                     {

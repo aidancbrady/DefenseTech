@@ -82,7 +82,7 @@ public abstract class BlastBeam extends Blast
                             currentPos = new Pos3D(position.xPos + x, position.yPos + y, position.zPos + z);
                             block = this.worldObj.getBlock((int)currentPos.xPos, (int)currentPos.yPos, (int)currentPos.zPos);
                             
-                            if (block == null || block.isAir(this.worldObj, x, y, z) || block.getBlockHardness(this.worldObj, x, y, x) < 0)
+                            if (block.isAir(this.worldObj, x, y, z) || block.getBlockHardness(this.worldObj, x, y, x) < 0)
                             {
                                 continue;
                             }

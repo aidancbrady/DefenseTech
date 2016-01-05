@@ -178,7 +178,7 @@ public class EntityFragments extends Entity implements IEntityAdditionalSpawnDat
 
         Block block = this.worldObj.getBlock(this.xTile, this.yTile, this.zTile);
 
-        if (block != null)
+        if (!worldObj.isAirBlock(xTile, yTile, zTile))
         {
             block.setBlockBoundsBasedOnState(this.worldObj, this.xTile, this.yTile, this.zTile);
             AxisAlignedBB var2 = block.getCollisionBoundingBoxFromPool(this.worldObj, this.xTile, this.yTile, this.zTile);

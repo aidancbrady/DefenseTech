@@ -61,7 +61,7 @@ public class BlastSonic extends Blast
                             Pos3D targetPosition = position.clone().translate(new Pos3D(x, y, z));
                             Block block = worldObj.getBlock((int)targetPosition.xPos, (int)targetPosition.yPos, (int)targetPosition.zPos);
 
-                            if (block != null)
+                            if (!worldObj.isAirBlock((int)targetPosition.xPos, (int)targetPosition.yPos, (int)targetPosition.zPos))
                             {
                                 Material material = block.getMaterial();
 

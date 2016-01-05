@@ -7,7 +7,7 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class MMPiaoFu extends ModelICBM
+public class ModelAntiGravitationalMissile extends ModelICBM
 {
     // fields
     ModelRenderer Shape1;
@@ -20,7 +20,7 @@ public class MMPiaoFu extends ModelICBM
     ModelRenderer Shape8;
     ModelRenderer Shape9;
 
-    public MMPiaoFu()
+    public ModelAntiGravitationalMissile()
     {
         textureWidth = 128;
         textureHeight = 128;

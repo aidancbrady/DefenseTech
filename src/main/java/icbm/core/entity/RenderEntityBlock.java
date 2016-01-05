@@ -19,6 +19,8 @@ import cpw.mods.fml.relauncher.SideOnly;
 @SideOnly(Side.CLIENT)
 public class RenderEntityBlock extends Render
 {
+	private final RenderBlocks renderer = new RenderBlocks();
+	
     public RenderEntityBlock()
     {
         this.shadowSize = 0.5F;
@@ -38,20 +40,21 @@ public class RenderEntityBlock extends Render
         GL11.glRotatef(entity.rotationPitch, 0.0F, 0.0F, 1.0F);
         GL11.glRotatef(entity.rotationYaw, 0.0F, 1.0F, 0.0F);
 
-        this.field_147909_c.blockAccess = world;
+        this.renderer.blockAccess = world;
+        this.renderer.setRenderBoundsFromBlock(block);
 
         if (block == Blocks.dragon_egg || block == Blocks.grass || block == Blocks.fence || block == Blocks.wheat || block == Blocks.leaves || block == Blocks.redstone_torch || block == Blocks.torch || block == Blocks.grass || block == Blocks.vine || block == Blocks.log || block == Blocks.bookshelf || block == Blocks.pumpkin)
         {
             Tessellator tessellator = Tessellator.instance;
             tessellator.startDrawingQuads();
             tessellator.setTranslation((-MathHelper.floor_double(entity.posX)) - 0.5F, (-MathHelper.floor_double(entity.posY)) - 0.5F, (-MathHelper.floor_double(entity.posZ)) - 0.5F);
-            this.field_147909_c.renderBlockByRenderType(block, MathHelper.floor_double(entity.posX), MathHelper.floor_double(entity.posY), MathHelper.floor_double(entity.posZ));
+            this.renderer.renderBlockByRenderType(block, MathHelper.floor_double(entity.posX), MathHelper.floor_double(entity.posY), MathHelper.floor_double(entity.posZ));
             tessellator.setTranslation(0.0D, 0.0D, 0.0D);
             tessellator.draw();
         }
         else
         {
-            this.renderBlockGravity(block, entity.metadata, this.field_147909_c);
+            this.renderBlockGravity(block, entity.metadata, this.renderer);
         }
 
         GL11.glEnable(GL11.GL_LIGHTING);

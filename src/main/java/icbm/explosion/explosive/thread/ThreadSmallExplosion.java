@@ -47,7 +47,7 @@ public class ThreadSmallExplosion extends ThreadExplosion
                                 double distanceFromCenter = position.distance(targetPosition);
                                 Block block = this.worldObj.getBlock((int)targetPosition.xPos, (int)targetPosition.yPos, (int)targetPosition.zPos);
 
-                                if (block != null)
+                                if (!worldObj.isAirBlock((int)targetPosition.xPos, (int)targetPosition.yPos, (int)targetPosition.zPos))
                                 {
                                     float resistance = 0;
 

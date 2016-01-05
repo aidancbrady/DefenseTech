@@ -2,7 +2,7 @@ package icbm.explosion.ex;
 
 import icbm.ModelICBM;
 import icbm.explosion.explosive.blast.BlastAntiGravitational;
-import icbm.explosion.model.missiles.MMPiaoFu;
+import icbm.explosion.model.missiles.ModelAntiGravitationalMissile;
 import mekanism.common.recipe.MekanismRecipe;
 import net.minecraft.entity.Entity;
 import net.minecraft.init.Items;
@@ -22,7 +22,7 @@ public class ExAntiGravitational extends Explosion
     @SideOnly(Side.CLIENT)
     public ModelICBM getMissileModel()
     {
-    	return new MMPiaoFu();
+    	return new ModelAntiGravitationalMissile();
     }
 
     @Override

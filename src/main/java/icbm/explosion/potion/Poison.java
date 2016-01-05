@@ -142,7 +142,7 @@ public abstract class Poison
             {
                 Block block = targetPosition.getCoord(world.provider.dimensionId).getBlock(world);
 
-                if (block != null)
+                if (!world.isAirBlock((int)targetPosition.xPos, (int)targetPosition.yPos, (int)targetPosition.zPos))
                 {
                     if (block instanceof IAntiPoisonBlock)
                     {

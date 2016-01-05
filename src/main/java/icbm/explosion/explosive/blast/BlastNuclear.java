@@ -152,7 +152,7 @@ public class BlastNuclear extends Blast
                 for (Pos3D p : this.thread.results)
                 {
                     Block block = this.worldObj.getBlock((int)p.xPos, (int)p.yPos, (int)p.zPos);
-                    if (block != null)
+                    if (!worldObj.isAirBlock((int)p.xPos, (int)p.yPos, (int)p.zPos))
                         block.onBlockExploded(this.worldObj, (int)p.xPos, (int)p.yPos, (int)p.zPos, this);
 
                 }
