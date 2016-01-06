@@ -53,7 +53,6 @@ public class ItemDefuser extends ItemEnergized
     @Override
     public boolean onLeftClickEntity(ItemStack itemStack, EntityPlayer player, Entity entity)
     {
-        System.out.println("stackCharge " + this.getEnergy(itemStack));
         if (this.getEnergy(itemStack) >= ENERGY_USAGE)
         {
             if (entity instanceof EntityExplosive)
