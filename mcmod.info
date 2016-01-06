@@ -1,16 +1,16 @@
 [
 {
-  "modid": "ICBM",
-  "name": "ICBM",
-  "description": "ICBM is a Minecraft Mod that introduces intercontinental ballistic missiles to Minecraft. But the fun doesn't end there! This mod also features many different explosives, missiles and machines classified in three different tiers.",
-  "version": "1.2",
+  "modid": "DefenseTech",
+  "name": "DefenseTech",
+  "description": "DefenseTech is a Minecraft add-on featuring high-tech weaponry and defense technologies, including missiles, devastating explosives, and other nifty gadgets. The mod serves as a continuation of Calclavia's classic mod 'ICBM.'",
+  "version": "1.0",
   "mcversion": "1.7.10",
   "authors": [
-    "Calclavia"
+    "aidancbrady"
   ],
   "credits": "",
-  "logoFile": "/icbm_banner.png",
+  "logoFile": "/defense_banner.png",
   "screenshots": [],
-  "dependencies": ["Mekanism"]
+  "dependencies": ["DefenseTech"]
 }
 ]
