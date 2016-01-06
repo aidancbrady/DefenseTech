@@ -56,7 +56,7 @@ public class ItemSulfurDust extends ItemICBMBase
         // Damage value of 1 returns name of saltpeter.
         if (par1ItemStack.getItemDamage() == 1)
         {
-            return "item." + Reference.PREFIX + "saltpeter";
+            return "item.saltpeter";
         }
         
         return super.getUnlocalizedName();

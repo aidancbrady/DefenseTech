@@ -39,8 +39,8 @@ public class ItemTracker extends ItemEnergized implements IItemTracker
     {
         if (par1IconRegister instanceof TextureMap)
         {
-            ((TextureMap) par1IconRegister).setTextureEntry(this.getUnlocalizedName().replace("item.", ""), new TextureTracker());
-            this.itemIcon = ((TextureMap) par1IconRegister).getTextureExtry(this.getUnlocalizedName().replace("item.", ""));
+            ((TextureMap) par1IconRegister).setTextureEntry(Reference.PREFIX + "tracker", new TextureTracker());
+            this.itemIcon = ((TextureMap) par1IconRegister).getTextureExtry(Reference.PREFIX + "tracker");
         }
     }
 
