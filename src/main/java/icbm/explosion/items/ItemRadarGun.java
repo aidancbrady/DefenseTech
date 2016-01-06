@@ -41,7 +41,7 @@ public class ItemRadarGun extends ItemEnergized implements IItemPacket
     {
         super(2000000);
         
-        this.setUnlocalizedName(Reference.PREFIX + "radarGun");
+        this.setUnlocalizedName("radarGun");
         this.setCreativeTab(TabICBM.INSTANCE);
         this.setTextureName(Reference.PREFIX + "radarGun");
     }

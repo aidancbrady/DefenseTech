@@ -7,18 +7,17 @@ potion.frostBite=Frost Bite
 potion.radiation=Radiation
 
 ## Items
-item.icbm\:sulfurDust.name=Sulfur
-item.icbm\:saltpeter.name=Saltpeter
-item.icbm\:poisonPowder.name=Poison Powder
-item.icbm\:antidote.name=Antidote
-item.icbm\:radarGun.name=Radar Gun
-item.icbm\:remoteDetonator.name=Remote Detonator
-item.icbm\:defuser.name=Defuser
-item.icbm\:laserDesignator.name=Laser Designator
-item.icbm\:tracker.name=Tracker
-item.icbm\:signalDisrupter.name=Signal Disrupter
-item.icbm\:computer.name=Tactical Interface
-item.icbm\:rocketLauncher.name=Rocket Launcher
+item.sulfurDust.name=Sulfur
+item.saltpeter.name=Saltpeter
+item.poisonPowder.name=Poison Powder
+item.antidote.name=Antidote
+item.radarGun.name=Radar Gun
+item.remoteDetonator.name=Remote Detonator
+item.defuser.name=Defuser
+item.laserDesignator.name=Laser Designator
+item.tracker.name=Tracker
+item.signalDisrupter.name=Signal Disrupter
+item.rocketLauncher.name=Rocket Launcher
 
 ## ICBM Machines
 icbm.machine.LauncherBase.0.name=Launcher Platform T1

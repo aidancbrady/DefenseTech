@@ -28,7 +28,7 @@ public class ItemTracker extends ItemEnergized implements IItemTracker
     {
         super(100000);
         
-        setUnlocalizedName(Reference.PREFIX + "tracker");
+        setUnlocalizedName("tracker");
         this.setCreativeTab(TabICBM.INSTANCE);
         this.setTextureName(Reference.PREFIX + "tracker");
     }

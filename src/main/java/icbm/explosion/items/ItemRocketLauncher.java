@@ -40,7 +40,7 @@ public class ItemRocketLauncher extends ItemEnergized
     {
         super(8000000);
         
-        this.setUnlocalizedName(Reference.PREFIX + "rocketLauncher");
+        this.setUnlocalizedName("rocketLauncher");
         this.setCreativeTab(TabICBM.INSTANCE);
         this.setTextureName(Reference.PREFIX + "rocketLauncher");
     }

@@ -12,7 +12,10 @@ import java.util.ArrayList;
 import li.cil.oc.api.machine.Callback;
 import li.cil.oc.api.network.SimpleComponent;
 import mekanism.api.Coord4D;
+import mekanism.api.Range4D;
+import mekanism.common.Mekanism;
 import mekanism.common.base.IBoundingBlock;
+import mekanism.common.network.PacketTileEntity.TileEntityMessage;
 import mekanism.common.tile.TileEntityElectricBlock;
 import mekanism.common.util.LangUtils;
 import mekanism.common.util.MekanismUtils;
@@ -27,7 +30,7 @@ public class TileEMPTower extends TileEntityElectricBlock implements IBoundingBl
     public static final int MAX_RADIUS = 150;
 
     public float rotation = 0;
-    private float rotationDelta, prevXuanZhuanLu = 0;
+    private float rotationDelta = 0;
 
     // The EMP mode. 0 = All, 1 = Missiles Only, 2 = Electricity Only
     public byte empMode = 0;
@@ -38,6 +41,8 @@ public class TileEMPTower extends TileEntityElectricBlock implements IBoundingBl
     public int empRadius = 60;
     
     public double energyToUse = 0;
+    
+    public boolean packet = false;
 
     public TileEMPTower()
     {
@@ -76,8 +81,11 @@ public class TileEMPTower extends TileEntityElectricBlock implements IBoundingBl
         rotation += rotationDelta;
         if (rotation > 360)
             rotation = 0;
-
-        prevXuanZhuanLu = rotationDelta;
+        
+        if(!worldObj.isRemote && ticker % 20 == 0)
+        {
+        	Mekanism.packetHandler.sendToReceivers(new TileEntityMessage(Coord4D.get(this), getNetworkedData(new ArrayList())), new Range4D(Coord4D.get(this)));
+        }
     }
     
     @Override
@@ -107,6 +115,22 @@ public class TileEMPTower extends TileEntityElectricBlock implements IBoundingBl
     	empRadius = dataStream.readInt();
         empMode = dataStream.readByte();
         
+        if(dataStream.readBoolean())
+        {
+        	switch (this.empMode)
+            {
+                default:
+                    new BlastEMP(this.worldObj, null, this.xCoord, this.yCoord, this.zCoord, this.empRadius).setEffectBlocks().setEffectEntities().explode();
+                    break;
+                case 1:
+                    new BlastEMP(this.worldObj, null, this.xCoord, this.yCoord, this.zCoord, this.empRadius).setEffectEntities().explode();
+                    break;
+                case 2:
+                    new BlastEMP(this.worldObj, null, this.xCoord, this.yCoord, this.zCoord, this.empRadius).setEffectBlocks().explode();
+                    break;
+            }
+        }
+        
         if(prev != empRadius)
         {
         	updateCapacity();
@@ -120,6 +144,9 @@ public class TileEMPTower extends TileEntityElectricBlock implements IBoundingBl
     	
     	data.add(empRadius);
     	data.add(empMode);
+    	data.add(packet);
+    	
+    	packet = false;
     	
     	return data;
     }
@@ -173,28 +200,36 @@ public class TileEMPTower extends TileEntityElectricBlock implements IBoundingBl
     @Callback(limit = 1)
     public boolean fire()
     {
-        if (getEnergy() >= energyToUse)
-        {
-            if (isReady())
-            {
-                switch (this.empMode)
-                {
-                    default:
-                        new BlastEMP(this.worldObj, null, this.xCoord, this.yCoord, this.zCoord, this.empRadius).setEffectBlocks().setEffectEntities().explode();
-                        break;
-                    case 1:
-                        new BlastEMP(this.worldObj, null, this.xCoord, this.yCoord, this.zCoord, this.empRadius).setEffectEntities().explode();
-                        break;
-                    case 2:
-                        new BlastEMP(this.worldObj, null, this.xCoord, this.yCoord, this.zCoord, this.empRadius).setEffectBlocks().explode();
-                        break;
-                }
-                
-                setEnergy(getEnergy()-energyToUse);
-                this.cooldownTicks = getMaxCooldown();
-                return true;
-            }
-        }
+    	if(!worldObj.isRemote)
+    	{
+	        if (getEnergy() >= energyToUse)
+	        {
+	            if (isReady())
+	            {
+	                switch (this.empMode)
+	                {
+	                    default:
+	                        new BlastEMP(this.worldObj, null, this.xCoord, this.yCoord, this.zCoord, this.empRadius).setEffectBlocks().setEffectEntities().explode();
+	                        break;
+	                    case 1:
+	                        new BlastEMP(this.worldObj, null, this.xCoord, this.yCoord, this.zCoord, this.empRadius).setEffectEntities().explode();
+	                        break;
+	                    case 2:
+	                        new BlastEMP(this.worldObj, null, this.xCoord, this.yCoord, this.zCoord, this.empRadius).setEffectBlocks().explode();
+	                        break;
+	                }
+	                
+	                setEnergy(getEnergy()-energyToUse);
+	                this.cooldownTicks = getMaxCooldown();
+	                packet = true;
+	                
+	                Mekanism.packetHandler.sendToReceivers(new TileEntityMessage(Coord4D.get(this), getNetworkedData(new ArrayList())), new Range4D(Coord4D.get(this)));
+	                
+	                return true;
+	            }
+	        }
+    	}
+    	
         return false;
     }
 

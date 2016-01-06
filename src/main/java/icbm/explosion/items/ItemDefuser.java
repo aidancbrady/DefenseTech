@@ -31,7 +31,7 @@ public class ItemDefuser extends ItemEnergized
     {
         super(100000);
         
-        this.setUnlocalizedName(Reference.PREFIX + "defuser");
+        this.setUnlocalizedName("defuser");
         this.setCreativeTab(TabICBM.INSTANCE);
         this.setTextureName(Reference.PREFIX + "defuser");
     }

@@ -12,7 +12,7 @@ public class ItemICBMBase extends Item
 {
     public ItemICBMBase(String name)
     {
-        this.setUnlocalizedName(Reference.PREFIX + name);
+        this.setUnlocalizedName(name);
         this.setCreativeTab(TabICBM.INSTANCE);
         this.setTextureName(Reference.PREFIX + name);
     }

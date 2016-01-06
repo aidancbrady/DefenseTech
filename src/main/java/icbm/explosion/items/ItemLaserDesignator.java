@@ -47,7 +47,7 @@ public class ItemLaserDesignator extends ItemEnergized implements IItemFrequency
     {
         super(100000);
         
-        this.setUnlocalizedName(Reference.PREFIX + "laserDesignator");
+        this.setUnlocalizedName("laserDesignator");
         this.setCreativeTab(TabICBM.INSTANCE);
         this.setTextureName(Reference.PREFIX + "laserDesignator");
     }

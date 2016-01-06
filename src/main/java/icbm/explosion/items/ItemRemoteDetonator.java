@@ -39,7 +39,7 @@ public class ItemRemoteDetonator extends ItemEnergized implements IItemPacket
     {
         super(1000000);
         
-        setUnlocalizedName(Reference.PREFIX + "remoteDetonator");
+        setUnlocalizedName("remoteDetonator");
         this.setCreativeTab(TabICBM.INSTANCE);
         this.setTextureName(Reference.PREFIX + "remoteDetonator");
     }

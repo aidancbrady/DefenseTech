@@ -8,7 +8,6 @@ import icbm.core.blocks.OreGeneratorSulfur;
 import icbm.core.entity.EntityFlyingBlock;
 import icbm.core.entity.EntityFragments;
 import icbm.core.items.ItemAntidote;
-import icbm.core.items.ItemComputer;
 import icbm.core.items.ItemPoisonPowder;
 import icbm.core.items.ItemSignalDisrupter;
 import icbm.core.items.ItemSulfurDust;
@@ -67,7 +66,6 @@ public final class ICBMCore
     public static Item itemAntidote;
     public static Item itemSignalDisrupter;
     public static Item itemTracker;
-    public static Item itemHackingComputer;
 
     public static Block blockSulfurOre, blockRadioactive;
 
@@ -99,14 +97,12 @@ public final class ICBMCore
         itemAntidote = new ItemAntidote();
         itemSignalDisrupter = new ItemSignalDisrupter();
         itemTracker = new ItemTracker();
-        itemHackingComputer = new ItemComputer();
         
         GameRegistry.registerItem(itemPoisonPowder, "poisonPowder");
         GameRegistry.registerItem(itemSulfurDust, "sulfur");
         GameRegistry.registerItem(itemAntidote, "antidote");
         GameRegistry.registerItem(itemSignalDisrupter, "signalDisrupter");
         GameRegistry.registerItem(itemTracker, "tracker");
-        GameRegistry.registerItem(itemHackingComputer, "hackingComputer");
         
         PotionUtility.resizePotionArray();
 

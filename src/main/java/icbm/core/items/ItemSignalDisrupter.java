@@ -29,7 +29,7 @@ public class ItemSignalDisrupter extends ItemEnergized implements IItemFrequency
     {
         super(100000);
         
-        setUnlocalizedName(Reference.PREFIX + "signalDisrupter");
+        setUnlocalizedName("signalDisrupter");
         this.setCreativeTab(TabICBM.INSTANCE);
         this.setTextureName(Reference.PREFIX + "signalDisrupter");
     }
