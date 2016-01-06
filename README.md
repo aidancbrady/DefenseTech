@@ -15,7 +15,7 @@ So go ahead, do whatever you like.  I honestly just don't want you messaging me 
 
 # License #
 
-DefenseTech is a bit tricky in its development nature. The skeleton of the mod is based in the 1.6.4 version of Calclavia’s ICBM mod, which was passed in an agreement to DarkGuardsman back in 2014. I am permitted to develop and distribute this software as per special terms laid upon me by DarkGuardsman, and as a result, any requests to modify and *publicly* distribute this source code will have to go through him. Note that this is temporary, and only until I have rewritten most or all of the old mod’s source code.
+DefenseTech is a bit tricky in its licensing nature. The skeleton of the mod is based on the 1.6.4 version of Calclavia’s ICBM mod, which was passed onto DarkGuardsman through an agreement made back in 2014. I am permitted to develop and distribute this software as per special terms laid upon me by DarkGuardsman, and as a result, any requests to modify and *publicly* distribute this source code will have to go through him. Note that this is temporary, and only until I have rewritten most or all of the old mod’s source code.
 
 Copyright © 2016 Aidan Brady
 
