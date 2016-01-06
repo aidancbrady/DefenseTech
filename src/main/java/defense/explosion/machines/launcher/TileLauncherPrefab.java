@@ -4,14 +4,13 @@ import io.netty.buffer.ByteBuf;
 
 import java.util.ArrayList;
 
-import defense.api.FrequencyGrid;
-import defense.api.IBlockFrequency;
-import defense.api.ILauncherController;
-import defense.api.LauncherType;
 import mekanism.api.Pos3D;
 import mekanism.common.integration.IComputerIntegration;
 import mekanism.common.tile.TileEntityElectricBlock;
 import net.minecraft.nbt.NBTTagCompound;
+import defense.api.FrequencyGrid;
+import defense.api.IBlockFrequency;
+import defense.api.ILauncherController;
 
 public abstract class TileLauncherPrefab extends TileEntityElectricBlock implements ILauncherController, IComputerIntegration, IBlockFrequency
 {
