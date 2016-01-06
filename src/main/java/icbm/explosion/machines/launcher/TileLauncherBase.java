@@ -90,10 +90,6 @@ public class TileLauncherBase extends TileEntityContainerBlock implements ILaunc
             {
                 this.supportFrame = null;
             }
-            else if (this.packetGengXin || this.ticker % (20 * 30) == 0 && this.supportFrame != null && !this.worldObj.isRemote)
-            {
-            	Mekanism.packetHandler.sendToReceivers(new TileEntityMessage(Coord4D.get(supportFrame), supportFrame.getNetworkedData(new ArrayList())), new Range4D(Coord4D.get(supportFrame)));
-            }
         }
 
         if (!this.worldObj.isRemote)
@@ -375,6 +371,12 @@ public class TileLauncherBase extends TileEntityContainerBlock implements ILaunc
     {
         return slot == 0 && stack.getItem() instanceof ItemMissile;
     }
+    
+    @Override
+	public int[] getAccessibleSlotsFromSide(int side)
+	{
+    	return new int[] {0};
+	}
 
     @Override
     public IMissile getContainingMissile()

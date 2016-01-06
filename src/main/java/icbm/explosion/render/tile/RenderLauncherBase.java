@@ -41,6 +41,7 @@ public class RenderLauncherBase extends TileEntitySpecialRenderer
 
         GL11.glPushMatrix();
         GL11.glTranslatef((float) x + 0.5F, (float) y + 1.5F, (float) z + 0.5F);
+        GL11.glDisable(GL11.GL_CULL_FACE);
 
         GL11.glRotatef(180F, 0.0F, 0.0F, 1.0F);
 
@@ -75,6 +76,7 @@ public class RenderLauncherBase extends TileEntitySpecialRenderer
             modelRail2.render(0.0625F);
         }
 
+        GL11.glEnable(GL11.GL_CULL_FACE);
         GL11.glPopMatrix();
     }
 }

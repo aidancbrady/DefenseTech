@@ -34,6 +34,7 @@ import icbm.explosion.render.entity.RenderExplosion;
 import icbm.explosion.render.entity.RenderGrenade;
 import icbm.explosion.render.entity.RenderLightBeam;
 import icbm.explosion.render.entity.RenderMissile;
+import icbm.explosion.render.item.RenderItemMachine;
 import icbm.explosion.render.item.RenderItemMissile;
 import icbm.explosion.render.item.RenderRocketLauncher;
 import icbm.explosion.render.tile.BlockRenderHandler;
@@ -60,6 +61,7 @@ import net.minecraft.client.renderer.entity.RendererLivingEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraftforge.client.MinecraftForgeClient;
@@ -93,6 +95,7 @@ public class ClientProxy extends CommonProxy
 
         MinecraftForgeClient.registerItemRenderer(ICBMExplosion.itemRocketLauncher, new RenderRocketLauncher());
         MinecraftForgeClient.registerItemRenderer(ICBMExplosion.itemMissile, new RenderItemMissile());
+        MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(ICBMExplosion.blockMachine), new RenderItemMachine());
 
         RenderingRegistry.registerBlockHandler(new RenderBombBlock());
         RenderingRegistry.registerBlockHandler(new BlockRenderHandler());

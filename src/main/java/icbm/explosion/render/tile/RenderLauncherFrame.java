@@ -29,6 +29,7 @@ public class RenderLauncherFrame extends TileEntitySpecialRenderer
             GL11.glPushMatrix();
             GL11.glTranslatef((float) x + 0.5F, (float) y + 1.25F, (float) z + 0.5F);
             GL11.glScalef(1f, 0.85f, 1f);
+            GL11.glDisable(GL11.GL_CULL_FACE);
 
             this.bindTexture(TEXTURE_FILE);
             GL11.glRotatef(180F, 0.0F, 0.0F, 1.0F);
@@ -42,6 +43,7 @@ public class RenderLauncherFrame extends TileEntitySpecialRenderer
 
             MODEL.render(0.0625F);
 
+            GL11.glEnable(GL11.GL_CULL_FACE);
             GL11.glPopMatrix();
         }
     }

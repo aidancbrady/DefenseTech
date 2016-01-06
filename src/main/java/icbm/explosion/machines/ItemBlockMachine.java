@@ -1,10 +1,13 @@
 package icbm.explosion.machines;
 
 import icbm.api.ITier;
+import icbm.explosion.machines.BlockICBMMachine.MachineData;
+import mekanism.common.tile.TileEntityBasicBlock;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 
@@ -26,7 +29,15 @@ public class ItemBlockMachine extends ItemBlock
     @Override
     public String getUnlocalizedName(ItemStack itemstack)
     {
-        return this.getUnlocalizedName() + "." + itemstack.getItemDamage();
+    	MachineData type = MachineData.values()[itemstack.getItemDamage()];
+    	String name = this.getUnlocalizedName() + "." + type.unlocalized;
+    	
+    	if(type.hasTier)
+    	{
+    		name += "." + getTier(itemstack);
+    	}
+    	
+    	return name;
     }
 
     @Override
@@ -35,62 +46,42 @@ public class ItemBlockMachine extends ItemBlock
         return "icbm.machine";
     }
 
+    public void setTier(ItemStack itemStack, int tier)
+	{
+		if(itemStack.stackTagCompound == null)
+		{
+			itemStack.setTagCompound(new NBTTagCompound());
+		}
+
+		itemStack.stackTagCompound.setInteger("tier", tier);
+	}
+	
+	public int getTier(ItemStack itemStack)
+	{
+		if(itemStack.stackTagCompound == null)
+		{
+			return 0;
+		}
+
+		return itemStack.stackTagCompound.getInteger("tier");
+	}
+    
     @Override
-    public boolean placeBlockAt(ItemStack itemStack, EntityPlayer entityPlayer, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ, int metadata)
+    public boolean placeBlockAt(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ, int metadata)
     {
-        int meta;
+        int direction = MathHelper.floor_double((player.rotationYaw * 4.0F / 360.0F) + 0.5D) & 3;
+        boolean place = BlockICBMMachine.canBePlacedAt(world, x, y, z, metadata, direction);
 
-        if (itemStack.getItemDamage() < 3)
+        if(place && super.placeBlockAt(stack, player, world, x, y, z, side, hitX, hitY, hitZ, metadata))
         {
-            meta = 0;
-        }
-        else if (itemStack.getItemDamage() < 6)
-        {
-            meta = 1;
-        }
-        else if (itemStack.getItemDamage() < 9)
-        {
-            meta = 2;
-        }
-        else
-        {
-            meta = itemStack.getItemDamage() - 6;
-        }
-
-        int direction = MathHelper.floor_double((entityPlayer.rotationYaw * 4.0F / 360.0F) + 0.5D) & 3;
-
-        if (BlockICBMMachine.canBePlacedAt(world, x, y, z, meta, direction))
-        {
-            if (world.setBlock(x, y, z, field_150939_a, meta, 3))
-            {
-                if (world.getBlock(x, y, z) == field_150939_a)
-                {
-                    if (itemStack.getItemDamage() < 9)
-                    {
-                        ITier tileEntity = (ITier) world.getTileEntity(x, y, z);
-
-                        if (tileEntity != null)
-                        {
-                            if (itemStack.getItemDamage() < 3)
-                            {
-                                tileEntity.setTier(itemStack.getItemDamage());
-                            }
-                            else if (itemStack.getItemDamage() < 6)
-                            {
-                                tileEntity.setTier(itemStack.getItemDamage() - 3);
-                            }
-                            else if (itemStack.getItemDamage() < 9)
-                            {
-                                tileEntity.setTier(itemStack.getItemDamage() - 6);
-                            }
-                        }
-                    }
-
-                    field_150939_a.onBlockPlacedBy(world, x, y, z, entityPlayer, itemStack);
-                }
-
-                return true;
-            }
+        	TileEntityBasicBlock tileEntity = (TileEntityBasicBlock)world.getTileEntity(x, y, z);
+        	
+        	if(tileEntity instanceof ITier)
+        	{
+        		((ITier)tileEntity).setTier(getTier(stack));
+        	}
+        	
+            return true;
         }
 
         return false;

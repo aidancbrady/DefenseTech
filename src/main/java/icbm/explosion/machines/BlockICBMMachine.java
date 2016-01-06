@@ -2,7 +2,6 @@ package icbm.explosion.machines;
 
 import icbm.api.ITier;
 import icbm.core.IBlockActivate;
-import icbm.core.IRedstoneReceptor;
 import icbm.core.prefab.BlockICBM;
 import icbm.explosion.ICBMExplosion;
 import icbm.explosion.machines.launcher.TileLauncherBase;
@@ -15,11 +14,11 @@ import java.util.Random;
 
 import mekanism.common.base.IBoundingBlock;
 import mekanism.common.tile.TileEntityBasicBlock;
-import mekanism.common.util.LangUtils;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -35,19 +34,23 @@ public class BlockICBMMachine extends BlockICBM
 {
     public enum MachineData
     {
-        LauncherBase(TileLauncherBase.class),
-        LauncherScreen(TileLauncherScreen.class),
-        LauncherFrame(TileLauncherFrame.class),
-        RadarStation(TileRadarStation.class),
-        EmpTower(TileEMPTower.class),
-        CruiseLauncher(TileCruiseLauncher.class),
-        MissileCoordinator(TileMissileCoordinator.class);
+        LauncherBase("LauncherBase", TileLauncherBase.class, true),
+        LauncherScreen("LauncherScreen", TileLauncherScreen.class, true),
+        LauncherFrame("LauncherFrame", TileLauncherFrame.class, true),
+        RadarStation("RadarStation", TileRadarStation.class, false),
+        EmpTower("EmpTower", TileEMPTower.class, false),
+        CruiseLauncher("CruiseLauncher", TileCruiseLauncher.class, false),
+        MissileCoordinator("MissileCoordinator", TileMissileCoordinator.class, false);
 
+        public String unlocalized;
         public Class<? extends TileEntity> tileEntity;
+        public boolean hasTier;
 
-        MachineData(Class<? extends TileEntity> tileEntity)
+        MachineData(String s, Class<? extends TileEntity> tileEntity, boolean tier)
         {
+        	this.unlocalized = s;
             this.tileEntity = tileEntity;
+            this.hasTier = tier;
         }
 
         public static MachineData get(int id)
@@ -75,10 +78,18 @@ public class BlockICBMMachine extends BlockICBM
     }
 
     @Override
-    public void onBlockAdded(World par1World, int x, int y, int z)
-    {
-        this.isBeingPowered(par1World, x, y, z);
-    }
+	public void onBlockAdded(World world, int x, int y, int z)
+	{
+		TileEntity tileEntity = world.getTileEntity(x, y, z);
+
+		if(!world.isRemote)
+		{
+			if(tileEntity instanceof TileEntityBasicBlock)
+			{
+				((TileEntityBasicBlock)tileEntity).onAdded();
+			}
+		}
+	}
 
     /** Called when the block is placed in the world. */
     @Override
@@ -170,9 +181,17 @@ public class BlockICBMMachine extends BlockICBM
     }
 
     @Override
-    public void onNeighborBlockChange(World par1World, int x, int y, int z, Block block)
+    public void onNeighborBlockChange(World world, int x, int y, int z, Block block)
     {
-        this.isBeingPowered(par1World, x, y, z);
+        if(!world.isRemote)
+		{
+			TileEntity tileEntity = world.getTileEntity(x, y, z);
+
+			if(tileEntity instanceof TileEntityBasicBlock)
+			{
+				((TileEntityBasicBlock)tileEntity).onNeighborChange(block);
+			}
+		}
     }
 
     /** Called when the block is right clicked by the player */
@@ -209,27 +228,26 @@ public class BlockICBMMachine extends BlockICBM
     {
         return this.onMachineActivated(world, x, y, z, player, side, hitX, hitY, hitZ);
     }
+    
+    @Override
+	public boolean removedByPlayer(World world, EntityPlayer player, int x, int y, int z, boolean willHarvest)
+	{
+		if(!player.capabilities.isCreativeMode && !world.isRemote && canHarvestBlock(player, world.getBlockMetadata(x, y, z)))
+		{
+			TileEntityBasicBlock tileEntity = (TileEntityBasicBlock)world.getTileEntity(x, y, z);
 
-    /** Checks of this block is being powered by redstone */
-    public void isBeingPowered(World world, int x, int y, int z)
-    {
-        int metadata = world.getBlockMetadata(x, y, z);
+			float motion = 0.7F;
+			double motionX = (world.rand.nextFloat() * motion) + (1.0F - motion) * 0.5D;
+			double motionY = (world.rand.nextFloat() * motion) + (1.0F - motion) * 0.5D;
+			double motionZ = (world.rand.nextFloat() * motion) + (1.0F - motion) * 0.5D;
 
-        TileEntity tileEntity = world.getTileEntity(x, y, z);
+			EntityItem entityItem = new EntityItem(world, x + motionX, y + motionY, z + motionZ, getPickBlock(null, world, x, y, z, player));
 
-        if (tileEntity instanceof IRedstoneReceptor)
-        {
-            if (world.isBlockIndirectlyGettingPowered(x, y, z))
-            {
-                // Send signal to tile entity
-                ((IRedstoneReceptor) tileEntity).onPowerOn();
-            }
-            else
-            {
-                ((IRedstoneReceptor) tileEntity).onPowerOff();
-            }
-        }
-    }
+			world.spawnEntityInWorld(entityItem);
+		}
+
+		return world.setBlockToAir(x, y, z);
+	}
 
     /** If this block doesn't render as an ordinary block it will return False (examples: signs,
      * buttons, stairs, etc) */
@@ -240,38 +258,17 @@ public class BlockICBMMachine extends BlockICBM
     }
 
     @Override
-    public void breakBlock(World world, int x, int y, int z, Block par5, int par6)
-    {
-        int metadata = world.getBlockMetadata(x, y, z);
-        Random random = new Random();
+	public void breakBlock(World world, int x, int y, int z, Block block, int meta)
+	{
+		TileEntity tileEntity = (TileEntity)world.getTileEntity(x, y, z);
 
-        TileEntity tileEntity = world.getTileEntity(x, y, z);
+		if(tileEntity instanceof IBoundingBlock)
+		{
+			((IBoundingBlock)tileEntity).onBreak();
+		}
 
-        if (tileEntity != null)
-        {
-
-            // Drops the machine
-            int itemMetadata = 0;
-
-            if (tileEntity instanceof ITier)
-            {
-                itemMetadata = ((ITier) tileEntity).getTier() + metadata * 3;
-            }
-            else
-            {
-                itemMetadata = 9 + metadata - 3;
-            }
-
-            this.dropBlockAsItem(world, x, y, z, new ItemStack(ICBMExplosion.blockMachine, 1, itemMetadata));
-
-            if(tileEntity instanceof IBoundingBlock)
-    		{
-    			((IBoundingBlock)tileEntity).onBreak();
-    		}
-        }
-
-        super.breakBlock(world, x, y, z, par5, par6);
-    }
+		super.breakBlock(world, x, y, z, block, meta);
+	}
 
     @Override
     public TileEntity createTileEntity(World world, int metadata)
@@ -319,17 +316,36 @@ public class BlockICBMMachine extends BlockICBM
     @Override
     public void getSubBlocks(Item item, CreativeTabs par2CreativeTabs, List par3List)
     {
-        for (int i = 0; i < MachineData.values().length + 6; i++)
+        for(MachineData data : MachineData.values())
         {
-            par3List.add(new ItemStack(this, 1, i));
+        	ItemStack stack = new ItemStack(this, 1, data.ordinal());
+        	par3List.add(stack);
+        	
+        	if(data.hasTier)
+        	{
+        		ItemStack tier2 = stack.copy();
+        		((ItemBlockMachine)tier2.getItem()).setTier(tier2, 1);
+        		par3List.add(tier2);
+        		
+        		ItemStack tier3 = stack.copy();
+        		((ItemBlockMachine)tier3.getItem()).setTier(tier3, 2);
+        		par3List.add(tier3);
+        	}
         }
     }
 
     @Override
-    public ItemStack getPickBlock(MovingObjectPosition target, World world, int x, int y, int z)
+    public ItemStack getPickBlock(MovingObjectPosition target, World world, int x, int y, int z, EntityPlayer player)
     {
-        TileEntity tileEntity = world.getTileEntity(x, y, z);
-        return new ItemStack(ICBMExplosion.blockMachine, 1, getJiQiID(tileEntity));
+        TileEntityBasicBlock tileEntity = (TileEntityBasicBlock)world.getTileEntity(x, y, z);
+        ItemStack stack = new ItemStack(ICBMExplosion.blockMachine, 1, world.getBlockMetadata(x, y, z));
+        
+        if(tileEntity instanceof ITier)
+        {
+        	((ItemBlockMachine)stack.getItem()).setTier(stack, ((ITier)tileEntity).getTier());
+        }
+        
+        return stack;
     }
 
     @Override
@@ -338,29 +354,9 @@ public class BlockICBMMachine extends BlockICBM
         return metadata;
     }
 
-    public static int getJiQiID(TileEntity tileEntity)
-    {
-        int itemMetadata = 0;
-
-        if (tileEntity != null)
-        {
-            int metadata = tileEntity.getBlockMetadata();
-
-            if (tileEntity instanceof ITier)
-            {
-                itemMetadata = ((ITier) tileEntity).getTier() + metadata * 3;
-            }
-            else
-            {
-                itemMetadata = 9 + metadata - 3;
-            }
-        }
-
-        return itemMetadata;
-    }
-
     public static String getJiQiMing(TileEntity tileEntity)
     {
-        return LangUtils.localize("icbm.machine." + getJiQiID(tileEntity) + ".name");
+    	ItemStack stack = tileEntity.getBlockType().getPickBlock(null, tileEntity.getWorldObj(), tileEntity.xCoord, tileEntity.yCoord, tileEntity.zCoord, null);
+    	return stack.getDisplayName();
     }
 }

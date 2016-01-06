@@ -21,19 +21,19 @@ item.icbm\:computer.name=Tactical Interface
 item.icbm\:rocketLauncher.name=Rocket Launcher
 
 ## ICBM Machines
-icbm.machine.0.name=Launcher Platform T1
-icbm.machine.1.name=Launcher Platform T2
-icbm.machine.2.name=Launcher Platform T3
-icbm.machine.3.name=Launcher Control Panel T1
-icbm.machine.4.name=Launcher Control Panel T2
-icbm.machine.5.name=Launcher Control Panel T3
-icbm.machine.6.name=Launcher Support Frame T1
-icbm.machine.7.name=Launcher Support Frame T2
-icbm.machine.8.name=Launcher Support Frame T3
-icbm.machine.9.name=Radar Station
-icbm.machine.10.name=EMP Tower
-icbm.machine.11.name=Cruise Launcher
-icbm.machine.12.name=Missile Coordinator
+icbm.machine.LauncherBase.0.name=Launcher Platform T1
+icbm.machine.LauncherBase.1.name=Launcher Platform T2
+icbm.machine.LauncherBase.2.name=Launcher Platform T3
+icbm.machine.LauncherScreen.0.name=Launcher Control Panel T1
+icbm.machine.LauncherScreen.1.name=Launcher Control Panel T2
+icbm.machine.LauncherScreen.2.name=Launcher Control Panel T3
+icbm.machine.LauncherFrame.0.name=Launcher Support Frame T1
+icbm.machine.LauncherFrame.1.name=Launcher Support Frame T2
+icbm.machine.LauncherFrame.2.name=Launcher Support Frame T3
+icbm.machine.RadarStation.name=Radar Station
+icbm.machine.EmpTower.name=EMP Tower
+icbm.machine.CruiseLauncher.name=Cruise Launcher
+icbm.machine.MissileCoordinator.name=Missile Coordinator
 
 ## Blocks
 tile.icbm\:sulfurOre.name=Sulfur Ore
@@ -133,46 +133,6 @@ icbm.minecart.sonic.name=Sonic Minecart
 icbm.minecart.breaching.name=Breaching Minecart
 icbm.minecart.rejuvenation.name=Rejuvenation Minecart
 icbm.minecart.thermobaric.name=Thermobaric Minecart
-
-## ICBM Misc Blocks
-tile.icbm\:oreSulfur.name=Sulfur Ore
-tile.icbm\:concrete.0.name=Concrete
-tile.icbm\:concrete.1.name=Compact Concrete
-tile.icbm\:concrete.2.name=Reinforced Concrete
-tile.icbm\:reinforcedGlass.name=Reinforced Glass
-tile.icbm\:glassPressurePlate.name=Glass Pressure Plate
-tile.icbm\:glassButton.name=Glass Button
-tile.icbm\:camouflage.name=Camouflage
-tile.icbm\:proximityDetector.name=Proximity Detector
-tile.icbm\:spikes.0.name=Spikes
-tile.icbm\:spikes.1.name=Poison Spikes
-tile.icbm\:spikes.2.name=Flammable Spikes
-
-## ICBM Sentry
-## Translated by Calclavia
-tile.icbm\:turret.gunTurret.name=Gun Turret
-tile.icbm\:turret.railgun.name=Railgun
-tile.icbm\:turret.antiAircraftTurret.name=Anti-Aircraft Turret
-tile.icbm\:turret.laserTurret.name=Laser Turret
-tile.icbm\:turret.autoBow.name=Crossbow Turret
-tile.icbm\:turretPlatform.name=Turret Platform
-
-item.icbm\:bulletShell.name=Shell Casing
-item.icbm\:bullet.name=20mm Shell
-item.icbm\:bulletRailgun.name=Railgun Slug
-item.icbm\:bulletAntimatter.name=Antimatter Slug
-item.icbm\:bulletInfinite.name=Creative Ammo
-
-item.icbm\:targetRange.name=Targeting Range Upgrade
-item.icbm\:shellCollector.name=Shell Collector
-item.icbm\:targetingSpeed.name=Targeting CPU
-item.icbm\:silencer.name=Weapon Silencer
-
-entity.turretseat.name=ICBM Turret Seat
-
-## Deaths
-death.attack.bullet=%1$s was shot into a swiss cheese!
-death.attack.laser=%1$s was vaporized by lasers!
 
 ## Chat messages
 message.tracker.nowtrack=Now tracking:
@@ -291,13 +251,4 @@ info.detonator.linked=Linked Explosive:
 info.detonator.noLink=No Linked Explosive
 info.misc.tier=Explosive Tier
 info.rocketlauncher.tooltip=This rocket launcher can fire up to Tier %s rockets
-info.tracker.tooltip=Left Click on a mob (players aswell), and I Will point to it.
-
-info.upgrade.range=Upgrades the targeting range of the sentry gun.
-info.upgrade.collect=Allows the sentry to collect ejected shell casings.
-info.upgrade.sentry=A modification for sentry guns
-info.upgrade.silencer=Turns down sound effects for sentry guns
-##info.upgrade.targetspeed=Increases targeting speed for sentry guns
-info.upgrade.targetspeed=Not implemented
-
-info.turretdenied.waila=Entry not found for %u
+info.tracker.tooltip=Left Click on a mob (players aswell), and I will point to it.

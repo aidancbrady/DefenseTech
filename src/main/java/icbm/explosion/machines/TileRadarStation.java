@@ -75,6 +75,12 @@ public class TileRadarStation extends TileEntityElectricBlock implements IChunkL
         this.worldObj.notifyBlocksOfNeighborChange(this.xCoord, this.yCoord, this.zCoord, this.worldObj.getBlock(this.xCoord, this.yCoord, this.zCoord));
         this.chunkLoaderInit(ForgeChunkManager.requestTicket(ICBMExplosion.instance, this.worldObj, Type.NORMAL));
     }
+    
+    @Override
+    public String getInventoryName()
+    {
+    	return LangUtils.localize("icbm.machine.RadarStation.name");
+    }
 
     @Override
     public void chunkLoaderInit(Ticket ticket)

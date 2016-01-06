@@ -97,7 +97,7 @@ public class ItemGrenade extends ItemICBMBase
                     }
                 }
 
-                world.playSoundAtEntity(entityPlayer, "random.fuse", 0.5F, 0.4F / (itemRand.nextFloat() * 0.4F + 0.8F));
+                world.playSoundAtEntity(entityPlayer, "game.tnt.primed", 0.5F, 0.4F / (itemRand.nextFloat() * 0.4F + 0.8F));
                 world.spawnEntityInWorld(new EntityGrenade(world, entityPlayer, zhaPin.getID(), (float) (this.getMaxItemUseDuration(itemStack) - nengLiang) / (float) this.getMaxItemUseDuration(itemStack)));
             }
             else

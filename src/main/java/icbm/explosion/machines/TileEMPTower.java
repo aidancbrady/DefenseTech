@@ -3,7 +3,6 @@ package icbm.explosion.machines;
 import icbm.Reference;
 import icbm.api.RadarRegistry;
 import icbm.core.IBlockActivate;
-import icbm.core.IRedstoneReceptor;
 import icbm.explosion.ICBMExplosion;
 import icbm.explosion.explosive.blast.BlastEMP;
 import io.netty.buffer.ByteBuf;
@@ -13,16 +12,16 @@ import java.util.ArrayList;
 import li.cil.oc.api.machine.Callback;
 import li.cil.oc.api.network.SimpleComponent;
 import mekanism.api.Coord4D;
-import mekanism.api.Pos3D;
 import mekanism.common.base.IBoundingBlock;
 import mekanism.common.tile.TileEntityElectricBlock;
+import mekanism.common.util.LangUtils;
 import mekanism.common.util.MekanismUtils;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraftforge.common.util.ForgeDirection;
 
-public class TileEMPTower extends TileEntityElectricBlock implements IBoundingBlock, IRedstoneReceptor, IBlockActivate, SimpleComponent
+public class TileEMPTower extends TileEntityElectricBlock implements IBoundingBlock, IBlockActivate, SimpleComponent
 {
     // The maximum possible radius for the EMP to strike
     public static final int MAX_RADIUS = 150;
@@ -45,6 +44,12 @@ public class TileEMPTower extends TileEntityElectricBlock implements IBoundingBl
     	super("EMPTower", 10000000);
         RadarRegistry.register(this);
         updateCapacity();
+    }
+    
+    @Override
+    public String getInventoryName()
+    {
+    	return LangUtils.localize("icbm.machine.EmpTower.name");
     }
 
     @Override
@@ -139,8 +144,8 @@ public class TileEMPTower extends TileEntityElectricBlock implements IBoundingBl
 
     private void updateCapacity()
     {
-        maxEnergy = Math.max(3000000 * (this.empRadius / MAX_RADIUS), 10000000);
-        energyToUse = getMaxEnergy()/0.9D;
+        maxEnergy = Math.max(3000000 * ((double)this.empRadius / (double)MAX_RADIUS), 10000000);
+        energyToUse = getMaxEnergy()/4D;
     }
 
     /** Reads a tile entity from NBT. */
@@ -194,14 +199,12 @@ public class TileEMPTower extends TileEntityElectricBlock implements IBoundingBl
     }
 
     @Override
-    public void onPowerOn()
+    public void onPowerChange()
     {
-        fire();
-    }
-
-    @Override
-    public void onPowerOff()
-    {
+    	if(redstone)
+    	{
+    		fire();
+    	}
     }
 
     @Override

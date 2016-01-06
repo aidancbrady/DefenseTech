@@ -14,6 +14,7 @@ import java.util.Set;
 import mekanism.api.Coord4D;
 import mekanism.api.Pos3D;
 import mekanism.common.util.LangUtils;
+import mekanism.common.util.MekanismUtils;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -48,10 +49,10 @@ public class TileLauncherScreen extends TileLauncherPrefab implements IBlockActi
 
         if (this.laucherBase == null)
         {
-            for (byte i = 2; i < 6; i++)
+            for(ForgeDirection side : MekanismUtils.SIDE_DIRS)
             {
                 Coord4D position = new Coord4D(this.xCoord, this.yCoord, this.zCoord);
-                position.step(ForgeDirection.getOrientation(i));
+                position.step(side);
 
                 TileEntity tileEntity = position.getTileEntity(worldObj);
 
@@ -60,7 +61,7 @@ public class TileLauncherScreen extends TileLauncherPrefab implements IBlockActi
                     if (tileEntity instanceof TileLauncherBase)
                     {
                         this.laucherBase = (TileLauncherBase) tileEntity;
-                        setFacing(i);
+                        setFacing((short)side.getOpposite().ordinal());
                     }
                 }
             }
@@ -93,6 +94,15 @@ public class TileLauncherScreen extends TileLauncherPrefab implements IBlockActi
                 this.worldObj.markBlockForUpdate(this.xCoord, this.yCoord, this.zCoord);
             }
         }
+    }
+    
+    @Override
+    public void onPowerChange()
+    {
+    	if(!worldObj.isRemote)
+    	{
+    		System.out.println("POWER");
+    	}
     }
     
     @Override

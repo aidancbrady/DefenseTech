@@ -86,7 +86,7 @@ public class GuiRadarStation extends GuiICBM
     @Override
     protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY)
     {
-        this.fontRendererObj.drawString("\u00a77" + LangUtils.localize("icbm.machine.9.name"), this.xSize / 2 - 30, 6, 4210752);
+        this.fontRendererObj.drawString("\u00a77" + tileEntity.getInventoryName(), this.xSize / 2 - 30, 6, 4210752);
 
         this.fontRendererObj.drawString(LangUtils.localize("gui.radar.coords"), 155, 18, 4210752);
         this.fontRendererObj.drawString(LangUtils.localize("gui.misc.x") + " " + (int) Math.round(mouseOverCoords.x) + " " + LangUtils.localize("gui.misc.z") + " " + (int) Math.round(mouseOverCoords.y), 155, 30, 4210752);

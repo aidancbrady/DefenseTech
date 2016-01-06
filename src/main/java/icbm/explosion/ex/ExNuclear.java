@@ -4,7 +4,7 @@ import icbm.ModelICBM;
 import icbm.explosion.explosive.Explosive;
 import icbm.explosion.explosive.blast.BlastNuclear;
 import icbm.explosion.model.missiles.MMWenZha;
-import icbm.explosion.model.missiles.MMYuanZi;
+import icbm.explosion.model.missiles.ModelNuclearMissile;
 import mekanism.common.recipe.MekanismRecipe;
 import net.minecraft.entity.Entity;
 import net.minecraft.world.World;
@@ -26,7 +26,7 @@ public class ExNuclear extends Explosion
     {
     	if(getTier() == 3)
     	{
-    		return new MMYuanZi();
+    		return new ModelNuclearMissile();
     	}
     	else {
     		return new MMWenZha();
