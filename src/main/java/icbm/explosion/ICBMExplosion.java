@@ -304,13 +304,13 @@ public class ICBMExplosion
     {
         /** Add all Recipes */
         // Rocket Launcher
-        CraftingManager.getInstance().getRecipeList().add(new MekanismRecipe(((ItemEnergized)itemRocketLauncher).getUnchargedItem(), new Object[] { "SCR", "SB ", 'R', itemRadarGun, 'C', new ItemStack(blockMachine, 1, MachineData.CruiseLauncher.ordinal() + 6), 'B', Blocks.stone_button, 'S', "ingotSteel" }));
+        CraftingManager.getInstance().getRecipeList().add(new MekanismRecipe(((ItemEnergized)itemRocketLauncher).getUnchargedItem(), new Object[] { "SCR", "SB ", 'R', ((ItemEnergized)itemRadarGun).getUnchargedItem(), 'C', new ItemStack(blockMachine, 1, MachineData.CruiseLauncher.ordinal() + 6), 'B', Blocks.stone_button, 'S', "ingotSteel" }));
         // Radar Gun
         CraftingManager.getInstance().getRecipeList().add(new MekanismRecipe(((ItemEnergized)itemRadarGun).getUnchargedItem(), new Object[] { "@#!", " $!", "  !", '@', "blockGlass", '!', "ingotSteel", '#', "circuitBasic", '$', Blocks.stone_button }));
         // Remote
         CraftingManager.getInstance().getRecipeList().add(new MekanismRecipe(((ItemEnergized)itemRemoteDetonator).getUnchargedItem(), new Object[] { "?@@", "@#$", "@@@", '@', "ingotSteel", '?', Items.redstone, '#', "circuitAdvanced", '$', Blocks.stone_button }));
         // Laser Designator
-        CraftingManager.getInstance().getRecipeList().add(new MekanismRecipe(((ItemEnergized)itemLaserDesignator).getUnchargedItem(), new Object[] { "!  ", " ? ", "  @", '@', itemRemoteDetonator, '?', "circuitElite", '!', itemRadarGun }));
+        CraftingManager.getInstance().getRecipeList().add(new MekanismRecipe(((ItemEnergized)itemLaserDesignator).getUnchargedItem(), new Object[] { "!  ", " ? ", "  @", '@', ((ItemEnergized)itemRemoteDetonator).getUnchargedItem(), '?', "circuitElite", '!', ((ItemEnergized)itemRadarGun).getUnchargedItem() }));
         // Defuser
         CraftingManager.getInstance().getRecipeList().add(new MekanismRecipe(((ItemEnergized)itemDefuser).getUnchargedItem(), new Object[] { "I  ", " W ", "  C", 'C', "circuitAdvanced", 'W', MekanismItems.Configurator.getUnchargedItem(), 'I', new ItemStack(MekanismItems.PartTransmitter, 1, 0) }));
         // Missile Launcher Platform
@@ -332,7 +332,7 @@ public class ICBMExplosion
         // Cruise Launcher
         CraftingManager.getInstance().getRecipeList().add(new MekanismRecipe(new ItemStack(blockMachine, 1, 11), new Object[] { "?! ", "@@@", '@', "alloyAdvanced", '!', new ItemStack(blockMachine, 1, 2), '?', new ItemStack(blockMachine, 1, 8) }));
         // Missile Coordinator
-        CraftingManager.getInstance().getRecipeList().add(new MekanismRecipe(new ItemStack(blockMachine, 1, 12), new Object[] { "R R", "SCS", "SSS", 'C', "circuitAdvanced", 'S', "alloyAdvanced", 'R', itemRemoteDetonator }));
+        CraftingManager.getInstance().getRecipeList().add(new MekanismRecipe(new ItemStack(blockMachine, 1, 12), new Object[] { "R R", "SCS", "SSS", 'C', "circuitAdvanced", 'S', "alloyAdvanced", 'R', ((ItemEnergized)itemRemoteDetonator).getUnchargedItem() }));
         // Missile module
         CraftingManager.getInstance().getRecipeList().add(new MekanismRecipe(new ItemStack(itemMissile, 1, Explosive.missileModule.getID()), new Object[] { " @ ", "@#@", "@?@", '@', "ingotSteel", '?', Items.flint_and_steel, '#', "circuitBasic" }));
         // Homing

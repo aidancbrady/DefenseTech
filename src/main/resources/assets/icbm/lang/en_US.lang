@@ -7,7 +7,7 @@ potion.frostBite=Frost Bite
 potion.radiation=Radiation
 
 ## Items
-item.sulfurDust.name=Sulfur
+item.sulfur.name=Sulfur
 item.saltpeter.name=Saltpeter
 item.poisonPowder.name=Poison Powder
 item.antidote.name=Antidote
