@@ -30,7 +30,7 @@ public class RenderMissile extends Render
     }
 
     @Override
-    public void doRender(Entity entity, double x, double y, double z, float f, float f1)
+    public void doRender(Entity entity, double x, double y, double z, float f, float partial)
     {
         EntityMissile entityMissile = (EntityMissile) entity;
         IExplosive e = entityMissile.getExplosiveType();
@@ -40,9 +40,9 @@ public class RenderMissile extends Render
             Explosion missile = (Explosion) e;
 
             GL11.glPushMatrix();
-            GL11.glTranslated(x, y, z);
-            GL11.glRotatef(entityMissile.prevRotationYaw + (entityMissile.rotationYaw - entityMissile.prevRotationYaw) * f1 - 90.0F, 0.0F, 1.0F, 0.0F);
-            GL11.glRotatef(entityMissile.prevRotationPitch + (entityMissile.rotationPitch - entityMissile.prevRotationPitch) * f1 + 90.0F, 0.0F, 0.0F, 1.0F);
+            GL11.glTranslated(x + (entityMissile.motionX * partial), y + (entityMissile.motionY * partial), z + (entityMissile.motionZ * partial));
+            GL11.glRotatef(entityMissile.prevRotationYaw + (entityMissile.rotationYaw - entityMissile.prevRotationYaw) * partial - 90.0F, 0.0F, 1.0F, 0.0F);
+            GL11.glRotatef(entityMissile.prevRotationPitch + (entityMissile.rotationPitch - entityMissile.prevRotationPitch) * partial + 90.0F, 0.0F, 0.0F, 1.0F);
 
             if (entityMissile.missileType == MissileType.CruiseMissile)
             {
@@ -50,14 +50,14 @@ public class RenderMissile extends Render
             }
 
             FMLClientHandler.instance().getClient().renderEngine.bindTexture(missile.getMissileResource());
+            
             synchronized (cache)
             {
                 if (!RenderMissile.cache.containsKey(missile))
                 {
-
                     RenderMissile.cache.put(missile, missile.getMissileModel());
-
                 }
+                
                 RenderMissile.cache.get(missile).render(0.0625F);
             }
 

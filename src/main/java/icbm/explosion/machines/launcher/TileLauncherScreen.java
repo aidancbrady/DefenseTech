@@ -74,9 +74,12 @@ public class TileLauncherScreen extends TileLauncherPrefab implements IBlockActi
             }
         }
 
-        if (this.ticker % 100 == 0 && this.worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord))
+        if(!worldObj.isRemote)
         {
-            this.launch();
+	        if (this.ticker % 40 == 0 && this.worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord))
+	        {
+	            this.launch();
+	        }
         }
 
         if (!this.worldObj.isRemote)
@@ -94,15 +97,6 @@ public class TileLauncherScreen extends TileLauncherPrefab implements IBlockActi
                 this.worldObj.markBlockForUpdate(this.xCoord, this.yCoord, this.zCoord);
             }
         }
-    }
-    
-    @Override
-    public void onPowerChange()
-    {
-    	if(!worldObj.isRemote)
-    	{
-    		System.out.println("POWER");
-    	}
     }
     
     @Override

@@ -120,7 +120,7 @@ public class TileCruiseLauncher extends TileLauncherPrefab implements IBlockActi
         {
             this.setMissile();
 
-            if (this.ticker % 100 == 0 && this.worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord))
+            if (this.ticker % 40 == 0 && this.worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord))
             {
                 this.launch();
             }
