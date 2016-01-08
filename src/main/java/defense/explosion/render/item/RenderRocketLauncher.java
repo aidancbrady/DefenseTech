@@ -50,12 +50,12 @@ public class RenderRocketLauncher implements IItemRenderer
             GL11.glRotatef(-75, 1, 0, 0);
             GL11.glRotatef(30, 0, 0, 1);
             GL11.glRotatef(20, 0, 1, 0);
-            GL11.glTranslatef(0.2f, -0.1f, -0f);
+            GL11.glTranslatef(0.2f, -0.8f, -0f);
             GL11.glScalef(2, 2, 2);
         }
         else if (type == ItemRenderType.EQUIPPED_FIRST_PERSON)
         {
-            GL11.glTranslatef(-0.4f, 1.3f, 1f);
+            GL11.glTranslatef(-0.4f, 0.5f, 1f);
             GL11.glRotatef(-30, 0, 1, 0);
             GL11.glRotatef(13, 1, 0, 0);
             GL11.glScaled(1.8f, 1.8f, 1.8f);
