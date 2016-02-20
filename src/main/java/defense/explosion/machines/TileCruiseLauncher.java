@@ -239,6 +239,12 @@ public class TileCruiseLauncher extends TileLauncherPrefab implements IBlockActi
     {
         return new Pos3D(this.xCoord, 0, this.zCoord).distance(new Pos3D(target.xPos, 0, target.zPos)) < 8;
     }
+    
+    @Override
+    public boolean canSetFacing(int facing)
+    {
+    	return facing != 0 && facing != 1;
+    }
 
     @Override
     public int getInventoryStackLimit()

@@ -324,6 +324,12 @@ public class TileLauncherBase extends TileEntityContainerBlock implements ILaunc
     }
     
     @Override
+    public boolean canSetFacing(int facing)
+    {
+    	return facing != 0 && facing != 1;
+    }
+    
+    @Override
 	public void onPlace()
 	{
 		Coord4D pos = Coord4D.get(this);

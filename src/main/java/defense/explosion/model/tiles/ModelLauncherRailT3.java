@@ -7,7 +7,7 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class MFaSheDiRail2 extends ModelBase
+public class ModelLauncherRailT3 extends ModelBase
 {
     // fields
     ModelRenderer Shape9;
@@ -15,7 +15,7 @@ public class MFaSheDiRail2 extends ModelBase
     ModelRenderer Shape21;
     ModelRenderer Shape16;
 
-    public MFaSheDiRail2()
+    public ModelLauncherRailT3()
     {
         textureWidth = 256;
         textureHeight = 256;

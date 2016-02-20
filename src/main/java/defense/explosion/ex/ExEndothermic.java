@@ -1,6 +1,6 @@
 package defense.explosion.ex;
 
-import mekanism.common.recipe.MekanismRecipe;
+import mekanism.common.recipe.ShapedMekanismRecipe;
 import net.minecraft.entity.Entity;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
@@ -28,7 +28,7 @@ public class ExEndothermic extends Explosion
     @Override
     public void init()
     {
-        GameRegistry.addRecipe(new MekanismRecipe(this.getItemStack(), new Object[] { "?!?", "!@!", "?!?", '@', attractive.getItemStack(), '?', Blocks.ice, '!', Blocks.snow }));
+        GameRegistry.addRecipe(new ShapedMekanismRecipe(this.getItemStack(), new Object[] { "?!?", "!@!", "?!?", '@', attractive.getItemStack(), '?', Blocks.ice, '!', Blocks.snow }));
     }
 
     @Override

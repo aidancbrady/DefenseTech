@@ -1,6 +1,6 @@
 package defense.explosion.ex;
 
-import mekanism.common.recipe.MekanismRecipe;
+import mekanism.common.recipe.ShapedMekanismRecipe;
 import net.minecraft.entity.Entity;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -44,15 +44,15 @@ public class ExShrapnel extends Explosion
     {
         if (this.getID() == Explosive.shrapnel.getID())
         {
-            GameRegistry.addRecipe(new MekanismRecipe(this.getItemStack(), new Object[] { "???", "?@?", "???", '@', replsive.getItemStack(), '?', Items.arrow }));
+            GameRegistry.addRecipe(new ShapedMekanismRecipe(this.getItemStack(), new Object[] { "???", "?@?", "???", '@', replsive.getItemStack(), '?', Items.arrow }));
         }
         else if (this.getID() == Explosive.anvil.getID())
         {
-            GameRegistry.addRecipe(new MekanismRecipe(this.getItemStack(10), new Object[] { "SSS", "SAS", "SSS", 'A', Blocks.anvil, 'S', Explosive.shrapnel.getItemStack() }));
+            GameRegistry.addRecipe(new ShapedMekanismRecipe(this.getItemStack(10), new Object[] { "SSS", "SAS", "SSS", 'A', Blocks.anvil, 'S', Explosive.shrapnel.getItemStack() }));
         }
         else if (this.getID() == Explosive.fragmentation.getID())
         {
-            GameRegistry.addRecipe(new MekanismRecipe(this.getItemStack(), new Object[] { " @ ", "@?@", " @ ", '?', incendiary.getItemStack(), '@', Explosive.shrapnel.getItemStack() }));
+            GameRegistry.addRecipe(new ShapedMekanismRecipe(this.getItemStack(), new Object[] { " @ ", "@?@", " @ ", '?', incendiary.getItemStack(), '@', Explosive.shrapnel.getItemStack() }));
         }
     }
 

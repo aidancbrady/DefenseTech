@@ -7,7 +7,7 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class MXiaoFaSheQiJia extends ModelBase
+public class ModelCruiseLauncherTurret extends ModelBase
 {
 
     ModelRenderer CLAMP_1_ROT;
@@ -18,7 +18,7 @@ public class MXiaoFaSheQiJia extends ModelBase
     ModelRenderer RAIL_2_ROT;
     ModelRenderer TORQUE_SUPPORT_ROT;
 
-    public MXiaoFaSheQiJia()
+    public ModelCruiseLauncherTurret()
     {
         textureWidth = 128;
         textureHeight = 128;

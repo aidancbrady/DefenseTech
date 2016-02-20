@@ -359,6 +359,12 @@ public class TileRadarStation extends TileEntityElectricBlock implements IChunkL
     	
     	return data;
     }
+    
+    @Override
+    public boolean canSetFacing(int facing)
+    {
+    	return facing != 0 && facing != 1;
+    }
 
     @Override
     public boolean isPoweringTo(ForgeDirection side)

@@ -11,12 +11,12 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import defense.Reference;
 import defense.explosion.machines.launcher.TileLauncherBase;
-import defense.explosion.model.tiles.MFaSheDi0;
-import defense.explosion.model.tiles.MFaSheDi1;
-import defense.explosion.model.tiles.MFaSheDi2;
-import defense.explosion.model.tiles.MFaSheDiRail0;
-import defense.explosion.model.tiles.MFaSheDiRail1;
-import defense.explosion.model.tiles.MFaSheDiRail2;
+import defense.explosion.model.tiles.ModelLauncherBaseT1;
+import defense.explosion.model.tiles.ModelLauncherBaseT2;
+import defense.explosion.model.tiles.ModelLauncherBaseT3;
+import defense.explosion.model.tiles.ModelLauncherRailT1;
+import defense.explosion.model.tiles.ModelLauncherRailT2;
+import defense.explosion.model.tiles.ModelLauncherRailT3;
 
 @SideOnly(Side.CLIENT)
 public class RenderLauncherBase extends TileEntitySpecialRenderer
@@ -25,14 +25,14 @@ public class RenderLauncherBase extends TileEntitySpecialRenderer
     public static final ResourceLocation TEXTURE_FILE_1 = new ResourceLocation(Reference.DOMAIN, Reference.MODEL_TEXTURE_PATH + "launcher_1.png");
     public static final ResourceLocation TEXTURE_FILE_2 = new ResourceLocation(Reference.DOMAIN, Reference.MODEL_TEXTURE_PATH + "launcher_2.png");
 
-    public static final MFaSheDi0 modelBase0 = new MFaSheDi0();
-    public static final MFaSheDiRail0 modelRail0 = new MFaSheDiRail0();
+    public static final ModelLauncherBaseT1 modelBase0 = new ModelLauncherBaseT1();
+    public static final ModelLauncherRailT1 modelRail0 = new ModelLauncherRailT1();
 
-    public static final MFaSheDi1 modelBase1 = new MFaSheDi1();
-    public static final MFaSheDiRail1 modelRail1 = new MFaSheDiRail1();
+    public static final ModelLauncherBaseT2 modelBase1 = new ModelLauncherBaseT2();
+    public static final ModelLauncherRailT2 modelRail1 = new ModelLauncherRailT2();
 
-    public static final MFaSheDi2 modelBase2 = new MFaSheDi2();
-    public static final MFaSheDiRail2 modelRail2 = new MFaSheDiRail2();
+    public static final ModelLauncherBaseT3 modelBase2 = new ModelLauncherBaseT3();
+    public static final ModelLauncherRailT3 modelRail2 = new ModelLauncherRailT3();
 
     @Override
     public void renderTileEntityAt(TileEntity tileentity, double x, double y, double z, float f)

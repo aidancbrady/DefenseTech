@@ -1,6 +1,6 @@
 package defense.explosion.ex;
 
-import mekanism.common.recipe.MekanismRecipe;
+import mekanism.common.recipe.ShapedMekanismRecipe;
 import net.minecraft.entity.Entity;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
@@ -39,11 +39,11 @@ public class ExSonic extends Explosion
     {
         if (this.getTier() == 3)
         {
-            GameRegistry.addRecipe(new MekanismRecipe(this.getItemStack(), new Object[] { " S ", "S S", " S ", 'S', Explosive.sonic.getItemStack() }));
+            GameRegistry.addRecipe(new ShapedMekanismRecipe(this.getItemStack(), new Object[] { " S ", "S S", " S ", 'S', Explosive.sonic.getItemStack() }));
         }
         else
         {
-            GameRegistry.addRecipe(new MekanismRecipe(this.getItemStack(), new Object[] { "@?@", "?R?", "@?@", 'R', Explosive.replsive.getItemStack(), '?', Blocks.noteblock, '@', "ingotBronze" }));
+            GameRegistry.addRecipe(new ShapedMekanismRecipe(this.getItemStack(), new Object[] { "@?@", "?R?", "@?@", 'R', Explosive.replsive.getItemStack(), '?', Blocks.noteblock, '@', "ingotBronze" }));
         }
     }
 

@@ -1,6 +1,6 @@
 package defense.explosion.ex;
 
-import mekanism.common.recipe.MekanismRecipe;
+import mekanism.common.recipe.ShapedMekanismRecipe;
 import net.minecraft.entity.Entity;
 import net.minecraft.init.Items;
 import net.minecraft.world.World;
@@ -39,11 +39,11 @@ public class ExChemical extends Explosion
     {
         if (this.getTier() == 1)
         {
-            GameRegistry.addRecipe(new MekanismRecipe(this.getItemStack(), new Object[] { "@@@", "@?@", "@@@", '@', CoreModule.itemPoisonPowder, '?', Explosive.debilitation.getItemStack() }));
+            GameRegistry.addRecipe(new ShapedMekanismRecipe(this.getItemStack(), new Object[] { "@@@", "@?@", "@@@", '@', CoreModule.itemPoisonPowder, '?', Explosive.debilitation.getItemStack() }));
         }
         else if (this.getTier() == 2)
         {
-            GameRegistry.addRecipe(new MekanismRecipe(this.getItemStack(2), new Object[] { " @ ", "@?@", " @ ", '?', Items.rotten_flesh, '@', Explosive.chemical.getItemStack() }));
+            GameRegistry.addRecipe(new ShapedMekanismRecipe(this.getItemStack(2), new Object[] { " @ ", "@?@", " @ ", '?', Items.rotten_flesh, '@', Explosive.chemical.getItemStack() }));
         }
     }
 

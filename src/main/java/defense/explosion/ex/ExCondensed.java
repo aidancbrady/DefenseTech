@@ -1,6 +1,6 @@
 package defense.explosion.ex;
 
-import mekanism.common.recipe.MekanismRecipe;
+import mekanism.common.recipe.ShapedMekanismRecipe;
 import net.minecraft.entity.Entity;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -30,7 +30,7 @@ public class ExCondensed extends Explosion
     @Override
     public void init()
     {
-        GameRegistry.addRecipe(new MekanismRecipe(this.getItemStack(3), new Object[] { "@?@", '@', Blocks.tnt, '?', Items.redstone }));
+        GameRegistry.addRecipe(new ShapedMekanismRecipe(this.getItemStack(3), new Object[] { "@?@", '@', Blocks.tnt, '?', Items.redstone }));
     }
 
     @Override

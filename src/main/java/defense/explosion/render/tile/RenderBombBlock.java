@@ -20,7 +20,7 @@ import defense.core.RenderUtils;
 import defense.explosion.explosive.Explosive;
 import defense.explosion.explosive.ExplosiveRegistry;
 import defense.explosion.explosive.TileExplosive;
-import defense.explosion.model.tiles.MDiLei;
+import defense.explosion.model.tiles.ModelSMine;
 
 @SideOnly(Side.CLIENT)
 public class RenderBombBlock extends TileEntitySpecialRenderer implements ISimpleBlockRenderingHandler
@@ -39,7 +39,7 @@ public class RenderBombBlock extends TileEntitySpecialRenderer implements ISimpl
                 GL11.glTranslatef(0.0F, 1.5F, 0.0F);
                 GL11.glRotatef(180f, 0f, 0f, 1f);
                 FMLClientHandler.instance().getClient().renderEngine.bindTexture(TEXTURE_FILE);
-                MDiLei.INSTANCE.render(0.0625F);
+                ModelSMine.INSTANCE.render(0.0625F);
                 GL11.glPopMatrix();
             }
             else

@@ -1,6 +1,6 @@
 package defense.explosion.ex;
 
-import mekanism.common.recipe.MekanismRecipe;
+import mekanism.common.recipe.ShapedMekanismRecipe;
 import net.minecraft.entity.Entity;
 import net.minecraft.init.Items;
 import net.minecraft.world.World;
@@ -30,7 +30,7 @@ public class ExBreaching extends Explosion
     @Override
     public void init()
     {
-        GameRegistry.addRecipe(new MekanismRecipe(this.getItemStack(2), new Object[] { "GCG", "GCG", "GCG", 'C', Explosive.condensed.getItemStack(), 'G', Items.gunpowder }));
+        GameRegistry.addRecipe(new ShapedMekanismRecipe(this.getItemStack(2), new Object[] { "GCG", "GCG", "GCG", 'C', Explosive.condensed.getItemStack(), 'G', Items.gunpowder }));
     }
 
     @Override

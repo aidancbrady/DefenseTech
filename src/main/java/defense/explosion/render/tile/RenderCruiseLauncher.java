@@ -10,16 +10,16 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import defense.Reference;
 import defense.explosion.machines.TileCruiseLauncher;
-import defense.explosion.model.tiles.MXiaoFaSheQi;
-import defense.explosion.model.tiles.MXiaoFaSheQiJia;
+import defense.explosion.model.tiles.ModelCruiseLauncherBase;
+import defense.explosion.model.tiles.ModelCruiseLauncherTurret;
 
 @SideOnly(Side.CLIENT)
 public class RenderCruiseLauncher extends TileEntitySpecialRenderer
 {
     public static final ResourceLocation TEXTURE_FILE = new ResourceLocation(Reference.DOMAIN, Reference.MODEL_TEXTURE_PATH + "cruise_launcher.png");
 
-    public static final MXiaoFaSheQi MODEL0 = new MXiaoFaSheQi();
-    public static final MXiaoFaSheQiJia MODEL1 = new MXiaoFaSheQiJia();
+    public static final ModelCruiseLauncherBase MODEL0 = new ModelCruiseLauncherBase();
+    public static final ModelCruiseLauncherTurret MODEL1 = new ModelCruiseLauncherTurret();
 
     public void renderModelAt(TileCruiseLauncher tileEntity, double d, double d1, double d2, float f)
     {

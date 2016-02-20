@@ -1,6 +1,6 @@
 package defense.explosion.ex;
 
-import mekanism.common.recipe.MekanismRecipe;
+import mekanism.common.recipe.ShapedMekanismRecipe;
 import net.minecraft.entity.Entity;
 import net.minecraft.init.Items;
 import net.minecraft.world.World;
@@ -29,7 +29,7 @@ public class ExDebilitation extends Explosion
     @Override
     public void init()
     {
-        GameRegistry.addRecipe(new MekanismRecipe(this.getItemStack(3), new Object[] { "SSS", "WRW", "SSS", 'R', Explosive.replsive.getItemStack(), 'W', Items.water_bucket, 'S', "dustSulfur" }));
+        GameRegistry.addRecipe(new ShapedMekanismRecipe(this.getItemStack(3), new Object[] { "SSS", "WRW", "SSS", 'R', Explosive.replsive.getItemStack(), 'W', Items.water_bucket, 'S', "dustSulfur" }));
     }
 
     @Override

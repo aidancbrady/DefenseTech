@@ -1,7 +1,7 @@
 package defense.explosion.ex;
 
 import mekanism.api.Pos3D;
-import mekanism.common.recipe.MekanismRecipe;
+import mekanism.common.recipe.ShapedMekanismRecipe;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
@@ -11,7 +11,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 import defense.ModelMissileBase;
 import defense.explosion.explosive.Explosive;
 import defense.explosion.explosive.blast.BlastMine;
-import defense.explosion.model.tiles.MDiLei;
+import defense.explosion.model.tiles.ModelSMine;
 
 public class ExSMine extends Explosive
 {
@@ -30,21 +30,21 @@ public class ExSMine extends Explosive
     @Override
     public void init()
     {
-        GameRegistry.addRecipe(new MekanismRecipe(this.getItemStack(), new Object[] { "S", "L", "R", 'S', Explosive.fragmentation.getItemStack(), 'L', Explosive.attractive.getItemStack(), 'R', Explosive.replsive.getItemStack() }));
+        GameRegistry.addRecipe(new ShapedMekanismRecipe(this.getItemStack(), new Object[] { "S", "L", "R", 'S', Explosive.fragmentation.getItemStack(), 'L', Explosive.attractive.getItemStack(), 'R', Explosive.replsive.getItemStack() }));
     }
 
     @SideOnly(Side.CLIENT)
     @Override
     public ModelMissileBase getBlockModel()
     {
-        return MDiLei.INSTANCE;
+        return ModelSMine.INSTANCE;
     }
 
     @SideOnly(Side.CLIENT)
     @Override
     public ResourceLocation getBlockResource()
     {
-        return MDiLei.TEXTURE;
+        return ModelSMine.TEXTURE;
     }
 
     @Override

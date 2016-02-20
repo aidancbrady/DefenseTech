@@ -9,9 +9,9 @@ import defense.ModelMissileBase;
 import defense.Reference;
 
 @SideOnly(Side.CLIENT)
-public class MDiLei extends ModelMissileBase
+public class ModelSMine extends ModelMissileBase
 {
-    public static final MDiLei INSTANCE = new MDiLei();
+    public static final ModelSMine INSTANCE = new ModelSMine();
     public static final ResourceLocation TEXTURE = new ResourceLocation(Reference.DOMAIN, Reference.MODEL_TEXTURE_PATH + "s-mine.png");
 
     // fields
@@ -19,7 +19,7 @@ public class MDiLei extends ModelMissileBase
     ModelRenderer B;
     ModelRenderer C;
 
-    public MDiLei()
+    public ModelSMine()
     {
         textureWidth = 45;
         textureHeight = 26;

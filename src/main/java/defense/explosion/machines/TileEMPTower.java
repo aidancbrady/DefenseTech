@@ -232,6 +232,12 @@ public class TileEMPTower extends TileEntityElectricBlock implements IBoundingBl
     	
         return false;
     }
+    
+    @Override
+    public boolean canSetFacing(int facing)
+    {
+    	return facing != 0 && facing != 1;
+    }
 
     @Override
     public void onPowerChange()

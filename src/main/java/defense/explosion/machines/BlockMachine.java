@@ -5,6 +5,7 @@ import java.util.Random;
 
 import mekanism.common.base.IBoundingBlock;
 import mekanism.common.tile.TileEntityBasicBlock;
+import mekanism.common.util.MekanismUtils;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.creativetab.CreativeTabs;
@@ -138,19 +139,22 @@ public class BlockMachine extends BlockBase
     /** Checks if the machine can be placed at the location */
     public static boolean canBePlacedAt(World world, int x, int y, int z, int m, int side)
     {
-        ForgeDirection d = ForgeDirection.getOrientation(side);
+        ForgeDirection d = MekanismUtils.getRight(side);
 
         if (m == 0)
         {
             //Launcher Pad multi block placement check
-            for (int yp = 0; yp < 2; yp++)
+            for (int yp = 0; yp <= 2; yp++)
             {
-                if (!world.isAirBlock(x + d.offsetX, y + yp, z + d.offsetZ))
+            	Block b = world.getBlock(x + d.offsetX, y + yp, z + d.offsetZ);
+            	
+                if (!b.isReplaceable(world, x + d.offsetX, y + yp, z + d.offsetZ))
                     return false;
-                if (!world.isAirBlock(x - d.offsetX, y + yp, z - d.offsetZ))
+                if (!b.isReplaceable(world, x - d.offsetX, y + yp, z - d.offsetZ))
                     return false;
             }
-            return world.isAirBlock(x, y, z);
+            
+            return world.getBlock(x, y, z).isReplaceable(world, x, y, z);
         }
         else if (m == 2)
         {

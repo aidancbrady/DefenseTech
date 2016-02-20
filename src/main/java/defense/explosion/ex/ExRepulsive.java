@@ -1,6 +1,6 @@
 package defense.explosion.ex;
 
-import mekanism.common.recipe.MekanismRecipe;
+import mekanism.common.recipe.ShapedMekanismRecipe;
 import net.minecraft.entity.Entity;
 import net.minecraft.world.World;
 import cpw.mods.fml.common.registry.GameRegistry;
@@ -39,11 +39,11 @@ public class ExRepulsive extends Explosion
     {
         if (this.getID() == Explosive.attractive.getID())
         {
-            GameRegistry.addRecipe(new MekanismRecipe(this.getItemStack(), new Object[] { "YY", 'Y', Explosive.condensed.getItemStack() }));
+            GameRegistry.addRecipe(new ShapedMekanismRecipe(this.getItemStack(), new Object[] { "YY", 'Y', Explosive.condensed.getItemStack() }));
         }
         else
         {
-            GameRegistry.addRecipe(new MekanismRecipe(this.getItemStack(), new Object[] { "Y", "Y", 'Y', Explosive.condensed.getItemStack() }));
+            GameRegistry.addRecipe(new ShapedMekanismRecipe(this.getItemStack(), new Object[] { "Y", "Y", 'Y', Explosive.condensed.getItemStack() }));
         }
     }
 

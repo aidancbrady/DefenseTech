@@ -11,12 +11,12 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import defense.Reference;
 import defense.explosion.machines.launcher.TileLauncherFrame;
-import defense.explosion.model.tiles.MFaSheJia;
+import defense.explosion.model.tiles.ModelLauncherFrame;
 
 @SideOnly(Side.CLIENT)
 public class RenderLauncherFrame extends TileEntitySpecialRenderer
 {
-    public static final MFaSheJia MODEL = new MFaSheJia();
+    public static final ModelLauncherFrame MODEL = new ModelLauncherFrame();
     public static final ResourceLocation TEXTURE_FILE = new ResourceLocation(Reference.DOMAIN, Reference.MODEL_TEXTURE_PATH + "launcher_0.png");
 
     @Override

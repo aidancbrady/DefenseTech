@@ -6,7 +6,7 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class MFaSheShiMuo2 extends ModelBase
+public class ModelLauncherScreenT3 extends ModelBase
 {
     // fields
     ModelRenderer Shape27;
@@ -14,7 +14,7 @@ public class MFaSheShiMuo2 extends ModelBase
     ModelRenderer Shape30;
     ModelRenderer Shape31;
 
-    public MFaSheShiMuo2()
+    public ModelLauncherScreenT3()
     {
         textureWidth = 256;
         textureHeight = 256;

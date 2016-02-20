@@ -8,7 +8,7 @@ import mekanism.common.MekanismBlocks;
 import mekanism.common.MekanismItems;
 import mekanism.common.Tier.EnergyCubeTier;
 import mekanism.common.item.ItemEnergized;
-import mekanism.common.recipe.MekanismRecipe;
+import mekanism.common.recipe.ShapedMekanismRecipe;
 import mekanism.common.util.MekanismUtils;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDispenser;
@@ -300,45 +300,45 @@ public class ExplosionModule
     {
         /** Add all Recipes */
         // Rocket Launcher
-        CraftingManager.getInstance().getRecipeList().add(new MekanismRecipe(((ItemEnergized)itemRocketLauncher).getUnchargedItem(), new Object[] { "SCR", "SB ", 'R', ((ItemEnergized)itemRadarGun).getUnchargedItem(), 'C', new ItemStack(blockMachine, 1, MachineData.CruiseLauncher.ordinal() + 6), 'B', Blocks.stone_button, 'S', "ingotSteel" }));
+        CraftingManager.getInstance().getRecipeList().add(new ShapedMekanismRecipe(((ItemEnergized)itemRocketLauncher).getUnchargedItem(), new Object[] { "SCR", "SB ", 'R', ((ItemEnergized)itemRadarGun).getUnchargedItem(), 'C', new ItemStack(blockMachine, 1, MachineData.CruiseLauncher.ordinal() + 6), 'B', Blocks.stone_button, 'S', "ingotSteel" }));
         // Radar Gun
-        CraftingManager.getInstance().getRecipeList().add(new MekanismRecipe(((ItemEnergized)itemRadarGun).getUnchargedItem(), new Object[] { "@#!", " $!", "  !", '@', "blockGlass", '!', "ingotSteel", '#', "circuitBasic", '$', Blocks.stone_button }));
+        CraftingManager.getInstance().getRecipeList().add(new ShapedMekanismRecipe(((ItemEnergized)itemRadarGun).getUnchargedItem(), new Object[] { "@#!", " $!", "  !", '@', "blockGlass", '!', "ingotSteel", '#', "circuitBasic", '$', Blocks.stone_button }));
         // Remote
-        CraftingManager.getInstance().getRecipeList().add(new MekanismRecipe(((ItemEnergized)itemRemoteDetonator).getUnchargedItem(), new Object[] { "?@@", "@#$", "@@@", '@', "ingotSteel", '?', Items.redstone, '#', "circuitAdvanced", '$', Blocks.stone_button }));
+        CraftingManager.getInstance().getRecipeList().add(new ShapedMekanismRecipe(((ItemEnergized)itemRemoteDetonator).getUnchargedItem(), new Object[] { "?@@", "@#$", "@@@", '@', "ingotSteel", '?', Items.redstone, '#', "circuitAdvanced", '$', Blocks.stone_button }));
         // Laser Designator
-        CraftingManager.getInstance().getRecipeList().add(new MekanismRecipe(((ItemEnergized)itemLaserDesignator).getUnchargedItem(), new Object[] { "!  ", " ? ", "  @", '@', ((ItemEnergized)itemRemoteDetonator).getUnchargedItem(), '?', "circuitElite", '!', ((ItemEnergized)itemRadarGun).getUnchargedItem() }));
+        CraftingManager.getInstance().getRecipeList().add(new ShapedMekanismRecipe(((ItemEnergized)itemLaserDesignator).getUnchargedItem(), new Object[] { "!  ", " ? ", "  @", '@', ((ItemEnergized)itemRemoteDetonator).getUnchargedItem(), '?', "circuitElite", '!', ((ItemEnergized)itemRadarGun).getUnchargedItem() }));
         // Defuser
-        CraftingManager.getInstance().getRecipeList().add(new MekanismRecipe(((ItemEnergized)itemDefuser).getUnchargedItem(), new Object[] { "I  ", " W ", "  C", 'C', "circuitAdvanced", 'W', MekanismItems.Configurator.getUnchargedItem(), 'I', new ItemStack(MekanismItems.PartTransmitter, 1, 0) }));
+        CraftingManager.getInstance().getRecipeList().add(new ShapedMekanismRecipe(((ItemEnergized)itemDefuser).getUnchargedItem(), new Object[] { "I  ", " W ", "  C", 'C', "circuitAdvanced", 'W', MekanismItems.Configurator.getUnchargedItem(), 'I', new ItemStack(MekanismItems.PartTransmitter, 1, 0) }));
         // Missile Launcher Platform
-        CraftingManager.getInstance().getRecipeList().add(new MekanismRecipe(new ItemStack(blockMachine, 1, 0), new Object[] { "! !", "!C!", "!!!", '!', "ingotBronze", 'C', "circuitBasic" }));
-        CraftingManager.getInstance().getRecipeList().add(new MekanismRecipe(new ItemStack(blockMachine, 1, 1), new Object[] { "! !", "!C!", "!@!", '@', new ItemStack(blockMachine, 1, 0), '!', "ingotSteel", 'C', "circuitAdvanced" }));
-        CraftingManager.getInstance().getRecipeList().add(new MekanismRecipe(new ItemStack(blockMachine, 1, 2), new Object[] { "! !", "!C!", "!@!", '@', new ItemStack(blockMachine, 1, 1), '!', "alloyAdvanced", 'C', "circuitElite" }));
+        CraftingManager.getInstance().getRecipeList().add(new ShapedMekanismRecipe(new ItemStack(blockMachine, 1, 0), new Object[] { "! !", "!C!", "!!!", '!', "ingotBronze", 'C', "circuitBasic" }));
+        CraftingManager.getInstance().getRecipeList().add(new ShapedMekanismRecipe(new ItemStack(blockMachine, 1, 1), new Object[] { "! !", "!C!", "!@!", '@', new ItemStack(blockMachine, 1, 0), '!', "ingotSteel", 'C', "circuitAdvanced" }));
+        CraftingManager.getInstance().getRecipeList().add(new ShapedMekanismRecipe(new ItemStack(blockMachine, 1, 2), new Object[] { "! !", "!C!", "!@!", '@', new ItemStack(blockMachine, 1, 1), '!', "alloyAdvanced", 'C', "circuitElite" }));
         // Missile Launcher Panel
-        CraftingManager.getInstance().getRecipeList().add(new MekanismRecipe(new ItemStack(blockMachine, 1, 3), new Object[] { "!!!", "!#!", "!?!", '#', "circuitBasic", '!', "blockGlass", '?', new ItemStack(MekanismItems.PartTransmitter, 1, 0) }));
-        CraftingManager.getInstance().getRecipeList().add(new MekanismRecipe(new ItemStack(blockMachine, 1, 4), new Object[] { "!$!", "!#!", "!?!", '#', "circuitAdvanced", '!', "ingotSteel", '?', new ItemStack(MekanismItems.PartTransmitter, 1, 0), '$', new ItemStack(blockMachine, 1, 3) }));
-        CraftingManager.getInstance().getRecipeList().add(new MekanismRecipe(new ItemStack(blockMachine, 1, 5), new Object[] { "!$!", "!#!", "!?!", '#', "circuitElite", '!', "ingotGold", '?', new ItemStack(MekanismItems.PartTransmitter, 1, 0), '$', new ItemStack(blockMachine, 1, 4) }));
+        CraftingManager.getInstance().getRecipeList().add(new ShapedMekanismRecipe(new ItemStack(blockMachine, 1, 3), new Object[] { "!!!", "!#!", "!?!", '#', "circuitBasic", '!', "blockGlass", '?', new ItemStack(MekanismItems.PartTransmitter, 1, 0) }));
+        CraftingManager.getInstance().getRecipeList().add(new ShapedMekanismRecipe(new ItemStack(blockMachine, 1, 4), new Object[] { "!$!", "!#!", "!?!", '#', "circuitAdvanced", '!', "ingotSteel", '?', new ItemStack(MekanismItems.PartTransmitter, 1, 0), '$', new ItemStack(blockMachine, 1, 3) }));
+        CraftingManager.getInstance().getRecipeList().add(new ShapedMekanismRecipe(new ItemStack(blockMachine, 1, 5), new Object[] { "!$!", "!#!", "!?!", '#', "circuitElite", '!', "ingotGold", '?', new ItemStack(MekanismItems.PartTransmitter, 1, 0), '$', new ItemStack(blockMachine, 1, 4) }));
         // Missile Launcher Support Frame
-        CraftingManager.getInstance().getRecipeList().add(new MekanismRecipe(new ItemStack(blockMachine, 1, 6), new Object[] { "! !", "!!!", "! !", '!', "ingotBronze" }));
-        CraftingManager.getInstance().getRecipeList().add(new MekanismRecipe(new ItemStack(blockMachine, 1, 7), new Object[] { "! !", "!@!", "! !", '!', "ingotSteel", '@', new ItemStack(blockMachine, 1, 6) }));
-        CraftingManager.getInstance().getRecipeList().add(new MekanismRecipe(new ItemStack(blockMachine, 1, 8), new Object[] { "! !", "!@!", "! !", '!', "alloyAdvanced", '@', new ItemStack(blockMachine, 1, 7) }));
+        CraftingManager.getInstance().getRecipeList().add(new ShapedMekanismRecipe(new ItemStack(blockMachine, 1, 6), new Object[] { "! !", "!!!", "! !", '!', "ingotBronze" }));
+        CraftingManager.getInstance().getRecipeList().add(new ShapedMekanismRecipe(new ItemStack(blockMachine, 1, 7), new Object[] { "! !", "!@!", "! !", '!', "ingotSteel", '@', new ItemStack(blockMachine, 1, 6) }));
+        CraftingManager.getInstance().getRecipeList().add(new ShapedMekanismRecipe(new ItemStack(blockMachine, 1, 8), new Object[] { "! !", "!@!", "! !", '!', "alloyAdvanced", '@', new ItemStack(blockMachine, 1, 7) }));
         // Radar Station
-        CraftingManager.getInstance().getRecipeList().add(new MekanismRecipe(new ItemStack(blockMachine, 1, 9), new Object[] { "?@?", " ! ", "!#!", '@', ((ItemEnergized)itemRadarGun).getUnchargedItem(), '!', "alloyAdvanced", '#', "circuitBasic", '?', "ingotGold" }));
+        CraftingManager.getInstance().getRecipeList().add(new ShapedMekanismRecipe(new ItemStack(blockMachine, 1, 9), new Object[] { "?@?", " ! ", "!#!", '@', ((ItemEnergized)itemRadarGun).getUnchargedItem(), '!', "alloyAdvanced", '#', "circuitBasic", '?', "ingotGold" }));
         // EMP Tower
-        GameRegistry.addRecipe(new MekanismRecipe(new ItemStack(blockMachine, 1, 10), new Object[] { "?W?", "@!@", "?#?", '?', "alloyAdvanced", '!', "circuitElite", '@', MekanismUtils.getEnergyCube(EnergyCubeTier.BASIC), '#', new ItemStack(MekanismBlocks.BasicBlock, 1, 8), 'W', new ItemStack(MekanismItems.PartTransmitter, 1, 0) }));
+        GameRegistry.addRecipe(new ShapedMekanismRecipe(new ItemStack(blockMachine, 1, 10), new Object[] { "?W?", "@!@", "?#?", '?', "alloyAdvanced", '!', "circuitElite", '@', MekanismUtils.getEnergyCube(EnergyCubeTier.BASIC), '#', new ItemStack(MekanismBlocks.BasicBlock, 1, 8), 'W', new ItemStack(MekanismItems.PartTransmitter, 1, 0) }));
         // Cruise Launcher
-        CraftingManager.getInstance().getRecipeList().add(new MekanismRecipe(new ItemStack(blockMachine, 1, 11), new Object[] { "?! ", "@@@", '@', "alloyAdvanced", '!', new ItemStack(blockMachine, 1, 2), '?', new ItemStack(blockMachine, 1, 8) }));
+        CraftingManager.getInstance().getRecipeList().add(new ShapedMekanismRecipe(new ItemStack(blockMachine, 1, 11), new Object[] { "?! ", "@@@", '@', "alloyAdvanced", '!', new ItemStack(blockMachine, 1, 2), '?', new ItemStack(blockMachine, 1, 8) }));
         // Missile Coordinator
-        CraftingManager.getInstance().getRecipeList().add(new MekanismRecipe(new ItemStack(blockMachine, 1, 12), new Object[] { "R R", "SCS", "SSS", 'C', "circuitAdvanced", 'S', "alloyAdvanced", 'R', ((ItemEnergized)itemRemoteDetonator).getUnchargedItem() }));
+        CraftingManager.getInstance().getRecipeList().add(new ShapedMekanismRecipe(new ItemStack(blockMachine, 1, 12), new Object[] { "R R", "SCS", "SSS", 'C', "circuitAdvanced", 'S', "alloyAdvanced", 'R', ((ItemEnergized)itemRemoteDetonator).getUnchargedItem() }));
         // Missile module
-        CraftingManager.getInstance().getRecipeList().add(new MekanismRecipe(new ItemStack(itemMissile, 1, Explosive.missileModule.getID()), new Object[] { " @ ", "@#@", "@?@", '@', "ingotSteel", '?', Items.flint_and_steel, '#', "circuitBasic" }));
+        CraftingManager.getInstance().getRecipeList().add(new ShapedMekanismRecipe(new ItemStack(itemMissile, 1, Explosive.missileModule.getID()), new Object[] { " @ ", "@#@", "@?@", '@', "ingotSteel", '?', Items.flint_and_steel, '#', "circuitBasic" }));
         // Homing
-        CraftingManager.getInstance().getRecipeList().add(new MekanismRecipe(new ItemStack(itemMissile, 1, Explosive.homing.getID()), new Object[] { " B ", " C ", "BMB", 'M', new ItemStack(itemMissile, 1, Explosive.missileModule.getID()), 'C', "circuitBasic", 'B', "ingotBronze" }));
+        CraftingManager.getInstance().getRecipeList().add(new ShapedMekanismRecipe(new ItemStack(itemMissile, 1, Explosive.homing.getID()), new Object[] { " B ", " C ", "BMB", 'M', new ItemStack(itemMissile, 1, Explosive.missileModule.getID()), 'C', "circuitBasic", 'B', "ingotBronze" }));
         // Anti-ballistic
-        CraftingManager.getInstance().getRecipeList().add(new MekanismRecipe(new ItemStack(itemMissile, 1, Explosive.antiBallistic.getID()), new Object[] { "!", "?", "@", '@', new ItemStack(itemMissile, 1, Explosive.missileModule.getID()), '?', new ItemStack(blockExplosive, 1, 0), '!', "circuitBasic" }));
+        CraftingManager.getInstance().getRecipeList().add(new ShapedMekanismRecipe(new ItemStack(itemMissile, 1, Explosive.antiBallistic.getID()), new Object[] { "!", "?", "@", '@', new ItemStack(itemMissile, 1, Explosive.missileModule.getID()), '?', new ItemStack(blockExplosive, 1, 0), '!', "circuitBasic" }));
         // Cluster
-        CraftingManager.getInstance().getRecipeList().add(new MekanismRecipe(new ItemStack(itemMissile, 1, Explosive.cluster.getID()), new Object[] { " ! ", " ? ", "!@!", '@', new ItemStack(itemMissile, 1, Explosive.missileModule.getID()), '?', Explosive.fragmentation.getItemStack(), '!', new ItemStack(itemMissile, 1, 0) }));
+        CraftingManager.getInstance().getRecipeList().add(new ShapedMekanismRecipe(new ItemStack(itemMissile, 1, Explosive.cluster.getID()), new Object[] { " ! ", " ? ", "!@!", '@', new ItemStack(itemMissile, 1, Explosive.missileModule.getID()), '?', Explosive.fragmentation.getItemStack(), '!', new ItemStack(itemMissile, 1, 0) }));
         // Nuclear Cluster
-        CraftingManager.getInstance().getRecipeList().add(new MekanismRecipe(new ItemStack(itemMissile, 1, Explosive.nuclearCluster.getID()), new Object[] { " N ", "NCN", 'C', new ItemStack(itemMissile, 1, Explosive.cluster.getID()), 'N', Explosive.nuclear.getItemStack() }));
+        CraftingManager.getInstance().getRecipeList().add(new ShapedMekanismRecipe(new ItemStack(itemMissile, 1, Explosive.nuclearCluster.getID()), new Object[] { " N ", "NCN", 'C', new ItemStack(itemMissile, 1, Explosive.cluster.getID()), 'N', Explosive.nuclear.getItemStack() }));
 
         // Add all explosive recipes.
         if (!Loader.isModLoaded("ResonantInduction|Atomic")) //TODO wither skull? what?
@@ -352,12 +352,12 @@ public class ExplosionModule
             if (explosive.getTier() < 2)
             {
                 // Grenade
-            	CraftingManager.getInstance().getRecipeList().add(new MekanismRecipe(new ItemStack(itemGrenade, 1, explosive.getID()), new Object[] { "?", "@", '@', new ItemStack(blockExplosive, 1, explosive.getID()), '?', Items.string }));
+            	CraftingManager.getInstance().getRecipeList().add(new ShapedMekanismRecipe(new ItemStack(itemGrenade, 1, explosive.getID()), new Object[] { "?", "@", '@', new ItemStack(blockExplosive, 1, explosive.getID()), '?', Items.string }));
             }
             if (explosive.getTier() < 3)
             {
                 // Minecart
-            	CraftingManager.getInstance().getRecipeList().add(new MekanismRecipe(new ItemStack(itemBombCart, 1, explosive.getID()), new Object[] { "?", "@", '?', new ItemStack(blockExplosive, 1, explosive.getID()), '@', Items.minecart }));
+            	CraftingManager.getInstance().getRecipeList().add(new ShapedMekanismRecipe(new ItemStack(itemBombCart, 1, explosive.getID()), new Object[] { "?", "@", '?', new ItemStack(blockExplosive, 1, explosive.getID()), '@', Items.minecart }));
             }
         }
     }

@@ -80,6 +80,12 @@ public class TileLauncherFrame extends TileEntityBasicBlock implements ITier, IB
     {
         this.tier = tier;
     }
+    
+    @Override
+    public boolean canSetFacing(int facing)
+    {
+    	return facing != 0 && facing != 1;
+    }
 
     @Override
 	public void onPlace()

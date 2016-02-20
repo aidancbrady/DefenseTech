@@ -1,6 +1,6 @@
 package defense.explosion.ex;
 
-import mekanism.common.recipe.MekanismRecipe;
+import mekanism.common.recipe.ShapedMekanismRecipe;
 import net.minecraft.entity.Entity;
 import net.minecraft.world.World;
 import net.minecraftforge.oredict.OreDictionary;
@@ -40,17 +40,17 @@ public class ExNuclear extends Explosion
         {
             if (OreDictionary.getOres("ingotUranium").size() > 0)
             {
-                GameRegistry.addRecipe(new MekanismRecipe(this.getItemStack(), new Object[] { "UUU", "UEU", "UUU", 'E', thermobaric.getItemStack(), 'U', "ingotUranium" }));
+                GameRegistry.addRecipe(new ShapedMekanismRecipe(this.getItemStack(), new Object[] { "UUU", "UEU", "UUU", 'E', thermobaric.getItemStack(), 'U', "ingotUranium" }));
             }
             else
             {
-                GameRegistry.addRecipe(new MekanismRecipe(this.getItemStack(), new Object[] { "EEE", "EEE", "EEE", 'E', thermobaric.getItemStack() }));
+                GameRegistry.addRecipe(new ShapedMekanismRecipe(this.getItemStack(), new Object[] { "EEE", "EEE", "EEE", 'E', thermobaric.getItemStack() }));
 
             }
         }
         else
         {
-            GameRegistry.addRecipe(new MekanismRecipe(this.getItemStack(), new Object[] { "CIC", "IRI", "CIC", 'R', Explosive.replsive.getItemStack(), 'C', Explosive.chemical.getItemStack(), 'I', Explosive.incendiary.getItemStack() }));
+            GameRegistry.addRecipe(new ShapedMekanismRecipe(this.getItemStack(), new Object[] { "CIC", "IRI", "CIC", 'R', Explosive.replsive.getItemStack(), 'C', Explosive.chemical.getItemStack(), 'I', Explosive.incendiary.getItemStack() }));
 
         }
     }

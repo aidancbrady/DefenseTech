@@ -21,6 +21,12 @@ public class TileMissileCoordinator extends TileEntityElectricBlock implements I
     	super("MissileCoordinator", 0);
         inventory = new ItemStack[2];
     }
+    
+    @Override
+    public boolean canSetFacing(int facing)
+    {
+    	return facing != 0 && facing != 1;
+    }
 
     @Override
     public boolean canUpdate()

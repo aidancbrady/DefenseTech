@@ -6,13 +6,13 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class MFaSheShiMuo0 extends ModelBase
+public class ModelLauncherScreenT2 extends ModelBase
 {
     // fields
     ModelRenderer Shape4;
     ModelRenderer Shape5;
 
-    public MFaSheShiMuo0()
+    public ModelLauncherScreenT2()
     {
         textureWidth = 128;
         textureHeight = 128;
@@ -43,5 +43,4 @@ public class MFaSheShiMuo0 extends ModelBase
         model.rotateAngleY = y;
         model.rotateAngleZ = z;
     }
-
 }

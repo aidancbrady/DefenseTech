@@ -7,7 +7,7 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class MXiaoFaSheQi extends ModelBase
+public class ModelCruiseLauncherBase extends ModelBase
 {
     // fields
     ModelRenderer SUPPORT_1;
@@ -20,7 +20,7 @@ public class MXiaoFaSheQi extends ModelBase
     ModelRenderer MAIN_SUPPORT;
     ModelRenderer TORQUE_ROT;
 
-    public MXiaoFaSheQi()
+    public ModelCruiseLauncherBase()
     {
         textureWidth = 128;
         textureHeight = 128;

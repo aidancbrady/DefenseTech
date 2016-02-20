@@ -6,13 +6,13 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class MFaSheDi2 extends ModelBase
+public class ModelLauncherBaseT3 extends ModelBase
 {
     // fields
     ModelRenderer Shape12;
     ModelRenderer Shape13;
 
-    public MFaSheDi2()
+    public ModelLauncherBaseT3()
     {
         textureWidth = 256;
         textureHeight = 256;

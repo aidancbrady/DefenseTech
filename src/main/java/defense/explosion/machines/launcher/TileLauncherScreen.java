@@ -241,6 +241,12 @@ public class TileLauncherScreen extends TileLauncherPrefab implements IBlockActi
         par1NBTTagCompound.setInteger("tier", this.tier);
         par1NBTTagCompound.setShort("gaoDu", this.gaoDu);
     }
+    
+    @Override
+    public boolean canSetFacing(int facing)
+    {
+    	return facing != 0 && facing != 1;
+    }
 
     @Override
     public int getTier()

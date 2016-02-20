@@ -69,8 +69,18 @@ public class ItemBlockMachine extends ItemBlock
     @Override
     public boolean placeBlockAt(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ, int metadata)
     {
+    	int change = 3;
         int direction = MathHelper.floor_double((player.rotationYaw * 4.0F / 360.0F) + 0.5D) & 3;
-        boolean place = BlockMachine.canBePlacedAt(world, x, y, z, metadata, direction);
+        
+        switch(direction)
+		{
+			case 0: change = 2; break;
+			case 1: change = 5; break;
+			case 2: change = 3; break;
+			case 3: change = 4; break;
+		}
+        
+        boolean place = BlockMachine.canBePlacedAt(world, x, y, z, metadata, change);
 
         if(place && super.placeBlockAt(stack, player, world, x, y, z, side, hitX, hitY, hitZ, metadata))
         {
