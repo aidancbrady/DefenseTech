@@ -23,4 +23,4 @@ Copyright © 2016 Aidan Brady
 
 **Lead Developer:** aidancbrady
 
-**ICBM Developers:** DarkGuardsman, Claclavia
+**ICBM Developers:** DarkGuardsman, Calclavia
