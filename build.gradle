@@ -77,39 +77,19 @@ processResources
 }
 
 task coreJar(type: Jar) {
-    baseName = 'Mekanism'
+    baseName = 'DefenseTech'
 
-    manifest {
-        attributes 'FMLCorePlugin': 'mekanism.common.asm.LoadingHook'
-        attributes 'FMLCorePluginContainsFMLMod': 'true'
-    }
-
-    from('etc/core') {
+    from('etc') {
         include '*.info'
         expand 'version': config.mod_version, 'mc_version': config.minecraft_version, 'fmp_version': config.FMP_version
     }
 
     from zipTree(jar.outputs.getFiles().getSingleFile()).matching {
-        exclude 'mekanism/tools/**', 'mekanism/generators/**', 'mcmod.info'
-    }
-}
-
-task generatorsJar(type: Jar) {
-    baseName = 'MekanismGenerators'
-
-    from('etc/generators') {
-        include '*.info'
-        expand 'version':config.mod_version,'mc_version':config.minecraft_version,'fmp_version':config.FMP_version
-    }
-
-    from zipTree(jar.outputs.getFiles().getSingleFile()).matching {
-        include 'mekanism/generators/**'
+        exclude 'mcmod.info'
     }
 }
 
 coreJar.dependsOn('reobf')
-toolsJar.dependsOn('reobf')
-generatorsJar.dependsOn('reobf')
 
 task DTDKZip(type: Zip) {
     baseName = 'DTDK'
@@ -119,9 +99,7 @@ task DTDKZip(type: Zip) {
 
 task releaseJars(type: Copy) {
     from coreJar
-    from toolsJar
-    from generatorsJar
-    from MDKZip
+    from DTDKZip
     rename '-(.*)jar', '.jar'
     rename '-(.*)zip', '.zip'
     into '.'
