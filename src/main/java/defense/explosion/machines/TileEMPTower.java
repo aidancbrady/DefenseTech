@@ -4,13 +4,6 @@ import io.netty.buffer.ByteBuf;
 
 import java.util.ArrayList;
 
-import defense.Reference;
-import defense.api.RadarRegistry;
-import defense.core.IBlockActivate;
-import defense.explosion.ExplosionModule;
-import defense.explosion.explosive.blast.BlastEMP;
-import li.cil.oc.api.machine.Callback;
-import li.cil.oc.api.network.SimpleComponent;
 import mekanism.api.Coord4D;
 import mekanism.api.Range4D;
 import mekanism.common.Mekanism;
@@ -23,8 +16,13 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraftforge.common.util.ForgeDirection;
+import defense.Reference;
+import defense.api.RadarRegistry;
+import defense.core.IBlockActivate;
+import defense.explosion.ExplosionModule;
+import defense.explosion.explosive.blast.BlastEMP;
 
-public class TileEMPTower extends TileEntityElectricBlock implements IBoundingBlock, IBlockActivate, SimpleComponent
+public class TileEMPTower extends TileEntityElectricBlock implements IBoundingBlock, IBlockActivate //SimpleComponent
 {
     // The maximum possible radius for the EMP to strike
     public static final int MAX_RADIUS = 150;
@@ -151,19 +149,19 @@ public class TileEMPTower extends TileEntityElectricBlock implements IBoundingBl
     	return data;
     }
 
-    @Callback
+    //@Callback
     public boolean isReady()
     {
         return getCooldown() <= 0;
     }
 
-    @Callback
+    //@Callback
     public int getCooldown()
     {
         return cooldownTicks;
     }
 
-    @Callback
+    //@Callback
     public int getMaxCooldown()
     {
         return 120;
@@ -197,7 +195,7 @@ public class TileEMPTower extends TileEntityElectricBlock implements IBoundingBl
         par1NBTTagCompound.setByte("muoShi", this.empMode);
     }
 
-    @Callback(limit = 1)
+    //@Callback(limit = 1)
     public boolean fire()
     {
     	if(!worldObj.isRemote)
@@ -275,7 +273,7 @@ public class TileEMPTower extends TileEntityElectricBlock implements IBoundingBl
         return INFINITE_EXTENT_AABB;
     }
 
-    @Override
+    /*@Override
     public String getComponentName()
     {
         return "emptower";
@@ -337,5 +335,5 @@ public class TileEMPTower extends TileEntityElectricBlock implements IBoundingBl
     public static int getMaxRadius()
     {
         return MAX_RADIUS;
-    }
+    }*/
 }
