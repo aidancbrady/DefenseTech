@@ -1,15 +1,24 @@
-!*.*
-/bin
+build
+output
+.gradle
+.idea
+*.iml
+*.ipr
+*.iws
+out
 
+DefenseTech*.jar
+/run
+/gradle
+*.bat
 *.classpath
 *.project
-.gradle/
-.settings/
-build/
-eclipse/
-.DS_Store
+/.settings
+/eclipse
+gradlew
+*.txt
 
-*.iml
-*.iws
-*.ipr
-*.idea/
+*.mtl
+*.blend1
+*.blend2
+/bin
