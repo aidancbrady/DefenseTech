@@ -87,6 +87,7 @@ task coreJar(type: Jar) {
     from zipTree(jar.outputs.getFiles().getSingleFile()).matching {
         exclude 'mcmod.info' 
         exclude '**/mekanism/**'
+        exclude '**/codechicken/**'
     }
 }
 
