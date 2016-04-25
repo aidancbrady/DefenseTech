@@ -2,6 +2,18 @@ package defense.explosion.explosive.blast;
 
 import java.util.List;
 
+import mekanism.api.Pos3D;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockLiquid;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
+import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.util.DamageSource;
+import net.minecraft.util.MathHelper;
+import net.minecraft.world.World;
+import net.minecraftforge.fluids.IFluidBlock;
 import defense.Reference;
 import defense.Settings;
 import defense.api.IExplosiveIgnore;
@@ -9,17 +21,6 @@ import defense.core.entity.EntityFlyingBlock;
 import defense.explosion.ExplosionModule;
 import defense.explosion.entities.EntityExplosion;
 import defense.explosion.entities.EntityExplosive;
-import mekanism.api.Pos3D;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockLiquid;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLiving;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
-import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.MathHelper;
-import net.minecraft.world.World;
-import net.minecraftforge.fluids.IFluidBlock;
 
 public class BlastRedmatter extends Blast
 {
@@ -233,9 +234,10 @@ public class BlastRedmatter extends Blast
                 explosionCreated = true;
             }
 
-            if (entity instanceof EntityLiving)
+            if (entity instanceof EntityLivingBase)
             {
                 entity.fallDistance = 0;
+                entity.attackEntityFrom(DamageSource.setExplosionSource(this), 4F);
             }
             else
             {
