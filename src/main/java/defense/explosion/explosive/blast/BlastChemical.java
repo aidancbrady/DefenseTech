@@ -2,9 +2,6 @@ package defense.explosion.explosive.blast;
 
 import java.util.List;
 
-import defense.Reference;
-import defense.explosion.ExplosionModule;
-import defense.explosion.potion.CustomPotionEffect;
 import mekanism.api.Pos3D;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -12,6 +9,9 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.Potion;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.World;
+import defense.Reference;
+import defense.core.DefenseTech;
+import defense.explosion.potion.CustomPotionEffect;
 
 public class BlastChemical extends Blast
 {
@@ -91,7 +91,7 @@ public class BlastChemical extends Blast
                 if (diDian.getMagnitude() <= radius)
                 {
                     diDian.translate(this.position);
-                    ExplosionModule.proxy.spawnParticle("smoke", this.worldObj, diDian, (Math.random() - 0.5) / 2, (Math.random() - 0.5) / 2, (Math.random() - 0.5) / 2, this.red, this.green, this.blue, 7.0F, 8);
+                    DefenseTech.proxy.spawnParticle("smoke", this.worldObj, diDian, (Math.random() - 0.5) / 2, (Math.random() - 0.5) / 2, (Math.random() - 0.5) / 2, this.red, this.green, this.blue, 7.0F, 8);
                 }
             }
         }
@@ -103,12 +103,12 @@ public class BlastChemical extends Blast
         {
             if (this.isContagious)
             {
-                ExplosionModule.contagios_potion.poisonEntity(position, entity);
+                DefenseTech.contagios_potion.poisonEntity(position, entity);
             }
 
             if (this.isPoisonous)
             {
-                ExplosionModule.poisonous_potion.poisonEntity(position, entity);
+                DefenseTech.poisonous_potion.poisonEntity(position, entity);
             }
 
             if (this.isConfuse)

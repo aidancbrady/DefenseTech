@@ -6,19 +6,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import defense.api.FrequencyGrid;
-import defense.api.IBlockFrequency;
-import defense.api.IItemFrequency;
-import defense.api.IRadarDetectable;
-import defense.api.RadarRegistry;
-import defense.core.IBlockActivate;
-import defense.core.IRedstoneProvider;
-import defense.core.Vector2;
-import defense.core.implement.IChunkLoadHandler;
-import defense.explosion.ExplosionModule;
-import defense.explosion.entities.EntityMissile;
-import defense.explosion.machines.launcher.TileLauncherPrefab;
-import defense.explosion.machines.launcher.TileLauncherScreen;
 import mekanism.api.Coord4D;
 import mekanism.api.Pos3D;
 import mekanism.api.Range4D;
@@ -40,6 +27,19 @@ import net.minecraftforge.common.ForgeChunkManager;
 import net.minecraftforge.common.ForgeChunkManager.Ticket;
 import net.minecraftforge.common.ForgeChunkManager.Type;
 import net.minecraftforge.common.util.ForgeDirection;
+import defense.api.FrequencyGrid;
+import defense.api.IBlockFrequency;
+import defense.api.IItemFrequency;
+import defense.api.IRadarDetectable;
+import defense.api.RadarRegistry;
+import defense.core.DefenseTech;
+import defense.core.IBlockActivate;
+import defense.core.IRedstoneProvider;
+import defense.core.Vector2;
+import defense.core.implement.IChunkLoadHandler;
+import defense.explosion.entities.EntityMissile;
+import defense.explosion.machines.launcher.TileLauncherPrefab;
+import defense.explosion.machines.launcher.TileLauncherScreen;
 
 public class TileRadarStation extends TileEntityElectricBlock implements IChunkLoadHandler, IRedstoneProvider, IComputerIntegration, IBlockActivate, IBlockFrequency
 {
@@ -73,7 +73,7 @@ public class TileRadarStation extends TileEntityElectricBlock implements IChunkL
     {
     	FrequencyGrid.instance().register(this);
         this.worldObj.notifyBlocksOfNeighborChange(this.xCoord, this.yCoord, this.zCoord, this.worldObj.getBlock(this.xCoord, this.yCoord, this.zCoord));
-        this.chunkLoaderInit(ForgeChunkManager.requestTicket(ExplosionModule.instance, this.worldObj, Type.NORMAL));
+        this.chunkLoaderInit(ForgeChunkManager.requestTicket(DefenseTech.INSTANCE, this.worldObj, Type.NORMAL));
     }
     
     @Override
@@ -448,7 +448,7 @@ public class TileRadarStation extends TileEntityElectricBlock implements IChunkL
             }
         }
 
-        entityPlayer.openGui(ExplosionModule.instance, 0, this.worldObj, this.xCoord, this.yCoord, this.zCoord);
+        entityPlayer.openGui(DefenseTech.INSTANCE, 0, this.worldObj, this.xCoord, this.yCoord, this.zCoord);
         return true;
     }
 

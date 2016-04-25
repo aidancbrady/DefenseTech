@@ -3,14 +3,6 @@ package defense.explosion.explosive.blast;
 import java.util.Iterator;
 import java.util.List;
 
-import defense.Reference;
-import defense.core.entity.EntityFlyingBlock;
-import defense.explosion.ExplosionModule;
-import defense.explosion.entities.EntityMissile;
-import defense.explosion.explosive.BlockExplosive;
-import defense.explosion.explosive.TileExplosive;
-import defense.explosion.explosive.thread.ThreadLargeExplosion;
-import defense.explosion.explosive.thread.ThreadLargeExplosion.IThreadCallBack;
 import mekanism.api.Pos3D;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLiquid;
@@ -20,6 +12,14 @@ import net.minecraft.init.Blocks;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.IFluidBlock;
+import defense.Reference;
+import defense.core.DefenseTechBlocks;
+import defense.core.entity.EntityFlyingBlock;
+import defense.explosion.entities.EntityMissile;
+import defense.explosion.explosive.BlockExplosive;
+import defense.explosion.explosive.TileExplosive;
+import defense.explosion.explosive.thread.ThreadLargeExplosion;
+import defense.explosion.explosive.thread.ThreadLargeExplosion.IThreadCallBack;
 
 public class BlastSonic extends Blast
 {
@@ -135,12 +135,11 @@ public class BlastSonic extends Blast
 
                     if (distance < r - 1 || this.worldObj.rand.nextInt(3) > 0)
                     {
-                        if (block == ExplosionModule.blockExplosive)
+                        if (block == DefenseTechBlocks.blockExplosive)
                         {
-                            BlockExplosive.yinZha(this.worldObj, (int)targetPosition.xPos, (int)targetPosition.yPos, (int)targetPosition.zPos, ((TileExplosive) this.worldObj.getTileEntity((int)targetPosition.xPos, (int)targetPosition.yPos, (int)targetPosition.zPos)).haoMa, 1);
+                            BlockExplosive.detonate(this.worldObj, (int)targetPosition.xPos, (int)targetPosition.yPos, (int)targetPosition.zPos, ((TileExplosive) this.worldObj.getTileEntity((int)targetPosition.xPos, (int)targetPosition.yPos, (int)targetPosition.zPos)).haoMa, 1);
                         }
-                        else
-                        {
+                        else {
                             this.worldObj.setBlockToAir((int)targetPosition.xPos, (int)targetPosition.yPos, (int)targetPosition.zPos);
                         }
 

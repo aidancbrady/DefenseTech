@@ -2,12 +2,12 @@ package defense.core.blocks;
 
 import java.util.Random;
 
-import defense.Reference;
-import defense.core.CoreModule;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
+import defense.Reference;
+import defense.core.DefenseTechItems;
 
 /** World generated block
  * 
@@ -26,7 +26,7 @@ public class BlockSulfurOre extends Block
     @Override
     public Item getItemDropped(int meta, Random rand, int fortune)
     {
-        return CoreModule.itemSulfurDust;
+        return DefenseTechItems.itemSulfurDust;
     }
 
     @Override

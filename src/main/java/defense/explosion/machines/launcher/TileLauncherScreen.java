@@ -17,8 +17,8 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.util.ForgeDirection;
 import defense.api.IMissile;
 import defense.api.ITier;
+import defense.core.DefenseTech;
 import defense.core.IBlockActivate;
-import defense.explosion.ExplosionModule;
 
 /** This tile entity is for the screen of the missile launcher
  * 
@@ -276,7 +276,7 @@ public class TileLauncherScreen extends TileLauncherPrefab implements IBlockActi
     @Override
     public boolean onActivated(EntityPlayer entityPlayer)
     {
-        entityPlayer.openGui(ExplosionModule.instance, 0, this.worldObj, this.xCoord, this.yCoord, this.zCoord);
+        entityPlayer.openGui(DefenseTech.INSTANCE, 0, this.worldObj, this.xCoord, this.yCoord, this.zCoord);
         return true;
     }
 

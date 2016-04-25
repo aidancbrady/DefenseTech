@@ -8,11 +8,11 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.util.ForgeDirection;
 import cpw.mods.fml.common.registry.IEntityAdditionalSpawnData;
+import defense.api.ExplosionEvent.ExplosivePreDetonationEvent;
 import defense.api.ExplosiveType;
 import defense.api.IExplosive;
 import defense.api.IExplosiveContainer;
-import defense.api.ExplosionEvent.ExplosivePreDetonationEvent;
-import defense.explosion.ExplosionModule;
+import defense.core.DefenseTechBlocks;
 import defense.explosion.explosive.ExplosiveRegistry;
 
 public class EntityExplosive extends Entity implements IEntityAdditionalSpawnData, IExplosiveContainer
@@ -77,7 +77,7 @@ public class EntityExplosive extends Entity implements IEntityAdditionalSpawnDat
 
             if (evt.isCanceled())
             {
-                ExplosionModule.blockExplosive.dropBlockAsItem(this.worldObj, (int) this.posX, (int) this.posY, (int) this.posZ, this.explosiveID, 0);
+            	DefenseTechBlocks.blockExplosive.dropBlockAsItem(this.worldObj, (int) this.posX, (int) this.posY, (int) this.posZ, this.explosiveID, 0);
                 this.setDead();
                 return;
             }

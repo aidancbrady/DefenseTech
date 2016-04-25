@@ -11,9 +11,9 @@ import net.minecraft.world.World;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import defense.ModelMissileBase;
-import defense.Settings;
 import defense.api.IExplosive;
-import defense.explosion.ExplosionModule;
+import defense.core.DefenseTech;
+import defense.core.DefenseTechBlocks;
 import defense.explosion.ex.ExAntiGravitational;
 import defense.explosion.ex.ExAntimatter;
 import defense.explosion.ex.ExBreaching;
@@ -42,81 +42,81 @@ import defense.explosion.ex.missiles.MissileNuclearCluster;
 public abstract class Explosive implements IExplosive
 {
     /** Explosives */
-    public static final Explosive condensed;
-    public static final Explosive shrapnel;
-    public static final Explosive incendiary;
-    public static final Explosive debilitation;
-    public static final Explosive chemical;
-    public static final Explosive anvil;
-    public static final Explosive replsive;
-    public static final Explosive attractive;
+    public static Explosive condensed;
+    public static Explosive shrapnel;
+    public static Explosive incendiary;
+    public static Explosive debilitation;
+    public static Explosive chemical;
+    public static Explosive anvil;
+    public static Explosive replsive;
+    public static Explosive attractive;
 
-    public static final Explosive fragmentation;
-    public static final Explosive contagious;
-    public static final Explosive sonic;
-    public static final Explosive breaching;
-    public static final Explosive rejuvenation;
-    public static final Explosive thermobaric;
-    public static final Explosive sMine;
+    public static Explosive fragmentation;
+    public static Explosive contagious;
+    public static Explosive sonic;
+    public static Explosive breaching;
+    public static Explosive rejuvenation;
+    public static Explosive thermobaric;
+    public static Explosive sMine;
 
-    public static final Explosive nuclear;
-    public static final Explosive emp;
-    public static final Explosive exothermic;
-    public static final Explosive endothermic;
-    public static final Explosive antiGrav;
-    public static final Explosive hypersonic;
+    public static Explosive nuclear;
+    public static Explosive emp;
+    public static Explosive exothermic;
+    public static Explosive endothermic;
+    public static Explosive antiGrav;
+    public static Explosive hypersonic;
 
-    public static final Explosive antimatter;
-    public static final Explosive redMatter;
+    public static Explosive antimatter;
+    public static Explosive redMatter;
 
     /** Missiles */
-    public static final Explosion missileModule;
-    public static final Explosion homing;
-    public static final Explosion antiBallistic;
-    public static final Explosion cluster;
-    public static final Explosion nuclearCluster;
+    public static Explosion missileModule;
+    public static Explosion homing;
+    public static Explosion antiBallistic;
+    public static Explosion cluster;
+    public static Explosion nuclearCluster;
 
     public static boolean registered = false;
 
-    static
+    public static void register()
     {
-        Settings.CONFIGURATION.load();
-
-        condensed = ExplosiveRegistry.register(new ExCondensed("condensed", 1));
-        shrapnel = ExplosiveRegistry.register(new ExShrapnel("shrapnel", 1));
-        incendiary = ExplosiveRegistry.register(new ExIncendiary("incendiary", 1));
-        debilitation = ExplosiveRegistry.register(new ExDebilitation("debilitation", 1));
-        chemical = ExplosiveRegistry.register(new ExChemical("chemical", 1));
-        anvil = ExplosiveRegistry.register(new ExShrapnel("anvil", 1));
-        replsive = ExplosiveRegistry.register(new ExRepulsive("repulsive", 1));
-        attractive = ExplosiveRegistry.register(new ExRepulsive("attractive", 1));
-
-        fragmentation = ExplosiveRegistry.register(new ExShrapnel("fragmentation", 2));
-        contagious = ExplosiveRegistry.register(new ExChemical("contagious", 2));
-        sonic = ExplosiveRegistry.register(new ExSonic("sonic", 2));
-        breaching = ExplosiveRegistry.register(new ExBreaching());
-        rejuvenation = ExplosiveRegistry.register(new ExRejuvenation());
-        thermobaric = ExplosiveRegistry.register(new ExNuclear("thermobaric", 2));
-        sMine = ExplosiveRegistry.register(new ExSMine("sMine", 2));
-
-        nuclear = ExplosiveRegistry.register(new ExNuclear("nuclear", 3));
-        emp = ExplosiveRegistry.register(new ExEMP());
-        exothermic = ExplosiveRegistry.register(new ExExothermic());
-        endothermic = ExplosiveRegistry.register(new ExEndothermic());
-        antiGrav = ExplosiveRegistry.register(new ExAntiGravitational());
-        hypersonic = ExplosiveRegistry.register(new ExSonic("hypersonic", 3));
-
-        antimatter = ExplosiveRegistry.register(new ExAntimatter());
-        redMatter = ExplosiveRegistry.register(new ExRedMatter());
-
-        /** Missiles */
-        missileModule = (Explosion) ExplosiveRegistry.register(new MissileModule());
-        homing = (Explosion) ExplosiveRegistry.register(new MissileHoming());
-        antiBallistic = (Explosion) ExplosiveRegistry.register(new MissileAnti());
-        cluster = (Explosion) ExplosiveRegistry.register(new MissileCluster("cluster", 2));
-        nuclearCluster = (Explosion) ExplosiveRegistry.register(new MissileNuclearCluster());
-
-        Settings.CONFIGURATION.save();
+    	if(!registered)
+    	{
+	        condensed = ExplosiveRegistry.register(new ExCondensed("condensed", 1));
+	        shrapnel = ExplosiveRegistry.register(new ExShrapnel("shrapnel", 1));
+	        incendiary = ExplosiveRegistry.register(new ExIncendiary("incendiary", 1));
+	        debilitation = ExplosiveRegistry.register(new ExDebilitation("debilitation", 1));
+	        chemical = ExplosiveRegistry.register(new ExChemical("chemical", 1));
+	        anvil = ExplosiveRegistry.register(new ExShrapnel("anvil", 1));
+	        replsive = ExplosiveRegistry.register(new ExRepulsive("repulsive", 1));
+	        attractive = ExplosiveRegistry.register(new ExRepulsive("attractive", 1));
+	
+	        fragmentation = ExplosiveRegistry.register(new ExShrapnel("fragmentation", 2));
+	        contagious = ExplosiveRegistry.register(new ExChemical("contagious", 2));
+	        sonic = ExplosiveRegistry.register(new ExSonic("sonic", 2));
+	        breaching = ExplosiveRegistry.register(new ExBreaching());
+	        rejuvenation = ExplosiveRegistry.register(new ExRejuvenation());
+	        thermobaric = ExplosiveRegistry.register(new ExNuclear("thermobaric", 2));
+	        sMine = ExplosiveRegistry.register(new ExSMine("sMine", 2));
+	
+	        nuclear = ExplosiveRegistry.register(new ExNuclear("nuclear", 3));
+	        emp = ExplosiveRegistry.register(new ExEMP());
+	        exothermic = ExplosiveRegistry.register(new ExExothermic());
+	        endothermic = ExplosiveRegistry.register(new ExEndothermic());
+	        antiGrav = ExplosiveRegistry.register(new ExAntiGravitational());
+	        hypersonic = ExplosiveRegistry.register(new ExSonic("hypersonic", 3));
+	
+	        antimatter = ExplosiveRegistry.register(new ExAntimatter());
+	        redMatter = ExplosiveRegistry.register(new ExRedMatter());
+	
+	        /** Missiles */
+	        missileModule = (Explosion) ExplosiveRegistry.register(new MissileModule());
+	        homing = (Explosion) ExplosiveRegistry.register(new MissileHoming());
+	        antiBallistic = (Explosion) ExplosiveRegistry.register(new MissileAnti());
+	        cluster = (Explosion) ExplosiveRegistry.register(new MissileCluster("cluster", 2));
+	        nuclearCluster = (Explosion) ExplosiveRegistry.register(new MissileNuclearCluster());
+    	}
+        
         registered = true;
     }
 
@@ -127,7 +127,7 @@ public abstract class Explosive implements IExplosive
     /** The fuse of this explosive */
     private int fuseTime;
     /** Is this explosive disabled? */
-    protected boolean isDisabled;
+    public boolean isDisabled;
     /** Is this explosive able to be pushed by other explosions? */
     protected boolean isMobile = false;
 
@@ -146,9 +146,6 @@ public abstract class Explosive implements IExplosive
         this.hasMissile = true;
         this.hasGrenade = this.tier <= 1;
         this.hasMinecart = this.tier <= 2;
-
-        this.isDisabled = Settings.CONFIGURATION.get("Disable_Explosives", "Disable " + this.nameID, false).getBoolean(false);
-
     }
 
     @Override
@@ -299,7 +296,7 @@ public abstract class Explosive implements IExplosive
 
     public ItemStack getItemStack(int amount)
     {
-        return new ItemStack(ExplosionModule.blockExplosive, amount, this.getID());
+        return new ItemStack(DefenseTechBlocks.blockExplosive, amount, this.getID());
     }
 
     public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer entityPlayer, int par6, float par7, float par8, float par9)

@@ -9,7 +9,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 import defense.Reference;
 import defense.CreativeTabHandler;
 import defense.api.IItemFrequency;
-import defense.core.CoreModule;
+import defense.core.DefenseTech;
 import defense.core.network.IItemPacket;
 import mekanism.common.item.ItemEnergized;
 import mekanism.common.util.LangUtils;
@@ -86,7 +86,7 @@ public class ItemSignalDisrupter extends ItemEnergized implements IItemFrequency
     @Override
     public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
     {        
-        par3EntityPlayer.openGui(CoreModule.INSTANCE, 0, par2World, (int) par3EntityPlayer.posX, (int) par3EntityPlayer.posY, (int) par3EntityPlayer.posZ);
+        par3EntityPlayer.openGui(DefenseTech.INSTANCE, 0, par2World, (int) par3EntityPlayer.posX, (int) par3EntityPlayer.posY, (int) par3EntityPlayer.posZ);
         return par1ItemStack;
     }
 

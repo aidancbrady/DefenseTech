@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 import defense.api.IExplosive;
 import defense.api.IExplosiveContainer;
-import defense.core.CoreModule;
+import defense.core.DefenseTech;
 import defense.explosion.items.ItemRemoteDetonator;
 import mekanism.api.Coord4D;
 import mekanism.common.Mekanism;

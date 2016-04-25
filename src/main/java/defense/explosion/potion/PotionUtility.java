@@ -3,7 +3,7 @@ package defense.explosion.potion;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 
-import defense.core.CoreModule;
+import defense.core.DefenseTech;
 import net.minecraft.potion.Potion;
 
 /** call on preinit
@@ -41,7 +41,7 @@ public class PotionUtility
             catch (Exception e)
             {
                 e.printStackTrace();
-                CoreModule.LOGGER.severe("The mod has Errored, Please report to the mod authors");
+                DefenseTech.LOGGER.severe("The mod has Errored, Please report to the mod authors");
             }
         }
     }

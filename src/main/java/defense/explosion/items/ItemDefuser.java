@@ -15,9 +15,10 @@ import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.DamageSource;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import defense.Reference;
 import defense.CreativeTabHandler;
-import defense.explosion.ExplosionModule;
+import defense.Reference;
+import defense.core.DefenseTech;
+import defense.core.DefenseTechBlocks;
 import defense.explosion.entities.EntityBombCart;
 import defense.explosion.entities.EntityExplosive;
 
@@ -59,7 +60,7 @@ public class ItemDefuser extends ItemEnergized
                 if (!entity.worldObj.isRemote)
                 {
                     EntityExplosive entityTNT = (EntityExplosive) entity;
-                    EntityItem entityItem = new EntityItem(entity.worldObj, entity.posX, entity.posY, entity.posZ, new ItemStack(ExplosionModule.blockExplosive, 1, entityTNT.explosiveID));
+                    EntityItem entityItem = new EntityItem(entity.worldObj, entity.posX, entity.posY, entity.posZ, new ItemStack(DefenseTechBlocks.blockExplosive, 1, entityTNT.explosiveID));
                     float var13 = 0.05F;
                     Random random = new Random();
                     entityItem.motionX = ((float) random.nextGaussian() * var13);

@@ -13,7 +13,7 @@ import org.lwjgl.opengl.GL11;
 import cpw.mods.fml.client.FMLClientHandler;
 import defense.Reference;
 import defense.api.IItemFrequency;
-import defense.core.CoreModule;
+import defense.core.DefenseTech;
 import defense.core.network.PacketItem.ItemMessage;
 
 public class GuiFrequency extends GuiBase
@@ -69,7 +69,7 @@ public class GuiFrequency extends GuiBase
                 ArrayList data = new ArrayList();
                 data.add(newFrequency);
                 
-                CoreModule.netHandler.sendToServer(new ItemMessage(data));
+                DefenseTech.netHandler.sendToServer(new ItemMessage(data));
             }
         }
         catch (NumberFormatException e)

@@ -153,7 +153,7 @@ public class BlockExplosive extends BlockBase
 
         if (world.isBlockIndirectlyGettingPowered(x, y, z))
         {
-            BlockExplosive.yinZha(world, x, y, z, explosiveID, 0);
+            BlockExplosive.detonate(world, x, y, z, explosiveID, 0);
         }
 
         // Check to see if there is fire nearby.
@@ -167,7 +167,7 @@ public class BlockExplosive extends BlockBase
 
             if (block == Blocks.fire || block == Blocks.flowing_lava || block == Blocks.lava)
             {
-                BlockExplosive.yinZha(world, x, y, z, explosiveID, 2);
+                BlockExplosive.detonate(world, x, y, z, explosiveID, 2);
             }
         }
 
@@ -259,11 +259,11 @@ public class BlockExplosive extends BlockBase
 
         if (world.isBlockIndirectlyGettingPowered(x, y, z))
         {
-            BlockExplosive.yinZha(world, x, y, z, explosiveID, 0);
+            BlockExplosive.detonate(world, x, y, z, explosiveID, 0);
         }
         else if (block == Blocks.fire || block == Blocks.flowing_lava || block == Blocks.lava)
         {
-            BlockExplosive.yinZha(world, x, y, z, explosiveID, 2);
+            BlockExplosive.detonate(world, x, y, z, explosiveID, 2);
         }
     }
 
@@ -271,7 +271,7 @@ public class BlockExplosive extends BlockBase
      * Called to detonate the TNT. Args: world, x, y, z, metaData, CauseOfExplosion (0, intentional,
      * 1, exploded, 2 burned)
      */
-    public static void yinZha(World world, int x, int y, int z, int explosiveID, int causeOfExplosion)
+    public static void detonate(World world, int x, int y, int z, int explosiveID, int causeOfExplosion)
     {
         if (!world.isRemote)
         {
@@ -311,7 +311,7 @@ public class BlockExplosive extends BlockBase
         if (world.getTileEntity(x, y, z) != null)
         {
             int explosiveID = ((TileExplosive) world.getTileEntity(x, y, z)).haoMa;
-            BlockExplosive.yinZha(world, x, y, z, explosiveID, 1);
+            BlockExplosive.detonate(world, x, y, z, explosiveID, 1);
         }
 
         super.onBlockExploded(world, x, y, z, explosion);
@@ -329,7 +329,7 @@ public class BlockExplosive extends BlockBase
             if (entityPlayer.getCurrentEquippedItem().getItem() == Items.flint_and_steel)
             {
                 int explosiveID = ((TileExplosive) tileEntity).haoMa;
-                BlockExplosive.yinZha(world, x, y, z, explosiveID, 0);
+                BlockExplosive.detonate(world, x, y, z, explosiveID, 0);
                 return true;
             }
             else if (MekanismUtils.hasUsableWrench(entityPlayer, x, y, z))

@@ -1,7 +1,5 @@
 package defense.explosion.explosive.blast;
 
-import defense.core.CoreModule;
-import defense.explosion.explosive.thread.ThreadLargeExplosion;
 import mekanism.api.Coord4D;
 import mekanism.api.Pos3D;
 import net.minecraft.block.Block;
@@ -9,6 +7,8 @@ import net.minecraft.entity.Entity;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidRegistry;
+import defense.core.DefenseTechBlocks;
+import defense.explosion.explosive.thread.ThreadLargeExplosion;
 
 /** Creates radiation spawning
  * 
@@ -57,7 +57,7 @@ public class BlastRot extends Blast
                         {
                             if (worldObj.rand.nextFloat() > 0.96)
                             {
-                            	worldObj.setBlock((int)targetPosition.xPos, (int)targetPosition.yPos, (int)targetPosition.zPos, CoreModule.blockRadioactive);
+                            	worldObj.setBlock((int)targetPosition.xPos, (int)targetPosition.yPos, (int)targetPosition.zPos, DefenseTechBlocks.blockRadioactive);
                             }
                         }
 
@@ -65,7 +65,7 @@ public class BlastRot extends Blast
                         {
                             if (worldObj.rand.nextFloat() > 0.99)
                             {
-                            	worldObj.setBlock((int)targetPosition.xPos, (int)targetPosition.yPos, (int)targetPosition.zPos, CoreModule.blockRadioactive);
+                            	worldObj.setBlock((int)targetPosition.xPos, (int)targetPosition.yPos, (int)targetPosition.zPos, DefenseTechBlocks.blockRadioactive);
                             }
                         }
 
@@ -86,7 +86,7 @@ public class BlastRot extends Blast
                         }
                         else if (block == Blocks.farmland)
                         {
-                        	worldObj.setBlock((int)targetPosition.xPos, (int)targetPosition.yPos, (int)targetPosition.zPos, CoreModule.blockRadioactive);
+                        	worldObj.setBlock((int)targetPosition.xPos, (int)targetPosition.yPos, (int)targetPosition.zPos, DefenseTechBlocks.blockRadioactive);
                         }
                         else if (block == Blocks.water || block == Blocks.flowing_water)
                         {

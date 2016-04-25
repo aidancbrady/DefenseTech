@@ -5,7 +5,6 @@ import net.minecraft.block.Block;
 import net.minecraft.entity.item.EntityMinecartTNT;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
@@ -13,7 +12,8 @@ import net.minecraft.world.World;
 import cpw.mods.fml.common.registry.IEntityAdditionalSpawnData;
 import defense.api.IExplosive;
 import defense.api.IExplosiveContainer;
-import defense.explosion.ExplosionModule;
+import defense.core.DefenseTechBlocks;
+import defense.core.DefenseTechItems;
 import defense.explosion.explosive.ExplosiveRegistry;
 
 public class EntityBombCart extends EntityMinecartTNT implements IExplosiveContainer, IEntityAdditionalSpawnData
@@ -83,10 +83,10 @@ public class EntityBombCart extends EntityMinecartTNT implements IExplosiveConta
 
         if (!par1DamageSource.isExplosion())
         {
-            this.entityDropItem(new ItemStack(ExplosionModule.blockExplosive, 1, this.explosiveID), 0.0F);
+            this.entityDropItem(new ItemStack(DefenseTechBlocks.blockExplosive, 1, this.explosiveID), 0.0F);
         }
 
-        if (par1DamageSource.isFireDamage() || par1DamageSource.isExplosion() || d0 >= 0.009999999776482582D)
+        if (par1DamageSource.isFireDamage() || par1DamageSource.isExplosion() || d0 >= 0.01)
         {
             this.explodeCart(d0);
         }
@@ -95,7 +95,7 @@ public class EntityBombCart extends EntityMinecartTNT implements IExplosiveConta
     @Override
     public ItemStack getCartItem()
     {
-        return new ItemStack(ExplosionModule.itemBombCart, 1, this.explosiveID);
+        return new ItemStack(DefenseTechItems.itemBombCart, 1, this.explosiveID);
     }
 
     @Override
@@ -125,7 +125,7 @@ public class EntityBombCart extends EntityMinecartTNT implements IExplosiveConta
     @Override
     public Block func_145817_o()
     {
-        return ExplosionModule.blockExplosive;
+        return DefenseTechBlocks.blockExplosive;
     }
 
     @Override

@@ -5,21 +5,6 @@ import io.netty.buffer.ByteBuf;
 import java.util.ArrayList;
 import java.util.List;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-import defense.Reference;
-import defense.Settings;
-import defense.CreativeTabHandler;
-import defense.api.FrequencyGrid;
-import defense.api.IBlockFrequency;
-import defense.api.IItemFrequency;
-import defense.core.CoreModule;
-import defense.core.network.IItemPacket;
-import defense.core.network.PacketItem.ItemMessage;
-import defense.explosion.ExplosionModule;
-import defense.explosion.entities.EntityLightBeam;
-import defense.explosion.machines.launcher.TileLauncherPrefab;
-import defense.explosion.machines.launcher.TileLauncherScreen;
 import mekanism.api.Coord4D;
 import mekanism.api.Pos3D;
 import mekanism.common.Mekanism;
@@ -37,6 +22,22 @@ import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.MovingObjectPosition.MovingObjectType;
 import net.minecraft.world.World;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+import defense.CreativeTabHandler;
+import defense.Reference;
+import defense.Settings;
+import defense.api.FrequencyGrid;
+import defense.api.IBlockFrequency;
+import defense.api.IItemFrequency;
+import defense.core.DefenseTech;
+import defense.core.DefenseTechBlocks;
+import defense.core.DefenseTechItems;
+import defense.core.network.IItemPacket;
+import defense.core.network.PacketItem.ItemMessage;
+import defense.explosion.entities.EntityLightBeam;
+import defense.explosion.machines.launcher.TileLauncherPrefab;
+import defense.explosion.machines.launcher.TileLauncherScreen;
 
 public class ItemLaserDesignator extends ItemEnergized implements IItemFrequency, IItemPacket
 {
@@ -277,12 +278,11 @@ public class ItemLaserDesignator extends ItemEnergized implements IItemFrequency
                  * Prevents calling air strike if the user is trying to set the frequency of the
                  * remote.
                  */
-                if (block == ExplosionModule.blockMachine)
+                if (block == DefenseTechBlocks.blockMachine)
                 {
                     return par1ItemStack;
                 }
-                else
-                {
+                else {
                     int airStrikeFreq = this.getFrequency(par1ItemStack);
 
                     // Check if it is possible to do an air strike.
@@ -343,7 +343,7 @@ public class ItemLaserDesignator extends ItemEnergized implements IItemFrequency
                             	data.add(objectMouseOver.blockY);
                             	data.add(objectMouseOver.blockZ);
                             	
-                            	CoreModule.netHandler.sendToServer(new ItemMessage(data));
+                            	DefenseTech.netHandler.sendToServer(new ItemMessage(data));
                                 player.addChatMessage(new ChatComponentText(LangUtils.localize("message.designator.callBlast")));
                             }
                         }
@@ -369,7 +369,7 @@ public class ItemLaserDesignator extends ItemEnergized implements IItemFrequency
         ItemStack itemStack = (ItemStack)player.getCurrentEquippedItem();
         Pos3D position = new Pos3D(data.readInt(), data.readInt(), data.readInt());
 
-        ((ItemLaserDesignator) ExplosionModule.itemLaserDesignator).setLauncherCountDown(itemStack, 119);
+        ((ItemLaserDesignator)DefenseTechItems.itemLaserDesignator).setLauncherCountDown(itemStack, 119);
 
         player.worldObj.playSoundEffect(position.xPos, player.worldObj.getHeightValue((int)position.yPos, (int)position.zPos), position.zPos, Reference.PREFIX + "airstrike", 5.0F, (1.0F + (player.worldObj.rand.nextFloat() - player.worldObj.rand.nextFloat()) * 0.2F) * 0.7F);
 

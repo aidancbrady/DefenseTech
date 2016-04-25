@@ -1,4 +1,4 @@
-package defense.explosion;
+package defense.core;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
@@ -11,25 +11,22 @@ public class TickHandler
 	@SubscribeEvent
 	public void onTick(PlayerTickEvent event)
 	{
-        try
-        {
+        try {
             EntityPlayer player = (EntityPlayer)event.player;
 
             ItemStack currentItem = player.getCurrentEquippedItem();
 
-            if (currentItem != null && (player != Minecraft.getMinecraft().renderViewEntity || Minecraft.getMinecraft().gameSettings.thirdPersonView != 0))
+            if(currentItem != null && (player != Minecraft.getMinecraft().renderViewEntity || Minecraft.getMinecraft().gameSettings.thirdPersonView != 0))
             {
-                if (currentItem.getItem() == ExplosionModule.itemRocketLauncher)
+                if(currentItem.getItem() == DefenseTechItems.itemRocketLauncher)
                 {
-                    if (player.getItemInUseCount() <= 0)
+                    if(player.getItemInUseCount() <= 0)
                     {
                         player.setItemInUse(currentItem, Integer.MAX_VALUE);
                     }
                 }
             }
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             System.out.println("Failed to tick properly.");
             e.printStackTrace();
         }

@@ -28,8 +28,8 @@ import defense.api.IEMPBlock;
 import defense.api.IEMPItem;
 import defense.api.IMissile;
 import defense.api.RadarRegistry;
+import defense.core.DefenseTech;
 import defense.core.Vector2;
-import defense.explosion.ExplosionModule;
 import defense.explosion.entities.EntityExplosive;
 
 public class BlastEMP extends Blast
@@ -135,7 +135,7 @@ public class BlastEMP extends Blast
                 {
                     if(worldObj.isRemote && maxFx > 0)
                     {
-                        ExplosionModule.proxy.spawnShock(worldObj, position, new Pos3D(entity), 20);
+                        DefenseTech.proxy.spawnShock(worldObj, position, new Pos3D(entity), 20);
                         maxFx--;
                     }
 
@@ -190,7 +190,7 @@ public class BlastEMP extends Blast
             }
         }
 
-        ExplosionModule.proxy.spawnParticle("shockwave", worldObj, position, 0, 0, 0, 0, 0, 255, 10, 3);
+        DefenseTech.proxy.spawnParticle("shockwave", worldObj, position, 0, 0, 0, 0, 0, 255, 10, 3);
         worldObj.playSoundEffect(position.xPos, position.yPos, position.zPos, Reference.PREFIX + "emp", 4.0F, (1.0F + (worldObj.rand.nextFloat() - worldObj.rand.nextFloat()) * 0.2F) * 0.7F);
     }
 

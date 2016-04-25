@@ -2,10 +2,6 @@ package defense.explosion.potion;
 
 import java.util.List;
 
-import defense.api.ExplosiveType;
-import defense.api.ExplosionEvent.ExplosivePreDetonationEvent;
-import defense.explosion.ExplosionModule;
-import defense.explosion.explosive.Explosive;
 import mekanism.api.Pos3D;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.monster.EntityPigZombie;
@@ -15,6 +11,10 @@ import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.DamageSource;
 import net.minecraftforge.common.MinecraftForge;
+import defense.api.ExplosionEvent.ExplosivePreDetonationEvent;
+import defense.api.ExplosiveType;
+import defense.core.DefenseTech;
+import defense.explosion.explosive.Explosive;
 
 public class PoisonContagion extends CustomPotion
 {
@@ -74,7 +74,7 @@ public class PoisonContagion extends CustomPotion
                             entity.setDead();
                         }
 
-                        ExplosionModule.contagios_potion.poisonEntity(new Pos3D(entity), entity);
+                        DefenseTech.contagios_potion.poisonEntity(new Pos3D(entity), entity);
                     }
                 }
             }

@@ -1,29 +1,17 @@
 package defense.explosion.explosive.blast;
 
-import defense.Reference;
-import defense.Settings;
-import defense.core.CoreModule;
-import defense.explosion.ExplosionModule;
-import defense.explosion.explosive.thread.ThreadLargeExplosion;
 import mekanism.api.Pos3D;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
-import net.minecraftforge.common.config.Configuration;
+import defense.Reference;
+import defense.core.DefenseTech;
+import defense.explosion.explosive.thread.ThreadLargeExplosion;
 
 public class BlastNuclear extends Blast
 {
-    public static boolean POLLUTIVE_NUCLEAR = true;
-
-    static
-    {
-        Settings.CONFIGURATION.load();
-        POLLUTIVE_NUCLEAR = Settings.CONFIGURATION.get(Configuration.CATEGORY_GENERAL, "Pollutive Nuclear", POLLUTIVE_NUCLEAR).getBoolean(POLLUTIVE_NUCLEAR);
-        Settings.CONFIGURATION.save();
-    }
-
     private ThreadLargeExplosion thread;
     private float energy;
     private boolean spawnMoreParticles = false;
@@ -57,7 +45,7 @@ public class BlastNuclear extends Blast
             this.thread.start();
 
         }
-        else if (this.spawnMoreParticles && ExplosionModule.proxy.isGaoQing())
+        else if (this.spawnMoreParticles && DefenseTech.proxy.isFancyGraphicsEnabled())
         {
             // Spawn nuclear cloud.
             for (int y = 0; y < 26; y++)
@@ -79,12 +67,12 @@ public class BlastNuclear extends Blast
                     {
                         double distance = MathHelper.sqrt_double(x * x + z * z);
 
-                        if (r > distance && r - 3 < distance)
+                        if(r > distance && r - 3 < distance)
                         {
                             Pos3D spawnPosition = position.clone().translate(new Pos3D(x * 2, (y - 2) * 2, z * 2));
                             float xDiff = (float) (spawnPosition.xPos - position.xPos);
                             float zDiff = (float) (spawnPosition.zPos - position.zPos);
-                            ExplosionModule.proxy.spawnParticle("smoke", worldObj, spawnPosition, xDiff * 0.3 * worldObj.rand.nextFloat(), -worldObj.rand.nextFloat(), zDiff * 0.3 * worldObj.rand.nextFloat(), (float) (distance / this.getRadius()) * worldObj.rand.nextFloat(), 0, 0, 8F, 1.2F);
+                            DefenseTech.proxy.spawnParticle("smoke", worldObj, spawnPosition, xDiff * 0.3 * worldObj.rand.nextFloat(), -worldObj.rand.nextFloat(), zDiff * 0.3 * worldObj.rand.nextFloat(), (float) (distance / this.getRadius()) * worldObj.rand.nextFloat(), 0, 0, 8F, 1.2F);
                         }
                     }
                 }
@@ -103,7 +91,7 @@ public class BlastNuclear extends Blast
 
         if (this.worldObj.isRemote)
         {
-            if (ExplosionModule.proxy.isGaoQing())
+            if (DefenseTech.proxy.isFancyGraphicsEnabled())
             {
                 for (int x = -r; x < r; x++)
                 {
@@ -117,7 +105,7 @@ public class BlastNuclear extends Blast
 
                             if (this.worldObj.rand.nextFloat() < Math.max(0.001 * r, 0.05))
                             {
-                                ExplosionModule.proxy.spawnParticle("smoke", this.worldObj, targetPosition, 5F, 1F);
+                                DefenseTech.proxy.spawnParticle("smoke", this.worldObj, targetPosition, 5F, 1F);
                             }
                         }
                     }
@@ -137,7 +125,7 @@ public class BlastNuclear extends Blast
             else
             {
                 this.controller.endExplosion();
-                CoreModule.LOGGER.severe("Something went wrong with multi-threading while detonating the nuclear explosive.");
+                DefenseTech.LOGGER.severe("Something went wrong with multi-threading while detonating the nuclear explosive.");
             }
         }
     }
@@ -160,7 +148,7 @@ public class BlastNuclear extends Blast
         }
         catch (Exception e)
         {
-            CoreModule.LOGGER.severe("Nuclear-type detonation Failed!");
+            DefenseTech.LOGGER.severe("Nuclear-type detonation Failed!");
             e.printStackTrace();
         }
 

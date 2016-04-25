@@ -5,11 +5,7 @@ public class Reference
     /** Name of the channel and mod ID. */
     public static final String NAME = "DefenseTech";
     
-    public static final String MAJOR_VERSION = "@MAJOR@";
-    public static final String MINOR_VERSION = "@MINOR@";
-    public static final String REVISION_VERSION = "@REVIS@";
-    public static final String BUILD_VERSION = "@BUILD@";
-    public static final String VERSION = MAJOR_VERSION + "." + MINOR_VERSION + "." + REVISION_VERSION;
+    public static final String VERSION = "1.0.0";
 
     public static final String CHANNEL = "DEF";
     public static final String ENTITY_PREFIX = CHANNEL;

@@ -5,17 +5,6 @@ import io.netty.buffer.ByteBuf;
 import java.util.ArrayList;
 import java.util.List;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-import defense.Reference;
-import defense.CreativeTabHandler;
-import defense.core.CoreModule;
-import defense.core.network.IItemPacket;
-import defense.core.network.PacketItem.ItemMessage;
-import defense.explosion.ExplosionModule;
-import defense.explosion.machines.TileCruiseLauncher;
-import defense.explosion.machines.launcher.TileLauncherPrefab;
-import defense.explosion.machines.launcher.TileLauncherScreen;
 import mekanism.api.Coord4D;
 import mekanism.api.Pos3D;
 import mekanism.common.Mekanism;
@@ -31,6 +20,17 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+import defense.CreativeTabHandler;
+import defense.Reference;
+import defense.core.DefenseTech;
+import defense.core.DefenseTechBlocks;
+import defense.core.network.IItemPacket;
+import defense.core.network.PacketItem.ItemMessage;
+import defense.explosion.machines.TileCruiseLauncher;
+import defense.explosion.machines.launcher.TileLauncherPrefab;
+import defense.explosion.machines.launcher.TileLauncherScreen;
 
 public class ItemRadarGun extends ItemEnergized implements IItemPacket
 {
@@ -80,10 +80,10 @@ public class ItemRadarGun extends ItemEnergized implements IItemPacket
 
                 // Do not scan if the target is a
                 // missile launcher
-                if (!(tileEntity instanceof TileLauncherPrefab))
+                if(!(tileEntity instanceof TileLauncherPrefab))
                 {
                     // Check for electricity
-                    if (this.getEnergy(itemStack) > YONG_DIAN_LIANG)
+                    if(this.getEnergy(itemStack) > YONG_DIAN_LIANG)
                     {
                     	ArrayList data = new ArrayList();
                     	
@@ -91,12 +91,11 @@ public class ItemRadarGun extends ItemEnergized implements IItemPacket
                     	data.add(objectMouseOver.blockY);
                     	data.add(objectMouseOver.blockZ);
                     	
-                    	CoreModule.netHandler.sendToServer(new ItemMessage(data));
+                    	DefenseTech.netHandler.sendToServer(new ItemMessage(data));
                         setEnergy(itemStack, getEnergy(itemStack) - YONG_DIAN_LIANG);
                         entityPlayer.addChatMessage(new ChatComponentText(LangUtils.localize("message.radarGun.scanned").replaceAll("%x", "" + objectMouseOver.blockX).replace("%y", "" + objectMouseOver.blockY).replaceAll("%z", "" + objectMouseOver.blockZ).replaceAll("%d", "" + Math.round(new Pos3D(entityPlayer).distance(new Pos3D(objectMouseOver))))));
                     }
-                    else
-                    {
+                    else {
                         entityPlayer.addChatMessage(new ChatComponentText(LangUtils.localize("message.radarGun.nopower")));
                     }
                 }
@@ -115,7 +114,7 @@ public class ItemRadarGun extends ItemEnergized implements IItemPacket
         Block block = par3World.getBlock(x, y, z);
         int blockMetadata = par3World.getBlockMetadata(x, y, z);
 
-        if (block == ExplosionModule.blockMachine)
+        if (block == DefenseTechBlocks.blockMachine)
         {
             TileEntity tileEntity = par3World.getTileEntity(x, y, z);
 

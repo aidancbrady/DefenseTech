@@ -8,7 +8,7 @@ import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import defense.ModelMissileBase;
-import defense.core.CoreModule;
+import defense.core.DefenseTechItems;
 import defense.explosion.explosive.Explosive;
 import defense.explosion.explosive.blast.BlastChemical;
 import defense.explosion.model.missiles.MMDuQi;
@@ -39,7 +39,7 @@ public class ExChemical extends Explosion
     {
         if (this.getTier() == 1)
         {
-            GameRegistry.addRecipe(new ShapedMekanismRecipe(this.getItemStack(), new Object[] { "@@@", "@?@", "@@@", '@', CoreModule.itemPoisonPowder, '?', Explosive.debilitation.getItemStack() }));
+            GameRegistry.addRecipe(new ShapedMekanismRecipe(this.getItemStack(), new Object[] { "@@@", "@?@", "@@@", '@', DefenseTechItems.itemPoisonPowder, '?', Explosive.debilitation.getItemStack() }));
         }
         else if (this.getTier() == 2)
         {

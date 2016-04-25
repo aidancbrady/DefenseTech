@@ -22,9 +22,11 @@ import net.minecraftforge.common.util.ForgeDirection;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import defense.api.ITier;
+import defense.core.DefenseTech;
+import defense.core.DefenseTechBlocks;
+import defense.core.DefenseTechItems;
 import defense.core.IBlockActivate;
 import defense.core.prefab.BlockBase;
-import defense.explosion.ExplosionModule;
 import defense.explosion.machines.launcher.TileLauncherBase;
 import defense.explosion.machines.launcher.TileLauncherFrame;
 import defense.explosion.machines.launcher.TileLauncherScreen;
@@ -203,11 +205,11 @@ public class BlockMachine extends BlockBase
     {
         if (player.inventory.getCurrentItem() != null)
         {
-            if (player.inventory.getCurrentItem().getItem() == ExplosionModule.itemLaserDesignator)
+            if (player.inventory.getCurrentItem().getItem() == DefenseTechItems.itemLaserDesignator)
             {
                 return false;
             }
-            else if (player.inventory.getCurrentItem().getItem() == ExplosionModule.itemRadarGun)
+            else if (player.inventory.getCurrentItem().getItem() == DefenseTechItems.itemRadarGun)
             {
                 return false;
             }
@@ -341,7 +343,7 @@ public class BlockMachine extends BlockBase
     public ItemStack getPickBlock(MovingObjectPosition target, World world, int x, int y, int z, EntityPlayer player)
     {
         TileEntityBasicBlock tileEntity = (TileEntityBasicBlock)world.getTileEntity(x, y, z);
-        ItemStack stack = new ItemStack(ExplosionModule.blockMachine, 1, world.getBlockMetadata(x, y, z));
+        ItemStack stack = new ItemStack(DefenseTechBlocks.blockMachine, 1, world.getBlockMetadata(x, y, z));
         
         if(tileEntity instanceof ITier)
         {

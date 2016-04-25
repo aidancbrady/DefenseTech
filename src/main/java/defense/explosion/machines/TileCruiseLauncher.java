@@ -15,8 +15,8 @@ import defense.api.ExplosiveType;
 import defense.api.ILauncherContainer;
 import defense.api.ILauncherController;
 import defense.api.IMissile;
+import defense.core.DefenseTech;
 import defense.core.IBlockActivate;
-import defense.explosion.ExplosionModule;
 import defense.explosion.entities.EntityMissile;
 import defense.explosion.ex.Explosion;
 import defense.explosion.explosive.ExplosiveRegistry;
@@ -284,7 +284,7 @@ public class TileCruiseLauncher extends TileLauncherPrefab implements IBlockActi
             return true;
         }
 
-        player.openGui(ExplosionModule.instance, 0, this.worldObj, this.xCoord, this.yCoord, this.zCoord);
+        player.openGui(DefenseTech.INSTANCE, 0, this.worldObj, this.xCoord, this.yCoord, this.zCoord);
         return true;
     }
 

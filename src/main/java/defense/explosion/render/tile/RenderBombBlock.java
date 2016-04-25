@@ -15,7 +15,7 @@ import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import defense.Reference;
-import defense.core.CoreModule;
+import defense.core.DefenseTech;
 import defense.core.RenderUtils;
 import defense.explosion.explosive.Explosive;
 import defense.explosion.explosive.ExplosiveRegistry;
@@ -50,7 +50,7 @@ public class RenderBombBlock extends TileEntitySpecialRenderer implements ISimpl
                 }
                 catch (Exception e)
                 {
-                    CoreModule.LOGGER.severe("Explosive Rendering Crash with: " + block + " and metadata: " + metadata);
+                    DefenseTech.LOGGER.severe("Explosive Rendering Crash with: " + block + " and metadata: " + metadata);
                     e.printStackTrace();
                 }
             }

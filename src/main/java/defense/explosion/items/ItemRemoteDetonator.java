@@ -5,17 +5,6 @@ import io.netty.buffer.ByteBuf;
 import java.util.ArrayList;
 import java.util.List;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-import defense.Reference;
-import defense.CreativeTabHandler;
-import defense.core.CoreModule;
-import defense.core.network.IItemPacket;
-import defense.core.network.PacketItem.ItemMessage;
-import defense.explosion.ExplosionModule;
-import defense.explosion.explosive.BlockExplosive;
-import defense.explosion.explosive.Explosive;
-import defense.explosion.explosive.TileExplosive;
 import mekanism.api.Pos3D;
 import mekanism.common.item.ItemEnergized;
 import mekanism.common.util.LangUtils;
@@ -29,6 +18,17 @@ import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.MovingObjectPosition.MovingObjectType;
 import net.minecraft.world.World;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+import defense.CreativeTabHandler;
+import defense.Reference;
+import defense.core.DefenseTech;
+import defense.core.DefenseTechBlocks;
+import defense.core.network.IItemPacket;
+import defense.core.network.PacketItem.ItemMessage;
+import defense.explosion.explosive.BlockExplosive;
+import defense.explosion.explosive.Explosive;
+import defense.explosion.explosive.TileExplosive;
 
 public class ItemRemoteDetonator extends ItemEnergized implements IItemPacket
 {
@@ -123,7 +123,7 @@ public class ItemRemoteDetonator extends ItemEnergized implements IItemPacket
                     {
                         if (tile instanceof TileExplosive)
                         {
-                            if (block == ExplosionModule.blockMachine)
+                            if (block == DefenseTechBlocks.blockMachine)
                             {
                                 return itemStack;
                             }
@@ -138,7 +138,7 @@ public class ItemRemoteDetonator extends ItemEnergized implements IItemPacket
                                 	data.add(tile.yCoord);
                                 	data.add(tile.zCoord);
                                 	
-                                	CoreModule.netHandler.sendToServer(new ItemMessage(new ArrayList()));
+                                	DefenseTech.netHandler.sendToServer(new ItemMessage(new ArrayList()));
                                     this.setEnergy(itemStack, this.getEnergy(itemStack) - ENERGY);
                                     return itemStack;
                                 }
@@ -165,7 +165,7 @@ public class ItemRemoteDetonator extends ItemEnergized implements IItemPacket
                     	data.add(tileEntity.yCoord);
                     	data.add(tileEntity.zCoord);
                     	
-                    	CoreModule.netHandler.sendToServer(new ItemMessage(data));
+                    	DefenseTech.netHandler.sendToServer(new ItemMessage(data));
                         this.setEnergy(itemStack, this.getEnergy(itemStack) - ENERGY);
                     }
                 }
@@ -227,7 +227,7 @@ public class ItemRemoteDetonator extends ItemEnergized implements IItemPacket
         
         if(isValidExplosive(player.worldObj.getTileEntity(x, y, z)))
         {
-        	BlockExplosive.yinZha(player.worldObj, x, y, z, ((TileExplosive)player.worldObj.getTileEntity(x, y, z)).haoMa, 0);
+        	BlockExplosive.detonate(player.worldObj, x, y, z, ((TileExplosive)player.worldObj.getTileEntity(x, y, z)).haoMa, 0);
         }
     }
 }

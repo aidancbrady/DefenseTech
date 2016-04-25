@@ -11,7 +11,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 import cpw.mods.fml.common.registry.IEntityAdditionalSpawnData;
 import defense.api.IEntityExplosion;
-import defense.core.CoreModule;
+import defense.core.DefenseTech;
 import defense.explosion.explosive.blast.Blast;
 
 /** The Entity handler responsible for entity explosions.
@@ -102,7 +102,7 @@ public class EntityExplosion extends Entity implements IEntityAdditionalSpawnDat
         if (this.blast == null)
         {
             this.setDead();
-            CoreModule.LOGGER.severe("Procedural explosion ended due to null! This is a bug!");
+            DefenseTech.LOGGER.severe("Procedural explosion ended due to null! This is a bug!");
             return;
         }
 
@@ -158,7 +158,7 @@ public class EntityExplosion extends Entity implements IEntityAdditionalSpawnDat
         }
         catch (Exception e)
         {
-            CoreModule.LOGGER.severe("Error in loading an explosion!");
+            DefenseTech.LOGGER.severe("Error in loading an explosion!");
             e.printStackTrace();
         }
     }

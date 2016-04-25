@@ -1,13 +1,12 @@
 package defense.explosion.explosive.blast;
 
-import defense.Reference;
-import defense.explosion.ex.ExExothermic;
-import defense.explosion.explosive.Explosive;
 import mekanism.api.Pos3D;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
+import defense.Reference;
+import defense.Settings;
 
 public class BlastExothermic extends BlastBeam
 {
@@ -74,7 +73,7 @@ public class BlastExothermic extends BlastBeam
 
                                 block = this.worldObj.getBlock((int)targetPosition.xPos, (int)targetPosition.yPos - 1, (int)targetPosition.zPos);
 
-                                if (((ExExothermic) Explosive.exothermic).createNetherrack && (block == Blocks.stone || block == Blocks.grass || block == Blocks.dirt) && this.worldObj.rand.nextFloat() > 0.75)
+                                if (Settings.CREATE_NETHERRACK && (block == Blocks.stone || block == Blocks.grass || block == Blocks.dirt) && this.worldObj.rand.nextFloat() > 0.75)
                                 {
                                     this.worldObj.setBlock((int)targetPosition.xPos, (int)targetPosition.yPos - 1, (int)targetPosition.zPos, Blocks.netherrack, 0, 2);
                                 }

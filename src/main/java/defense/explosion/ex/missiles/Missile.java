@@ -1,8 +1,8 @@
 package defense.explosion.ex.missiles;
 
-import defense.explosion.ExplosionModule;
-import defense.explosion.ex.Explosion;
 import net.minecraft.item.ItemStack;
+import defense.core.DefenseTechItems;
+import defense.explosion.ex.Explosion;
 
 /** Ex object that are only defined as missiles
  * 
@@ -20,6 +20,6 @@ public abstract class Missile extends Explosion
     @Override
     public ItemStack getItemStack()
     {
-        return new ItemStack(ExplosionModule.itemMissile, 1, this.getID());
+        return new ItemStack(DefenseTechItems.itemMissile, 1, this.getID());
     }
 }

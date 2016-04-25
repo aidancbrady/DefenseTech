@@ -12,8 +12,8 @@ import org.lwjgl.opengl.GL12;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import defense.core.DefenseTechItems;
 import defense.core.RenderUtils;
-import defense.explosion.ExplosionModule;
 import defense.explosion.entities.EntityGrenade;
 
 @SideOnly(Side.CLIENT)
@@ -23,13 +23,13 @@ public class RenderGrenade extends Render
     public void doRender(Entity entity, double x, double y, double z, float par8, float par9)
     {
         /** Renders the grenade based on the explosive ID. */
-        IIcon icon = ExplosionModule.itemGrenade.getIconFromDamage(((EntityGrenade) entity).explosiveID);
+        IIcon icon = DefenseTechItems.itemGrenade.getIconFromDamage(((EntityGrenade) entity).explosiveID);
 
         GL11.glPushMatrix();
         GL11.glTranslatef((float) x, (float) y + 0.4f, (float) z);
         GL11.glEnable(GL12.GL_RESCALE_NORMAL);
         GL11.glScalef(0.6F, 0.6F, 0.6F);
-        RenderUtils.setSpriteTexture(new ItemStack(ExplosionModule.itemGrenade));
+        RenderUtils.setSpriteTexture(new ItemStack(DefenseTechItems.itemGrenade));
         Tessellator tessellator = Tessellator.instance;
         this.renderIcon(tessellator, icon);
         GL11.glDisable(GL12.GL_RESCALE_NORMAL);

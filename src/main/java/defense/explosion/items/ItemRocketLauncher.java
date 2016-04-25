@@ -90,7 +90,7 @@ public class ItemRocketLauncher extends ItemEnergized
                                 if (((Explosion) ex) != null && !evt.isCanceled())
                                 {
                                     // Limit the missile to tier two.
-                                    if (((Explosion) ex).getTier() <= Settings.MAX_ROCKET_LAUCNHER_TIER && ((Explosion) ex).isCruise())
+                                    if (((Explosion) ex).getTier() <= Settings.MAX_ROCKET_LAUNCHER_TIER && ((Explosion) ex).isCruise())
                                     {
                                         Pos3D launcher = new Pos3D(player).translate(new Pos3D(0, 0.5, 0));
                                         Pos3D playerAim = new Pos3D(player.getLook(1));
@@ -141,7 +141,7 @@ public class ItemRocketLauncher extends ItemEnergized
     @Override
     public void addInformation(ItemStack itemStack, EntityPlayer entityPlayer, List list, boolean par4)
     {
-        String str = LangUtils.localize("info.rocketlauncher.tooltip").replaceAll("%s", String.valueOf(Settings.MAX_ROCKET_LAUCNHER_TIER));
+        String str = LangUtils.localize("info.rocketlauncher.tooltip").replaceAll("%s", String.valueOf(Settings.MAX_ROCKET_LAUNCHER_TIER));
         list.add(str);
 
         super.addInformation(itemStack, entityPlayer, list, par4);

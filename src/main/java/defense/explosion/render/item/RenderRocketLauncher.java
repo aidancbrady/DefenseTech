@@ -12,7 +12,7 @@ import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import defense.Reference;
-import defense.explosion.ExplosionModule;
+import defense.core.DefenseTechItems;
 
 @SideOnly(Side.CLIENT)
 public class RenderRocketLauncher implements IItemRenderer
@@ -23,13 +23,13 @@ public class RenderRocketLauncher implements IItemRenderer
     @Override
     public boolean handleRenderType(ItemStack item, ItemRenderType type)
     {
-        return item.getItem() == ExplosionModule.itemRocketLauncher;
+        return item.getItem() == DefenseTechItems.itemRocketLauncher;
     }
 
     @Override
     public boolean shouldUseRenderHelper(ItemRenderType type, ItemStack item, ItemRendererHelper helper)
     {
-        return item.getItem() == ExplosionModule.itemRocketLauncher;
+        return item.getItem() == DefenseTechItems.itemRocketLauncher;
     }
 
     @Override

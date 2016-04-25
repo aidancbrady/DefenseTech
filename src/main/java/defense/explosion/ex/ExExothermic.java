@@ -5,24 +5,19 @@ import mekanism.common.recipe.ShapedMekanismRecipe;
 import net.minecraft.entity.Entity;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
-import net.minecraftforge.common.config.Configuration;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import defense.ModelMissileBase;
-import defense.Settings;
 import defense.explosion.explosive.Explosive;
 import defense.explosion.explosive.blast.BlastExothermic;
 import defense.explosion.model.missiles.ModelExothermicMissile;
 
 public class ExExothermic extends Explosion
 {
-    public boolean createNetherrack = true;
-
     public ExExothermic()
     {
         super("exothermic", 3);
-        this.createNetherrack = Settings.CONFIGURATION.get(Configuration.CATEGORY_GENERAL, "Exothermic Create Netherrack", createNetherrack).getBoolean(createNetherrack);
     }
     
     @Override

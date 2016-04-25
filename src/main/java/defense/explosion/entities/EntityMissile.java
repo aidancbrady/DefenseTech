@@ -27,6 +27,7 @@ import net.minecraftforge.common.MinecraftForge;
 import cpw.mods.fml.common.registry.IEntityAdditionalSpawnData;
 import defense.Reference;
 import defense.Settings;
+import defense.api.ExplosionEvent.ExplosivePreDetonationEvent;
 import defense.api.ExplosiveType;
 import defense.api.IExplosive;
 import defense.api.IExplosiveContainer;
@@ -34,12 +35,11 @@ import defense.api.ILauncherContainer;
 import defense.api.IMissile;
 import defense.api.ITarget;
 import defense.api.RadarRegistry;
-import defense.api.ExplosionEvent.ExplosivePreDetonationEvent;
+import defense.core.DefenseTech;
 import defense.core.DamageUtility;
-import defense.core.CoreModule;
+import defense.core.DefenseTechItems;
 import defense.core.Vector2;
 import defense.core.implement.IChunkLoadHandler;
-import defense.explosion.ExplosionModule;
 import defense.explosion.ex.Explosion;
 import defense.explosion.explosive.ExplosiveRegistry;
 import defense.explosion.machines.TileCruiseLauncher;
@@ -216,7 +216,7 @@ public class EntityMissile extends Entity implements IChunkLoadHandler, IExplosi
         this.worldObj.playSoundAtEntity(this, Reference.PREFIX + "missilelaunch", 4F, (1.0F + (this.worldObj.rand.nextFloat() - this.worldObj.rand.nextFloat()) * 0.2F) * 0.7F);
         // TODO add an event system here
         RadarRegistry.register(this);
-        CoreModule.LOGGER.info("Launching " + this.getCommandSenderName() + " (" + this.getEntityId() + ") from " + (int)startPos.xPos + ", " + (int)startPos.yPos + ", " + (int)startPos.zPos + " to " + (int)targetVector.xPos + ", " + (int)targetVector.yPos + ", " + (int)targetVector.zPos);
+        DefenseTech.LOGGER.info("Launching " + this.getCommandSenderName() + " (" + this.getEntityId() + ") from " + (int)startPos.xPos + ", " + (int)startPos.yPos + ", " + (int)startPos.zPos + " to " + (int)targetVector.xPos + ", " + (int)targetVector.yPos + ", " + (int)targetVector.zPos);
     }
 
     @Override
@@ -260,7 +260,7 @@ public class EntityMissile extends Entity implements IChunkLoadHandler, IExplosi
     {
         this.dataWatcher.addObject(16, -1);
         this.dataWatcher.addObject(17, 0);
-        this.chunkLoaderInit(ForgeChunkManager.requestTicket(ExplosionModule.instance, this.worldObj, Type.ENTITY));
+        this.chunkLoaderInit(ForgeChunkManager.requestTicket(DefenseTech.INSTANCE, this.worldObj, Type.ENTITY));
     }
 
     @Override
@@ -337,7 +337,7 @@ public class EntityMissile extends Entity implements IChunkLoadHandler, IExplosi
         else {
         	if(!createdSound)
         	{
-        		ExplosionModule.proxy.playSound(this);
+        		DefenseTech.proxy.playSound(this);
         		createdSound = true;
         	}
         }
@@ -588,13 +588,13 @@ public class EntityMissile extends Entity implements IChunkLoadHandler, IExplosi
 
             position.translate(delta);
             this.worldObj.spawnParticle("flame", position.xPos, position.yPos, position.zPos, 0, 0, 0);
-            ExplosionModule.proxy.spawnParticle("missile_smoke", this.worldObj, position, 4, 2);
+            DefenseTech.proxy.spawnParticle("missile_smoke", this.worldObj, position, 4, 2);
             position.scale(1 - 0.001 * Math.random());
-            ExplosionModule.proxy.spawnParticle("missile_smoke", this.worldObj, position, 4, 2);
+            DefenseTech.proxy.spawnParticle("missile_smoke", this.worldObj, position, 4, 2);
             position.scale(1 - 0.001 * Math.random());
-            ExplosionModule.proxy.spawnParticle("missile_smoke", this.worldObj, position, 4, 2);
+            DefenseTech.proxy.spawnParticle("missile_smoke", this.worldObj, position, 4, 2);
             position.scale(1 - 0.001 * Math.random());
-            ExplosionModule.proxy.spawnParticle("missile_smoke", this.worldObj, position, 4, 2);
+            DefenseTech.proxy.spawnParticle("missile_smoke", this.worldObj, position, 4, 2);
         }
     }
 
@@ -698,7 +698,7 @@ public class EntityMissile extends Entity implements IChunkLoadHandler, IExplosi
 
                 this.isExpoding = true;
 
-                CoreModule.LOGGER.info(this.getCommandSenderName() + " (" + this.getEntityId() + ") exploded in " + (int) this.posX + ", " + (int) this.posY + ", " + (int) this.posZ);
+                DefenseTech.LOGGER.info(this.getCommandSenderName() + " (" + this.getEntityId() + ") exploded in " + (int) this.posX + ", " + (int) this.posY + ", " + (int) this.posZ);
             }
 
             setDead();
@@ -706,7 +706,7 @@ public class EntityMissile extends Entity implements IChunkLoadHandler, IExplosi
         }
         catch (Exception e)
         {
-            CoreModule.LOGGER.severe("Missile failed to explode properly. Report this to the developers.");
+            DefenseTech.LOGGER.severe("Missile failed to explode properly. Report this to the developers.");
             e.printStackTrace();
         }
     }
@@ -732,7 +732,7 @@ public class EntityMissile extends Entity implements IChunkLoadHandler, IExplosi
     {
         if (!this.isExpoding && !this.worldObj.isRemote)
         {
-            EntityItem entityItem = new EntityItem(this.worldObj, this.posX, this.posY, this.posZ, new ItemStack(ExplosionModule.itemMissile, 1, this.explosiveID));
+            EntityItem entityItem = new EntityItem(this.worldObj, this.posX, this.posY, this.posZ, new ItemStack(DefenseTechItems.itemMissile, 1, this.explosiveID));
 
             float var13 = 0.05F;
             Random random = new Random();

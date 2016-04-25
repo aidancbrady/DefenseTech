@@ -17,8 +17,8 @@ import net.minecraftforge.fluids.IFluidBlock;
 import defense.Reference;
 import defense.Settings;
 import defense.api.IExplosiveIgnore;
+import defense.core.DefenseTech;
 import defense.core.entity.EntityFlyingBlock;
-import defense.explosion.ExplosionModule;
 import defense.explosion.entities.EntityExplosion;
 import defense.explosion.entities.EntityExplosive;
 
@@ -210,12 +210,11 @@ public class BlastRedmatter extends Blast
         {
             if (entity instanceof EntityFlyingBlock)
             {
-                if (ExplosionModule.proxy.getParticleSetting() == 0)
+                if (DefenseTech.proxy.getParticleSetting() == 0)
                 {
                     if (this.worldObj.rand.nextInt(5) == 0)
                     {
-                        ExplosionModule.proxy.spawnParticle("digging", this.worldObj, new Pos3D(entity), -xDifference, -yDifference + 10, -zDifference, Block.getIdFromBlock(((EntityFlyingBlock) entity).block), 0, ((EntityFlyingBlock) entity).metadata, 2, 1);
-
+                        DefenseTech.proxy.spawnParticle("digging", this.worldObj, new Pos3D(entity), -xDifference, -yDifference + 10, -zDifference, Block.getIdFromBlock(((EntityFlyingBlock) entity).block), 0, ((EntityFlyingBlock) entity).metadata, 2, 1);
                     }
                 }
             }

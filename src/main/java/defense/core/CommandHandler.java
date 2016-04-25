@@ -1,4 +1,4 @@
-package defense.explosion;
+package defense.core;
 
 import java.util.List;
 

@@ -11,13 +11,12 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
-import codechicken.lib.vec.Vector3;
 import cpw.mods.fml.common.registry.IEntityAdditionalSpawnData;
+import defense.api.ExplosionEvent.ExplosivePreDetonationEvent;
 import defense.api.ExplosiveType;
 import defense.api.IExplosive;
 import defense.api.IExplosiveContainer;
-import defense.api.ExplosionEvent.ExplosivePreDetonationEvent;
-import defense.explosion.ExplosionModule;
+import defense.core.DefenseTechItems;
 import defense.explosion.explosive.Explosive;
 import defense.explosion.explosive.ExplosiveRegistry;
 
@@ -150,7 +149,7 @@ public class EntityGrenade extends Entity implements IExplosiveContainer, IEntit
                 double var7 = this.worldObj.rand.nextFloat() * var6 + (1.0F - var6) * 0.5D;
                 double var9 = this.worldObj.rand.nextFloat() * var6 + (1.0F - var6) * 0.5D;
                 double var11 = this.worldObj.rand.nextFloat() * var6 + (1.0F - var6) * 0.5D;
-                EntityItem var13 = new EntityItem(this.worldObj, this.posX + var7, this.posY + var9, this.posZ + var11, new ItemStack(ExplosionModule.itemGrenade, this.explosiveID, 1));
+                EntityItem var13 = new EntityItem(this.worldObj, this.posX + var7, this.posY + var9, this.posZ + var11, new ItemStack(DefenseTechItems.itemGrenade, this.explosiveID, 1));
                 var13.delayBeforeCanPickup = 10;
                 this.worldObj.spawnEntityInWorld(var13);
                 this.setDead();

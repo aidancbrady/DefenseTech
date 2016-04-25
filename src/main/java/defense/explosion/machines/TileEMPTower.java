@@ -19,8 +19,8 @@ import net.minecraft.util.AxisAlignedBB;
 import net.minecraftforge.common.util.ForgeDirection;
 import defense.Reference;
 import defense.api.RadarRegistry;
+import defense.core.DefenseTech;
 import defense.core.IBlockActivate;
-import defense.explosion.ExplosionModule;
 import defense.explosion.explosive.blast.BlastEMP;
 
 public class TileEMPTower extends TileEntityElectricBlock implements IBoundingBlock, IBlockActivate, IComputerIntegration
@@ -250,7 +250,7 @@ public class TileEMPTower extends TileEntityElectricBlock implements IBoundingBl
     @Override
     public boolean onActivated(EntityPlayer entityPlayer)
     {
-        entityPlayer.openGui(ExplosionModule.instance, 0, this.worldObj, this.xCoord, this.yCoord, this.zCoord);
+        entityPlayer.openGui(DefenseTech.INSTANCE, 0, this.worldObj, this.xCoord, this.yCoord, this.zCoord);
         return true;
     }
     
