@@ -138,13 +138,13 @@ message.tracker.banned=Tracker is banned in this area!
 
 message.defuser.nopower=Defuser out of electricity!
 
-message.designator.callTime=Calling air strike in:
-message.designator.blast=Incoming air strike!
-message.designator.setFreq=Laser designator frequency Set:
+message.designator.callTime=Calling airstrike in:
+message.designator.blast=Incoming airstrike!
+message.designator.setFreq=Laser Designator frequency set:
 message.designator.failFreq=Frequency must be greater than zero.
-message.designator.callBlast=Calling air strike into designated position!
-message.designator.nopower=Laser designator out of electricity!
-message.designator.noFreq=Laser designator frequency not set!
+message.designator.callBlast=Calling airstrike onto designated position!
+message.designator.nopower=Laser Designator out of electricity!
+message.designator.noFreq=Laser Designator frequency not set!
 
 message.radarGun.scanned=Scanned Coordinates: X:%x, Y:%y, Z:%z - Distance: %d
 message.radarGun.nopower=Radar gun out of electricity!

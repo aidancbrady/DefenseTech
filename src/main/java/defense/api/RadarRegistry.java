@@ -6,7 +6,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
-import defense.core.Vector2;
+import defense.common.Vector2;
 import mekanism.api.Pos3D;
 import net.minecraft.entity.Entity;
 import net.minecraft.tileentity.TileEntity;

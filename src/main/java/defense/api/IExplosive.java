@@ -7,7 +7,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import defense.ModelMissileBase;
+import defense.common.ModelMissileBase;
 
 /** An interface used to find various types of explosive's information.
  * 
