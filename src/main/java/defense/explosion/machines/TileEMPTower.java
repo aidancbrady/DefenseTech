@@ -8,6 +8,7 @@ import mekanism.api.Coord4D;
 import mekanism.api.Range4D;
 import mekanism.common.Mekanism;
 import mekanism.common.base.IBoundingBlock;
+import mekanism.common.integration.IComputerIntegration;
 import mekanism.common.network.PacketTileEntity.TileEntityMessage;
 import mekanism.common.tile.TileEntityElectricBlock;
 import mekanism.common.util.LangUtils;
@@ -22,7 +23,7 @@ import defense.core.IBlockActivate;
 import defense.explosion.ExplosionModule;
 import defense.explosion.explosive.blast.BlastEMP;
 
-public class TileEMPTower extends TileEntityElectricBlock implements IBoundingBlock, IBlockActivate //SimpleComponent
+public class TileEMPTower extends TileEntityElectricBlock implements IBoundingBlock, IBlockActivate, IComputerIntegration
 {
     // The maximum possible radius for the EMP to strike
     public static final int MAX_RADIUS = 150;
@@ -273,67 +274,97 @@ public class TileEMPTower extends TileEntityElectricBlock implements IBoundingBl
         return INFINITE_EXTENT_AABB;
     }
 
-    /*@Override
-    public String getComponentName()
-    {
-        return "emptower";
-    }
+	private static final String[] methods = new String[]{"getEMPMode", "setEMPMode", "targetMissiles", "targetAll", "targetElectronics", "getEMPRadius", "getMaxEMPRadius", "setEMPRadius"};
 
-    @Callback
+	@Override
+	public String[] getMethods()
+	{
+		return methods;
+	}
+
+	@Override
+	public Object[] invoke(int method, Object[] args) throws Exception
+	{
+		switch(method)
+		{
+			case 0:
+				return new Object[]{getEmpMode()};
+			case 1:
+				if(args.length < 1 || !(args[0] instanceof Number))
+				{
+					return new Object[] {false, "first argument needs to be a number between 0 and 2"};
+				}
+				return new Object[]{setEmpMode(((Number) args[0]).byteValue())};
+			case 2:
+				empMissiles();
+				return new Object[]{};
+			case 3:
+				empAll();
+				return new Object[]{};
+			case 4:
+				empElectronics();
+				return new Object[]{};
+			case 5:
+				return new Object[]{getEmpRadius()};
+			case 6:
+				return new Object[]{getMaxEmpRadius()};
+			case 7:
+				if(args.length < 1 || !(args[0] instanceof Number))
+				{
+					return new Object[] {false, "first argument needs to be a number"};
+				}
+				setEmpRadius(((Number) args[0]).intValue());
+				return new Object[]{true};
+			default:
+				throw new NoSuchMethodException();
+		}
+	}
+
     public byte getEmpMode()
     {
         return empMode;
     }
 
-    @Callback
-    public void setEmpMode(byte empMode)
+    public boolean setEmpMode(byte empMode)
     {
         if (empMode >= 0 && empMode <= 2)
-            this.empMode = empMode;
+		{
+			this.empMode = empMode;
+			return true;
+		}
+		return false;
     }
 
-    @Callback
     public void empMissiles()
     {
         this.empMode = 1;
     }
 
-    @Callback
     public void empAll()
     {
         this.empMode = 0;
     }
 
-    @Callback
     public void empElectronics()
     {
         this.empMode = 2;
     }
 
-    @Callback
     public int getEmpRadius()
     {
         return empRadius;
     }
 
-    @Callback
     public int getMaxEmpRadius()
     {
         return MAX_RADIUS;
     }
 
-    @Callback
-    public void setEmpRadius(int empRadius)
+	public void setEmpRadius(int empRadius)
     {
         int prev = getEmpRadius();
         this.empRadius = Math.min(Math.max(empRadius, 0), MAX_RADIUS);
         if (prev != getEmpRadius())
             updateCapacity();
     }
-
-    @Callback
-    public static int getMaxRadius()
-    {
-        return MAX_RADIUS;
-    }*/
 }
