@@ -249,3 +249,11 @@ info.detonator.noLink=Kein verbundener Sprengsatz
 info.misc.tier=Explosivstufe
 info.rocketlauncher.tooltip=Dieser Raketenwerfer kann Raketen bis Stufe %s abfeuern
 info.tracker.tooltip=Linksklicke ein Lebewesen (auch Spieler) und der Tracker wird in dessen Richtung zeigen.
+
+## Config Gui
+defensetech.configgui.ctgy.general=Generelle Einstellungen
+defensetech.configgui.ctgy.explosives=Sprengstoffeinstellungen
+
+## Config Tooltips
+defensetech.configgui.ctgy.general.tooltip=Generelle Einstellungen bezüglich DefenseTech und all seinen Modulen
+defensetech.configgui.ctgy.explosives.tooltip=Einstellungen bezüglich des Aktivierens und Deaktivierens einzelner Sprengstoffarten
