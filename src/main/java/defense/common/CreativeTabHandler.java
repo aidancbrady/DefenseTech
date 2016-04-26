@@ -19,7 +19,7 @@ public class CreativeTabHandler extends CreativeTabs
     @Override
     public ItemStack getIconItemStack()
     {
-        if (itemStack == null)
+        if(itemStack == null)
         {
             itemStack = new ItemStack(Blocks.tnt);
         }

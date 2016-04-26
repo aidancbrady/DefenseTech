@@ -20,8 +20,8 @@ import org.lwjgl.opengl.GL11;
 import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import defense.client.render.RenderUtils;
 import defense.common.Reference;
-import defense.common.RenderUtils;
 
 /** An effect that renders a electrical bolt from one position to another. Inspired by Azanor's
  * lightning wand.

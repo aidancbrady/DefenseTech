@@ -4,7 +4,6 @@ import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import defense.common.ModelMissileBase;
 
 @SideOnly(Side.CLIENT)
 public class ModelFragmentationMissile extends ModelMissileBase

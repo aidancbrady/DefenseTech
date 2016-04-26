@@ -10,8 +10,8 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import defense.client.model.missile.ModelAnvilMissile;
 import defense.client.model.missile.ModelFragmentationMissile;
+import defense.client.model.missile.ModelMissileBase;
 import defense.client.model.missile.ModelShrapnelMissile;
-import defense.common.ModelMissileBase;
 import defense.common.explosive.Explosive;
 import defense.common.explosive.blast.BlastShrapnel;
 

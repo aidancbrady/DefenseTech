@@ -6,7 +6,7 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import defense.api.IMissile;
 import defense.client.model.missile.ModelCondensedMissile;
-import defense.common.ModelMissileBase;
+import defense.client.model.missile.ModelMissileBase;
 
 public class MissileModule extends Missile
 {

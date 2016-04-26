@@ -5,7 +5,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.util.ResourceLocation;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import defense.common.ModelMissileBase;
+import defense.client.model.missile.ModelMissileBase;
 import defense.common.Reference;
 
 @SideOnly(Side.CLIENT)

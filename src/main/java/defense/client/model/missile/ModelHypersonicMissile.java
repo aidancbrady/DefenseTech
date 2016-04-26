@@ -1,6 +1,5 @@
 package defense.client.model.missile;
 
-import defense.common.ModelMissileBase;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
 

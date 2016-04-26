@@ -15,18 +15,22 @@ import defense.common.explosion.Explosion;
 public class ExplosiveRegistry
 {
     private static int maxID = 0;
+    
     private static final HashMap<Integer, Explosive> idToExplosiveMap = new HashMap<Integer, Explosive>();
     private static final BiMap<Integer, String> idToNameMap = HashBiMap.create();
 
     public static Explosive register(Explosive zhaPin)
     {
-        if (!isRegistered(zhaPin))
+        if(!isRegistered(zhaPin))
         {
             int nextID = maxID++;
+            
             idToExplosiveMap.put(nextID, zhaPin);
             idToNameMap.put(nextID, zhaPin.getUnlocalizedName());
+            
             return zhaPin;
         }
+        
         return null;
     }
 
@@ -64,9 +68,9 @@ public class ExplosiveRegistry
     {
         Collection<Explosion> missiles = new HashSet<Explosion>();
 
-        for (Explosive zhaPin : idToExplosiveMap.values())
+        for(Explosive zhaPin : idToExplosiveMap.values())
         {
-            if (zhaPin instanceof Explosion)
+            if(zhaPin instanceof Explosion)
             {
                 missiles.add((Explosion) zhaPin);
             }
@@ -79,5 +83,4 @@ public class ExplosiveRegistry
     {
         return idToExplosiveMap;
     }
-
 }

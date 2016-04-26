@@ -9,7 +9,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 import defense.api.ITarget;
 import defense.api.ITarget.TargetType;
 import defense.client.model.missile.ModelAntiMissileMissile;
-import defense.common.ModelMissileBase;
+import defense.client.model.missile.ModelMissileBase;
 import defense.common.Reference;
 import defense.common.entity.EntityMissile;
 import defense.common.explosive.blast.BlastRepulsive;

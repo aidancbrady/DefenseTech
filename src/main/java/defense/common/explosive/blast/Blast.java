@@ -21,7 +21,7 @@ import defense.api.ExplosionEvent.DoExplosionEvent;
 import defense.api.ExplosionEvent.ExplosionConstructionEvent;
 import defense.api.ExplosionEvent.PostExplosionEvent;
 import defense.api.ExplosionEvent.PreExplosionEvent;
-import defense.common.ModelMissileBase;
+import defense.client.model.missile.ModelMissileBase;
 import defense.common.entity.EntityExplosion;
 import defense.common.entity.EntityMissile;
 

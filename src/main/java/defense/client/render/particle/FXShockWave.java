@@ -10,7 +10,7 @@ import org.lwjgl.util.glu.Sphere;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import defense.common.RenderUtils;
+import defense.client.render.RenderUtils;
 
 @SideOnly(Side.CLIENT)
 public class FXShockWave extends EntityFX

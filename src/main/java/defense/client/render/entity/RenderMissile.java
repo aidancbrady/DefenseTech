@@ -12,7 +12,7 @@ import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import defense.api.IExplosive;
-import defense.common.ModelMissileBase;
+import defense.client.model.missile.ModelMissileBase;
 import defense.common.entity.EntityMissile;
 import defense.common.entity.EntityMissile.MissileType;
 import defense.common.explosion.Explosion;

@@ -8,8 +8,8 @@ import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import defense.client.model.missile.ModelHypersonicMissile;
+import defense.client.model.missile.ModelMissileBase;
 import defense.client.model.missile.ModelSonicMissile;
-import defense.common.ModelMissileBase;
 import defense.common.explosive.Explosive;
 import defense.common.explosive.blast.BlastSonic;
 

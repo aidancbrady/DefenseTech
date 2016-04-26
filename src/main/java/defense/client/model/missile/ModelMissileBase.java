@@ -1,4 +1,4 @@
-package defense.common;
+package defense.client.model.missile;
 
 import net.minecraft.client.model.ModelBase;
 

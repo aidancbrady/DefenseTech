@@ -13,8 +13,8 @@ import org.lwjgl.util.glu.Sphere;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import defense.client.render.RenderUtils;
 import defense.common.Reference;
-import defense.common.RenderUtils;
 import defense.common.entity.EntityExplosion;
 import defense.common.explosive.blast.BlastRedmatter;
 

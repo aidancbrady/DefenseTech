@@ -9,8 +9,8 @@ import org.lwjgl.opengl.GL11;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import defense.client.render.RenderUtils;
 import defense.common.DefenseTechBlocks;
-import defense.common.RenderUtils;
 import defense.common.entity.EntityExplosive;
 
 @SideOnly(Side.CLIENT)

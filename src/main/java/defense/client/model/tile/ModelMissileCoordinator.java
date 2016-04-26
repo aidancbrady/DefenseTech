@@ -1,6 +1,6 @@
 package defense.client.model.tile;
 
-import defense.common.ModelMissileBase;
+import defense.client.model.missile.ModelMissileBase;
 import net.minecraft.client.model.ModelRenderer;
 
 public class ModelMissileCoordinator extends ModelMissileBase

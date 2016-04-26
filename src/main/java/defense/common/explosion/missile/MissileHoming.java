@@ -10,7 +10,7 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import defense.api.IItemTracker;
 import defense.client.model.missile.ModelHomingMissile;
-import defense.common.ModelMissileBase;
+import defense.client.model.missile.ModelMissileBase;
 import defense.common.Vector2;
 import defense.common.entity.EntityMissile;
 import defense.common.entity.EntityMissile.MissileType;

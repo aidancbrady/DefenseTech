@@ -9,8 +9,8 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import defense.client.model.missile.ModelChemicalMissile;
 import defense.client.model.missile.ModelContagiousMissile;
+import defense.client.model.missile.ModelMissileBase;
 import defense.common.DefenseTechItems;
-import defense.common.ModelMissileBase;
 import defense.common.explosive.Explosive;
 import defense.common.explosive.blast.BlastChemical;
 

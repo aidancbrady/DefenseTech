@@ -32,106 +32,109 @@ public class CommandHandler extends CommandBase
     @Override
     public void processCommand(ICommandSender sender, String[] args)
     {
-        try
-        {
-            EntityPlayer entityPlayer = (EntityPlayer) sender;
+        try {
+            EntityPlayer entityPlayer = (EntityPlayer)sender;
             int dimension = entityPlayer.worldObj.provider.dimensionId;
-            if (args == null || args.length == 0 || args[0].equalsIgnoreCase("help"))
+            
+            if(args == null || args.length == 0 || args[0].equalsIgnoreCase("help"))
             {
                 sender.addChatMessage(new ChatComponentText("/" + Reference.DOMAIN + " help"));
                 sender.addChatMessage(new ChatComponentText("/" + Reference.DOMAIN + " lag <radius>"));
                 sender.addChatMessage(new ChatComponentText("/" + Reference.DOMAIN + " remove <All/Missile/Explosion> <radius>"));
                 sender.addChatMessage(new ChatComponentText("/" + Reference.DOMAIN + " emp <radius>"));
+                
                 return;
             }
-            else if (args.length >= 2 && args[0].equalsIgnoreCase("lag"))
+            else if(args.length >= 2 && args[0].equalsIgnoreCase("lag"))
             {
                 int radius = parseInt(sender, args[1]);
 
-                if (radius > 0)
+                if(radius > 0)
                 {
-
                     AxisAlignedBB bounds = AxisAlignedBB.getBoundingBox(entityPlayer.posX - radius, entityPlayer.posY - radius, entityPlayer.posZ - radius, entityPlayer.posX + radius, entityPlayer.posY + radius, entityPlayer.posZ + radius);
                     List<Entity> entitiesNearby = entityPlayer.worldObj.getEntitiesWithinAABB(Entity.class, bounds);
 
-                    for (Entity entity : entitiesNearby)
+                    for(Entity entity : entitiesNearby)
                     {
-                        if (entity instanceof EntityFlyingBlock)
+                        if(entity instanceof EntityFlyingBlock)
                         {
                             ((EntityFlyingBlock) entity).setBlock();
                         }
-                        else if (entity instanceof EntityMissile)
+                        else if(entity instanceof EntityMissile)
                         {
                             entity.setDead();
                         }
-                        else if (entity instanceof EntityExplosion)
+                        else if(entity instanceof EntityExplosion)
                         {
                             entity.setDead();
                         }
                     }
 
                     sender.addChatMessage(new ChatComponentText("Removed all mod-related lag sources within " + radius + " radius."));
+                    
                     return;
                 }
-                else
-                {
+                else {
                     throw new WrongUsageException("Radius needs to be higher than zero");
                 }
             }
-            else if (args.length >= 3 && args[0].equalsIgnoreCase("remove"))
+            else if(args.length >= 3 && args[0].equalsIgnoreCase("remove"))
             {
                 int radius = parseInt(sender, args[2]);
                 boolean all = args[1].equalsIgnoreCase("all");
                 boolean missile = args[1].equalsIgnoreCase("missiles");
                 boolean explosion = args[1].equalsIgnoreCase("explosion");
                 String str = "entities";
-                if (missile)
+                
+                if(missile)
                 {
                     str = "missiles";
-                }
-                if (explosion)
+                } 
+                else if(explosion)
                 {
                     str = "explosions";
                 }
 
-                if (radius > 0)
+                if(radius > 0)
                 {
-                    EntityPlayer player = (EntityPlayer) sender;
+                    EntityPlayer player = (EntityPlayer)sender;
 
                     AxisAlignedBB bounds = AxisAlignedBB.getBoundingBox(player.posX - radius, player.posY - radius, player.posZ - radius, player.posX + radius, player.posY + radius, player.posZ + radius);
                     List<Entity> entitiesNearby = player.worldObj.getEntitiesWithinAABB(Entity.class, bounds);
 
-                    for (Entity entity : entitiesNearby)
+                    for(Entity entity : entitiesNearby)
                     {
-                        if ((all || explosion) && entity instanceof EntityFlyingBlock)
+                        if((all || explosion) && entity instanceof EntityFlyingBlock)
                         {
                             ((EntityFlyingBlock) entity).setBlock();
                         }
-                        else if ((all || missile) && entity instanceof EntityMissile)
+                        else if((all || missile) && entity instanceof EntityMissile)
                         {
                             entity.setDead();
                         }
-                        else if ((all || explosion) && entity instanceof EntityExplosion)
+                        else if((all || explosion) && entity instanceof EntityExplosion)
                         {
                             entity.setDead();
                         }
                     }
 
                     sender.addChatMessage(new ChatComponentText("Removed all mod-related " + str + " within " + radius + " radius."));
+                   
                     return;
                 }
-                else
-                {
+                else {
                     throw new WrongUsageException("Radius needs to be higher than zero");
                 }
             }
-            else if (args.length >= 2 && args[0].equalsIgnoreCase("emp"))
+            else if(args.length >= 2 && args[0].equalsIgnoreCase("emp"))
             {
                 int radius = parseInt(sender, args[1]);
-                if (radius > 0)
+                
+                if(radius > 0)
                 {
                     new BlastEMP(entityPlayer.worldObj, null, entityPlayer.posX, entityPlayer.posY, entityPlayer.posZ, radius).setEffectBlocks().setEffectEntities().doExplode();
-                    switch (entityPlayer.worldObj.rand.nextInt(20))
+                    
+                    switch(entityPlayer.worldObj.rand.nextInt(20))
                     {
                         case 0:
                             sender.addChatMessage(new ChatComponentText("Did you pay the power bill?"));
@@ -153,17 +156,13 @@ public class CommandHandler extends CommandBase
                             return;
                     }
                 }
-                else
-                {
+                else {
                     throw new WrongUsageException("Radius needs to be higher than zero");
                 }
             }
-        }
-        catch (Exception e)
-        {
-        }
+        } catch(Exception e) {}
 
-        throw new WrongUsageException(this.getCommandUsage(sender));
+        throw new WrongUsageException(getCommandUsage(sender));
     }
 
     @Override
@@ -175,12 +174,12 @@ public class CommandHandler extends CommandBase
     @Override
     public List addTabCompletionOptions(ICommandSender sender, String[] args)
     {
-        return args.length == 1 ? getListOfStringsMatchingLastWord(args, new String[] { "lag" }) : null;
+        return args.length == 1 ? getListOfStringsMatchingLastWord(args, new String[] {"lag"}) : null;
     }
 
     @Override
     public int compareTo(Object par1Obj)
     {
-        return this.compareTo((ICommand) par1Obj);
+        return compareTo((ICommand)par1Obj);
     }
 }

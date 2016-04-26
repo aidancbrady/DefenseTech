@@ -28,9 +28,7 @@ import defense.common.tile.TileRadarStation;
 
 public class CommonProxy implements IGuiHandler
 {
-    public void preInit()
-    {
-    }
+    public void preInit() {}
 
     public void init()
     {
@@ -74,15 +72,15 @@ public class CommonProxy implements IGuiHandler
         {
             return new ContainerNull(player, null);
         }
-        else if (tileEntity instanceof TileCruiseLauncher)
+        else if(tileEntity instanceof TileCruiseLauncher)
         {
-            return new ContainerCruiseLauncher(player.inventory, (TileCruiseLauncher) tileEntity);
+            return new ContainerCruiseLauncher(player.inventory, (TileCruiseLauncher)tileEntity);
         }
-        else if (tileEntity instanceof TileMissileCoordinator)
+        else if(tileEntity instanceof TileMissileCoordinator)
         {
-            return new ContainerMissileCoordinator(player.inventory, (TileMissileCoordinator) tileEntity);
+            return new ContainerMissileCoordinator(player.inventory, (TileMissileCoordinator)tileEntity);
         }
-        else if (tileEntity instanceof TileLauncherScreen || tileEntity instanceof TileRadarStation || tileEntity instanceof TileEMPTower || tileEntity instanceof TileLauncherBase || tileEntity instanceof TileMissileCoordinator)
+        else if(tileEntity instanceof TileLauncherScreen || tileEntity instanceof TileRadarStation || tileEntity instanceof TileEMPTower || tileEntity instanceof TileLauncherBase || tileEntity instanceof TileMissileCoordinator)
         {
             return new ContainerNull(player, (TileEntityContainerBlock)tileEntity);
         }

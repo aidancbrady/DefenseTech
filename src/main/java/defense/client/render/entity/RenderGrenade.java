@@ -12,8 +12,8 @@ import org.lwjgl.opengl.GL12;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import defense.client.render.RenderUtils;
 import defense.common.DefenseTechItems;
-import defense.common.RenderUtils;
 import defense.common.entity.EntityGrenade;
 
 @SideOnly(Side.CLIENT)

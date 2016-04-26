@@ -11,9 +11,8 @@ import net.minecraft.world.World;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import defense.api.IExplosive;
-import defense.common.DefenseTech;
+import defense.client.model.missile.ModelMissileBase;
 import defense.common.DefenseTechBlocks;
-import defense.common.ModelMissileBase;
 import defense.common.explosion.ExAntiGravitational;
 import defense.common.explosion.ExAntimatter;
 import defense.common.explosion.ExBreaching;
@@ -157,7 +156,7 @@ public abstract class Explosive implements IExplosive
     @Override
     public String getUnlocalizedName()
     {
-        return this.nameID;
+        return nameID;
     }
 
     @Override
@@ -232,7 +231,7 @@ public abstract class Explosive implements IExplosive
      * @return - Fuse left */
     public int onBlockExploded()
     {
-        return (int) (this.fuseTime / 2 + Math.random() * this.fuseTime / 4);
+        return (int)(fuseTime / 2 + Math.random() * this.fuseTime / 4);
     }
 
     @Override
@@ -270,17 +269,17 @@ public abstract class Explosive implements IExplosive
 
     public boolean hasMissileForm()
     {
-        return this.hasMissile;
+        return hasMissile;
     }
 
     public boolean hasMinecartForm()
     {
-        return this.hasMinecart;
+        return hasMinecart;
     }
 
     public boolean hasBlockForm()
     {
-        return this.hasBlock;
+        return hasBlock;
     }
 
     /** Called to add the recipe for this explosive */

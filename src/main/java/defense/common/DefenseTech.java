@@ -61,8 +61,8 @@ import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.relauncher.Side;
 import defense.api.FrequencyGrid;
 import defense.common.base.IChunkLoadHandler;
-import defense.common.block.OreGeneratorSulfur;
 import defense.common.block.BlockMachine.MachineData;
+import defense.common.block.OreGeneratorSulfur;
 import defense.common.entity.EntityBombCart;
 import defense.common.entity.EntityExplosion;
 import defense.common.entity.EntityExplosive;
@@ -143,8 +143,7 @@ public final class DefenseTech
 		CreativeTabHandler.itemStack = new ItemStack(DefenseTechBlocks.blockExplosive);
 
         /** Dispenser Handler */
-        BlockDispenser.dispenseBehaviorRegistry.putObject(DefenseTechItems.itemGrenade, new IBehaviorDispenseItem()
-        {
+        BlockDispenser.dispenseBehaviorRegistry.putObject(DefenseTechItems.itemGrenade, new IBehaviorDispenseItem() {
             @Override
             public ItemStack dispense(IBlockSource blockSource, ItemStack itemStack)
             {
@@ -163,12 +162,12 @@ public final class DefenseTech
                 }
 
                 itemStack.stackSize--;
+               
                 return itemStack;
             }
         });
 
-        BlockDispenser.dispenseBehaviorRegistry.putObject(DefenseTechItems.itemBombCart, new IBehaviorDispenseItem()
-        {
+        BlockDispenser.dispenseBehaviorRegistry.putObject(DefenseTechItems.itemBombCart, new IBehaviorDispenseItem() {
             private final BehaviorDefaultDispenseItem defaultItemDispenseBehavior = new BehaviorDefaultDispenseItem();
 
             @Override
@@ -212,13 +211,13 @@ public final class DefenseTech
                 }
 
                 itemStack.stackSize--;
+                
                 return itemStack;
             }
         });
 
         /** Chunk loading handler. */
-        ForgeChunkManager.setForcedChunkLoadingCallback(this, new LoadingCallback()
-        {
+        ForgeChunkManager.setForcedChunkLoadingCallback(this, new LoadingCallback() {
             @Override
             public void ticketsLoaded(List<Ticket> tickets, World world)
             {
@@ -226,7 +225,7 @@ public final class DefenseTech
                 {
                     if(ticket.getEntity() instanceof IChunkLoadHandler)
                     {
-                        ((IChunkLoadHandler) ticket.getEntity()).chunkLoaderInit(ticket);
+                        ((IChunkLoadHandler)ticket.getEntity()).chunkLoaderInit(ticket);
                     }
                     else {
                         if(ticket.getModData() != null)
@@ -237,7 +236,7 @@ public final class DefenseTech
 
                             if(tileEntity instanceof IChunkLoadHandler)
                             {
-                                ((IChunkLoadHandler) tileEntity).chunkLoaderInit(ticket);
+                                ((IChunkLoadHandler)tileEntity).chunkLoaderInit(ticket);
                             }
                         }
                     }
@@ -294,9 +293,14 @@ public final class DefenseTech
         GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(Items.gunpowder, 2), new Object[] { "dustSulfur", "dustSaltpeter", new ItemStack(Items.coal, 1, 1) }));
 
         if(dustCharcoal != null && dustCharcoal.size() > 0)
+        {
             GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(Items.gunpowder, 2), new Object[] { "dustSulfur", "dustSaltpeter", "dustCharcoal" }));
+        }
+        
         if(dustCoal != null && dustCoal.size() > 0)
+        {
             GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(Items.gunpowder, 2), new Object[] { "dustSulfur", "dustSaltpeter", "dustCoal" }));
+        }
 
         GameRegistry.addRecipe(new ShapedOreRecipe(Blocks.tnt, new Object[] { "@@@", "@R@", "@@@", '@', Items.gunpowder, 'R', Items.redstone }));
 
@@ -395,7 +399,7 @@ public final class DefenseTech
     {
         if(evt.entity instanceof EntityMissile)
         {
-            ((EntityMissile) evt.entity).updateLoadChunk(evt.newChunkX, evt.newChunkZ);
+            ((EntityMissile)evt.entity).updateLoadChunk(evt.newChunkX, evt.newChunkZ);
         }
     }
 
@@ -418,7 +422,6 @@ public final class DefenseTech
                     else {
                         evt.entityLiving.worldObj.createExplosion(evt.entityLiving, evt.entityLiving.posX, evt.entityLiving.posY, evt.entityLiving.posZ, 3f, flag);
                     }
-
                 }
             }
         }

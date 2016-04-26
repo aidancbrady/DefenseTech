@@ -1,4 +1,4 @@
-package defense.common;
+package defense.client.render;
 
 import static org.lwjgl.opengl.GL11.GL_BLEND;
 import static org.lwjgl.opengl.GL11.GL_FLAT;

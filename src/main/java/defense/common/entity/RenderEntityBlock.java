@@ -14,7 +14,7 @@ import org.lwjgl.opengl.GL11;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import defense.common.RenderUtils;
+import defense.client.render.RenderUtils;
 
 @SideOnly(Side.CLIENT)
 public class RenderEntityBlock extends Render
