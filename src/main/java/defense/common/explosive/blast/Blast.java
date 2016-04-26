@@ -16,11 +16,11 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import defense.api.IExplosion;
 import defense.api.ExplosionEvent.DoExplosionEvent;
 import defense.api.ExplosionEvent.ExplosionConstructionEvent;
 import defense.api.ExplosionEvent.PostExplosionEvent;
 import defense.api.ExplosionEvent.PreExplosionEvent;
+import defense.api.IExplosion;
 import defense.client.model.missile.ModelMissileBase;
 import defense.common.entity.EntityExplosion;
 import defense.common.entity.EntityMissile;
@@ -67,7 +67,7 @@ public abstract class Blast extends Explosion implements IExplosion
         PreExplosionEvent evt = new PreExplosionEvent(worldObj, this);
         MinecraftForge.EVENT_BUS.post(evt);
 
-        if (!evt.isCanceled())
+        if(!evt.isCanceled())
         {
             this.doPreExplode();
         }
@@ -81,7 +81,7 @@ public abstract class Blast extends Explosion implements IExplosion
         DoExplosionEvent evt = new DoExplosionEvent(worldObj, this);
         MinecraftForge.EVENT_BUS.post(evt);
         
-        if (!evt.isCanceled())
+        if(!evt.isCanceled())
         {
             this.doExplode();
             this.callCount++;
@@ -98,7 +98,7 @@ public abstract class Blast extends Explosion implements IExplosion
         PostExplosionEvent evt = new PostExplosionEvent(worldObj, this);
         MinecraftForge.EVENT_BUS.post(evt);
 
-        if (!evt.isCanceled())
+        if(!evt.isCanceled())
         {
             this.doPostExplode();
         }
@@ -122,11 +122,11 @@ public abstract class Blast extends Explosion implements IExplosion
         ExplosionConstructionEvent evt = new ExplosionConstructionEvent(worldObj, this);
         MinecraftForge.EVENT_BUS.post(evt);
 
-        if (!evt.isCanceled())
+        if(!evt.isCanceled())
         {
-            if (this.proceduralInterval() > 0)
+            if(this.proceduralInterval() > 0)
             {
-                if (!this.worldObj.isRemote)
+                if(!this.worldObj.isRemote)
                 {
                     this.worldObj.spawnEntityInWorld(new EntityExplosion(this));
                 }
@@ -173,7 +173,6 @@ public abstract class Blast extends Explosion implements IExplosion
     protected void doDamageEntities(float radius, float power, boolean destroyItem)
     {
         // Step 2: Damage all entities
-        radius *= 2.0F;
         Pos3D minCoord = position.clone();
         minCoord.translate(-radius - 1, -radius - 1, -radius - 1);
         Pos3D maxCoord = position.clone();
@@ -181,27 +180,29 @@ public abstract class Blast extends Explosion implements IExplosion
         List<Entity> allEntities = worldObj.getEntitiesWithinAABB(Entity.class, AxisAlignedBB.getBoundingBox(minCoord.xPos, minCoord.yPos, minCoord.zPos, maxCoord.xPos, maxCoord.yPos, maxCoord.zPos));
         Vec3 var31 = Vec3.createVectorHelper(position.xPos, position.yPos, position.zPos);
 
-        for (int i = 0; i < allEntities.size(); ++i)
+        for(int i = 0; i < allEntities.size(); ++i)
         {
             Entity entity = allEntities.get(i);
 
-            if (this.onDamageEntity(entity))
+            if(onDamageEntity(entity))
             {
                 continue;
             }
 
-            if (entity instanceof EntityMissile)
+            if(entity instanceof EntityMissile)
             {
-                ((EntityMissile) entity).setExplode();
+                ((EntityMissile)entity).setExplode();
                 continue;
             }
 
-            if (entity instanceof EntityItem && !destroyItem)
+            if(entity instanceof EntityItem && !destroyItem)
+            {
                 continue;
+            }
 
             double distance = entity.getDistance(position.xPos, position.yPos, position.zPos) / radius;
 
-            if (distance <= 1.0D)
+            if(distance <= 1.0D)
             {
                 double xDifference = entity.posX - position.xPos;
                 double yDifference = entity.posY - position.yPos;
@@ -214,7 +215,7 @@ public abstract class Blast extends Explosion implements IExplosion
                 double var36 = (1.0D - distance) * var34;
                 int damage = 0;
 
-                damage = (int) ((var36 * var36 + var36) / 2.0D * 8.0D * power + 1.0D);
+                damage = (int)((var36 * var36 + var36) / 2.0D * 8.0D * power + 1.0D);
 
                 entity.attackEntityFrom(DamageSource.setExplosionSource(this), damage);
 

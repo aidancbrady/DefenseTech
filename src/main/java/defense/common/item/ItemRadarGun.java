@@ -60,8 +60,8 @@ public class ItemRadarGun extends ItemEnergized implements IItemPacket
     {
         Pos3D coord = getLink(itemStack);
         par3List.add("\uaa74" + LangUtils.localize("info.radarGun.savedCoords"));
-        par3List.add(LangUtils.localize("gui.misc.x") + " " + (int) coord.xPos + ", " + LangUtils.localize("gui.misc.y") + " " + (int) coord.yPos + ", " + LangUtils.localize("gui.misc.z") + " " + (int) coord.zPos);
-        par3List.add((int) new Pos3D(entityPlayer).distance(coord) + " " + LangUtils.localize("info.radarGun.meters") + " (" + (int) (new Pos3D(entityPlayer).xPos - coord.xPos) + ", " + (int) (new Pos3D(entityPlayer).yPos - coord.yPos) + ", " + (int) (new Pos3D(entityPlayer).zPos - coord.zPos) + ")");
+        par3List.add(LangUtils.localize("gui.misc.x") + " " + (int)coord.xPos + ", " + LangUtils.localize("gui.misc.y") + " " + (int)coord.yPos + ", " + LangUtils.localize("gui.misc.z") + " " + (int)coord.zPos);
+        par3List.add((int) new Pos3D(entityPlayer).distance(coord) + " " + LangUtils.localize("info.radarGun.meters") + " (" + (int)(new Pos3D(entityPlayer).xPos - coord.xPos) + ", " + (int) (new Pos3D(entityPlayer).yPos - coord.yPos) + ", " + (int) (new Pos3D(entityPlayer).zPos - coord.zPos) + ")");
 
 		super.addInformation(itemStack, entityPlayer, par3List, par4);
     }
@@ -94,7 +94,7 @@ public class ItemRadarGun extends ItemEnergized implements IItemPacket
                     	
                     	DefenseTech.netHandler.sendToServer(new ItemMessage(data));
                         setEnergy(itemStack, getEnergy(itemStack) - YONG_DIAN_LIANG);
-                        entityPlayer.addChatMessage(new ChatComponentText(Reference.CHAT_DESC + EnumColor.GREY + " " + LangUtils.localize("message.radarGun.scanned").replaceAll("%x", "" + objectMouseOver.blockX).replace("%y", "" + objectMouseOver.blockY).replaceAll("%z", "" + objectMouseOver.blockZ).replaceAll("%d", "" + Math.round(new Pos3D(entityPlayer).distance(new Pos3D(objectMouseOver))))));
+                        entityPlayer.addChatMessage(new ChatComponentText(Reference.CHAT_DESC + EnumColor.GREY + " " + LangUtils.localize("message.radarGun.scanned").replaceAll("%x", "" + objectMouseOver.blockX).replace("%y", "" + objectMouseOver.blockY).replaceAll("%z", "" + objectMouseOver.blockZ).replaceAll("%s", "" + Math.round(new Pos3D(entityPlayer).distance(new Pos3D(objectMouseOver))))));
                     }
                     else {
                         entityPlayer.addChatMessage(new ChatComponentText(Reference.CHAT_DESC + EnumColor.GREY + " " + LangUtils.localize("message.radarGun.nopower")));

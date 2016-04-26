@@ -1,12 +1,12 @@
 package defense.common.explosive.blast;
 
-import defense.common.Reference;
-import defense.common.entity.EntityExplosion;
 import mekanism.api.Coord4D;
 import mekanism.api.Pos3D;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.world.World;
+import defense.common.Reference;
+import defense.common.entity.EntityExplosion;
 
 public class BlastAntimatter extends Blast
 {
@@ -88,15 +88,15 @@ public class BlastAntimatter extends Blast
     @Override
     public void doPostExplode()
     {
-        this.doDamageEntities(this.getRadius() * 2, Integer.MAX_VALUE);
+        doDamageEntities(this.getRadius() * 2, Integer.MAX_VALUE);
     }
 
     @Override
     protected boolean onDamageEntity(Entity entity)
     {
-        if (entity instanceof EntityExplosion)
+        if(entity instanceof EntityExplosion)
         {
-            if (((EntityExplosion) entity).blast instanceof BlastRedmatter)
+            if(((EntityExplosion)entity).blast instanceof BlastRedmatter)
             {
                 entity.setDead();
                 return true;

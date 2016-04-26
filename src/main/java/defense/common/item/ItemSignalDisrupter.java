@@ -4,13 +4,6 @@ import io.netty.buffer.ByteBuf;
 
 import java.util.List;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-import defense.api.IItemFrequency;
-import defense.common.CreativeTabHandler;
-import defense.common.DefenseTech;
-import defense.common.Reference;
-import defense.common.base.IItemPacket;
 import mekanism.common.item.ItemEnergized;
 import mekanism.common.util.LangUtils;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -20,6 +13,13 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+import defense.api.IItemFrequency;
+import defense.common.CreativeTabHandler;
+import defense.common.DefenseTech;
+import defense.common.Reference;
+import defense.common.base.IItemPacket;
 
 public class ItemSignalDisrupter extends ItemEnergized implements IItemFrequency, IItemPacket
 {
@@ -96,13 +96,13 @@ public class ItemSignalDisrupter extends ItemEnergized implements IItemFrequency
         ItemStack itemStack = player.getCurrentEquippedItem();
         int frequency = dataStream.readInt();
         
-        if (itemStack != null)
+        if(itemStack != null)
         {
             Item clientItem = itemStack.getItem();
             
-            if (clientItem instanceof ItemSignalDisrupter)
+            if(clientItem instanceof ItemSignalDisrupter)
             {
-                ((ItemSignalDisrupter) clientItem).setFrequency(frequency, itemStack);
+                ((ItemSignalDisrupter)clientItem).setFrequency(frequency, itemStack);
             }
         }
     }
