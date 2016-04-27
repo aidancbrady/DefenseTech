@@ -8,6 +8,7 @@ import mekanism.api.Coord4D;
 import mekanism.api.Pos3D;
 import mekanism.common.MekanismBlocks;
 import mekanism.common.MekanismItems;
+import mekanism.common.Tier.BaseTier;
 import mekanism.common.Tier.EnergyCubeTier;
 import mekanism.common.Version;
 import mekanism.common.item.ItemEnergized;
@@ -329,25 +330,23 @@ public final class DefenseTech
         // Defuser
         CraftingManager.getInstance().getRecipeList().add(new ShapedMekanismRecipe(((ItemEnergized)DefenseTechItems.itemDefuser).getUnchargedItem(), new Object[] { "I  ", " W ", "  C", 'C', "circuitAdvanced", 'W', MekanismItems.Configurator.getUnchargedItem(), 'I', new ItemStack(MekanismItems.PartTransmitter, 1, 0) }));
         // Missile Launcher Platform
-        CraftingManager.getInstance().getRecipeList().add(new ShapedMekanismRecipe(new ItemStack(DefenseTechBlocks.blockMachine, 1, 0), new Object[] { "! !", "!C!", "!!!", '!', "ingotBronze", 'C', "circuitBasic" }));
-        CraftingManager.getInstance().getRecipeList().add(new ShapedMekanismRecipe(new ItemStack(DefenseTechBlocks.blockMachine, 1, 1), new Object[] { "! !", "!C!", "!@!", '@', new ItemStack(DefenseTechBlocks.blockMachine, 1, 0), '!', "ingotSteel", 'C', "circuitAdvanced" }));
-        CraftingManager.getInstance().getRecipeList().add(new ShapedMekanismRecipe(new ItemStack(DefenseTechBlocks.blockMachine, 1, 2), new Object[] { "! !", "!C!", "!@!", '@', new ItemStack(DefenseTechBlocks.blockMachine, 1, 1), '!', "alloyAdvanced", 'C', "circuitElite" }));
+        CraftingManager.getInstance().getRecipeList().add(new ShapedMekanismRecipe(DefenseUtils.getLauncherBase(BaseTier.BASIC), new Object[] { "! !", "!C!", "!!!", '!', "ingotBronze", 'C', "circuitBasic" }));
+        CraftingManager.getInstance().getRecipeList().add(new ShapedMekanismRecipe(DefenseUtils.getLauncherBase(BaseTier.ADVANCED), new Object[] { "! !", "!C!", "!@!", '@', DefenseUtils.getLauncherBase(BaseTier.BASIC), '!', "ingotSteel", 'C', "circuitAdvanced" }));
+        CraftingManager.getInstance().getRecipeList().add(new ShapedMekanismRecipe(DefenseUtils.getLauncherBase(BaseTier.ELITE), new Object[] { "! !", "!C!", "!@!", '@', DefenseUtils.getLauncherBase(BaseTier.ADVANCED), '!', "alloyAdvanced", 'C', "circuitElite" }));
         // Missile Launcher Panel
-        CraftingManager.getInstance().getRecipeList().add(new ShapedMekanismRecipe(new ItemStack(DefenseTechBlocks.blockMachine, 1, 3), new Object[] { "!!!", "!#!", "!?!", '#', "circuitBasic", '!', "blockGlass", '?', new ItemStack(MekanismItems.PartTransmitter, 1, 0) }));
-        CraftingManager.getInstance().getRecipeList().add(new ShapedMekanismRecipe(new ItemStack(DefenseTechBlocks.blockMachine, 1, 4), new Object[] { "!$!", "!#!", "!?!", '#', "circuitAdvanced", '!', "ingotSteel", '?', new ItemStack(MekanismItems.PartTransmitter, 1, 0), '$', new ItemStack(DefenseTechBlocks.blockMachine, 1, 3) }));
-        CraftingManager.getInstance().getRecipeList().add(new ShapedMekanismRecipe(new ItemStack(DefenseTechBlocks.blockMachine, 1, 5), new Object[] { "!$!", "!#!", "!?!", '#', "circuitElite", '!', "ingotGold", '?', new ItemStack(MekanismItems.PartTransmitter, 1, 0), '$', new ItemStack(DefenseTechBlocks.blockMachine, 1, 4) }));
+        CraftingManager.getInstance().getRecipeList().add(new ShapedMekanismRecipe(DefenseUtils.getLauncherScreen(BaseTier.BASIC), new Object[] { "!!!", "!#!", "!?!", '#', "circuitBasic", '!', "blockGlass", '?', new ItemStack(MekanismItems.PartTransmitter, 1, 0) }));
+        CraftingManager.getInstance().getRecipeList().add(new ShapedMekanismRecipe(DefenseUtils.getLauncherScreen(BaseTier.ADVANCED), new Object[] { "!$!", "!#!", "!?!", '#', "circuitAdvanced", '!', "ingotSteel", '?', new ItemStack(MekanismItems.PartTransmitter, 1, 0), '$', DefenseUtils.getLauncherScreen(BaseTier.BASIC) }));
+        CraftingManager.getInstance().getRecipeList().add(new ShapedMekanismRecipe(DefenseUtils.getLauncherScreen(BaseTier.ELITE), new Object[] { "!$!", "!#!", "!?!", '#', "circuitElite", '!', "ingotGold", '?', new ItemStack(MekanismItems.PartTransmitter, 1, 0), '$', DefenseUtils.getLauncherScreen(BaseTier.ADVANCED) }));
         // Missile Launcher Support Frame
-        CraftingManager.getInstance().getRecipeList().add(new ShapedMekanismRecipe(new ItemStack(DefenseTechBlocks.blockMachine, 1, 6), new Object[] { "! !", "!!!", "! !", '!', "ingotBronze" }));
-        CraftingManager.getInstance().getRecipeList().add(new ShapedMekanismRecipe(new ItemStack(DefenseTechBlocks.blockMachine, 1, 7), new Object[] { "! !", "!@!", "! !", '!', "ingotSteel", '@', new ItemStack(DefenseTechBlocks.blockMachine, 1, 6) }));
-        CraftingManager.getInstance().getRecipeList().add(new ShapedMekanismRecipe(new ItemStack(DefenseTechBlocks.blockMachine, 1, 8), new Object[] { "! !", "!@!", "! !", '!', "alloyAdvanced", '@', new ItemStack(DefenseTechBlocks.blockMachine, 1, 7) }));
+        CraftingManager.getInstance().getRecipeList().add(new ShapedMekanismRecipe(DefenseUtils.getLauncherFrame(BaseTier.BASIC), new Object[] { "! !", "!!!", "! !", '!', "ingotBronze" }));
+        CraftingManager.getInstance().getRecipeList().add(new ShapedMekanismRecipe(DefenseUtils.getLauncherFrame(BaseTier.ADVANCED), new Object[] { "! !", "!@!", "! !", '!', "ingotSteel", '@', DefenseUtils.getLauncherFrame(BaseTier.BASIC) }));
+        CraftingManager.getInstance().getRecipeList().add(new ShapedMekanismRecipe(DefenseUtils.getLauncherFrame(BaseTier.ELITE), new Object[] { "! !", "!@!", "! !", '!', "alloyAdvanced", '@', DefenseUtils.getLauncherFrame(BaseTier.ADVANCED) }));
         // Radar Station
-        CraftingManager.getInstance().getRecipeList().add(new ShapedMekanismRecipe(new ItemStack(DefenseTechBlocks.blockMachine, 1, 9), new Object[] { "?@?", " ! ", "!#!", '@', ((ItemEnergized)DefenseTechItems.itemRadarGun).getUnchargedItem(), '!', "alloyAdvanced", '#', "circuitBasic", '?', "ingotGold" }));
+        CraftingManager.getInstance().getRecipeList().add(new ShapedMekanismRecipe(new ItemStack(DefenseTechBlocks.blockMachine, 1, 3), new Object[] { "?@?", " ! ", "!#!", '@', ((ItemEnergized)DefenseTechItems.itemRadarGun).getUnchargedItem(), '!', "alloyAdvanced", '#', "circuitBasic", '?', "ingotGold" }));
         // EMP Tower
-        GameRegistry.addRecipe(new ShapedMekanismRecipe(new ItemStack(DefenseTechBlocks.blockMachine, 1, 10), new Object[] { "?W?", "@!@", "?#?", '?', "alloyAdvanced", '!', "circuitElite", '@', MekanismUtils.getEnergyCube(EnergyCubeTier.BASIC), '#', new ItemStack(MekanismBlocks.BasicBlock, 1, 8), 'W', new ItemStack(MekanismItems.PartTransmitter, 1, 0) }));
+        GameRegistry.addRecipe(new ShapedMekanismRecipe(new ItemStack(DefenseTechBlocks.blockMachine, 1, 4), new Object[] { "?W?", "@!@", "?#?", '?', "alloyAdvanced", '!', "circuitElite", '@', MekanismUtils.getEnergyCube(EnergyCubeTier.BASIC), '#', new ItemStack(MekanismBlocks.BasicBlock, 1, 8), 'W', new ItemStack(MekanismItems.PartTransmitter, 1, 0) }));
         // Cruise Launcher
-        CraftingManager.getInstance().getRecipeList().add(new ShapedMekanismRecipe(new ItemStack(DefenseTechBlocks.blockMachine, 1, 11), new Object[] { "?! ", "@@@", '@', "alloyAdvanced", '!', new ItemStack(DefenseTechBlocks.blockMachine, 1, 2), '?', new ItemStack(DefenseTechBlocks.blockMachine, 1, 8) }));
-        // Missile Coordinator
-        CraftingManager.getInstance().getRecipeList().add(new ShapedMekanismRecipe(new ItemStack(DefenseTechBlocks.blockMachine, 1, 12), new Object[] { "R R", "SCS", "SSS", 'C', "circuitAdvanced", 'S', "alloyAdvanced", 'R', ((ItemEnergized)DefenseTechItems.itemRemoteDetonator).getUnchargedItem() }));
+        CraftingManager.getInstance().getRecipeList().add(new ShapedMekanismRecipe(new ItemStack(DefenseTechBlocks.blockMachine, 1, 5), new Object[] { "?! ", "@@@", '@', "alloyAdvanced", '!', new ItemStack(DefenseTechBlocks.blockMachine, 1, 2), '?', new ItemStack(DefenseTechBlocks.blockMachine, 1, 8) }));
         // Missile module
         CraftingManager.getInstance().getRecipeList().add(new ShapedMekanismRecipe(new ItemStack(DefenseTechItems.itemMissile, 1, Explosive.missileModule.getID()), new Object[] { " @ ", "@#@", "@?@", '@', "ingotSteel", '?', Items.flint_and_steel, '#', "circuitBasic" }));
         // Homing

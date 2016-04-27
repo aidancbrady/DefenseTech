@@ -57,21 +57,24 @@ public class BlastEMP extends Blast
     @Override
     public void doExplode()
     {
-        if (effectBlocks)
+        if(effectBlocks)
         {
-            for (int x = (int) -getRadius(); x < (int) getRadius(); x++)
+            for(int x = (int)-getRadius(); x < (int)getRadius(); x++)
             {
-                for (int y = (int) -getRadius(); y < (int) getRadius(); y++)
+                for(int y = (int)-getRadius(); y < (int)getRadius(); y++)
                 {
-                    for (int z = (int) -getRadius(); z < (int) getRadius(); z++)
+                    for(int z = (int)-getRadius(); z < (int)getRadius(); z++)
                     {
                         double dist = MathHelper.sqrt_double((x * x + y * y + z * z));
 
                         Pos3D searchPosition = position.clone().translate(new Pos3D(x, y, z));
-                        if (dist > getRadius())
+                        
+                        if(dist > getRadius())
+                        {
                             continue;
+                        }
 
-                        if (Math.round(position.xPos + y) == (int)position.yPos)
+                        if(Math.round(position.xPos + y) == (int)position.yPos)
                         {
                             worldObj.spawnParticle("largesmoke", searchPosition.xPos, searchPosition.yPos, searchPosition.zPos, 0, 0, 0);
                         }
@@ -79,9 +82,9 @@ public class BlastEMP extends Blast
                         Block block = searchPosition.getCoord(worldObj.provider.dimensionId).getBlock(worldObj);
                         TileEntity tileEntity = searchPosition.getCoord(worldObj.provider.dimensionId).getTileEntity(worldObj);
 
-                        if (!worldObj.isAirBlock((int)searchPosition.xPos, (int)searchPosition.yPos, (int)searchPosition.zPos))
+                        if(!worldObj.isAirBlock((int)searchPosition.xPos, (int)searchPosition.yPos, (int)searchPosition.zPos))
                         {
-                            if (block instanceof IEMPBlock)
+                            if(block instanceof IEMPBlock)
                             {
                                 ((IEMPBlock)block).onEMP(worldObj, (int)searchPosition.xPos, (int)searchPosition.yPos, (int)searchPosition.zPos, this);
                             }
@@ -100,7 +103,7 @@ public class BlastEMP extends Blast
 	                            }
 	                            else if(MekanismUtils.useRF() && tileEntity instanceof IEnergyHandler)
 	                            {
-	                            	((IEnergyHandler) tileEntity).extractEnergy(ForgeDirection.UNKNOWN, ((IEnergyHandler)tileEntity).getEnergyStored(ForgeDirection.UNKNOWN), false);
+	                            	((IEnergyHandler)tileEntity).extractEnergy(ForgeDirection.UNKNOWN, Integer.MAX_VALUE, false);
 	                            }
                         	} catch(Exception e) {}
                         }
@@ -114,13 +117,13 @@ public class BlastEMP extends Blast
             // Drop all missiles
             List<Entity> entitiesNearby = RadarRegistry.getEntitiesWithinRadius(new Vector2(position), (int) getRadius());
 
-            for (Entity entity : entitiesNearby)
+            for(Entity entity : entitiesNearby)
             {
-                if (entity instanceof IMissile && !entity.isEntityEqual(controller))
+                if(entity instanceof IMissile && !entity.isEntityEqual(controller))
                 {
-                    if (((IMissile) entity).getTicksInAir() > -1)
+                    if(((IMissile)entity).getTicksInAir() > -1)
                     {
-                        ((IMissile) entity).dropMissileAsItem();
+                        ((IMissile)entity).dropMissileAsItem();
                     }
                 }
             }
@@ -129,9 +132,9 @@ public class BlastEMP extends Blast
             AxisAlignedBB bounds = AxisAlignedBB.getBoundingBox(position.xPos - getRadius(), position.yPos - getRadius(), position.zPos - getRadius(), position.xPos + getRadius(), position.yPos + getRadius(), position.zPos + getRadius());
             List<Entity> entities = worldObj.getEntitiesWithinAABB(Entity.class, bounds);
 
-            for (Entity entity : entities)
+            for(Entity entity : entities)
             {
-                if (entity instanceof EntityLivingBase)
+                if(entity instanceof EntityLivingBase)
                 {
                     if(worldObj.isRemote && maxFx > 0)
                     {

@@ -34,7 +34,6 @@ import defense.client.gui.GuiCruiseLauncher;
 import defense.client.gui.GuiEMPTower;
 import defense.client.gui.GuiFrequency;
 import defense.client.gui.GuiLauncherScreen;
-import defense.client.gui.GuiMissileCoordinator;
 import defense.client.gui.GuiRadarStation;
 import defense.client.render.RenderUtils;
 import defense.client.render.block.BlockRenderingHandler;
@@ -58,7 +57,6 @@ import defense.client.render.tile.RenderEmpTower;
 import defense.client.render.tile.RenderLauncherBase;
 import defense.client.render.tile.RenderLauncherFrame;
 import defense.client.render.tile.RenderLauncherScreen;
-import defense.client.render.tile.RenderMissileCoordinator;
 import defense.client.render.tile.RenderRadarStation;
 import defense.common.CommonProxy;
 import defense.common.DefenseTech;
@@ -82,7 +80,6 @@ import defense.common.tile.TileExplosive;
 import defense.common.tile.TileLauncherBase;
 import defense.common.tile.TileLauncherFrame;
 import defense.common.tile.TileLauncherScreen;
-import defense.common.tile.TileMissileCoordinator;
 import defense.common.tile.TileRadarStation;
 
 @SideOnly(Side.CLIENT)
@@ -126,7 +123,6 @@ public class ClientProxy extends CommonProxy
         ClientRegistry.bindTileEntitySpecialRenderer(TileLauncherFrame.class, new RenderLauncherFrame());
         ClientRegistry.bindTileEntitySpecialRenderer(TileRadarStation.class, new RenderRadarStation());
         ClientRegistry.bindTileEntitySpecialRenderer(TileEMPTower.class, new RenderEmpTower());
-        ClientRegistry.bindTileEntitySpecialRenderer(TileMissileCoordinator.class, new RenderMissileCoordinator());
         ClientRegistry.bindTileEntitySpecialRenderer(TileExplosive.class, new RenderBombBlock());
     }
 
@@ -154,10 +150,6 @@ public class ClientProxy extends CommonProxy
         else if (tileEntity instanceof TileEMPTower)
         {
             return new GuiEMPTower((TileEMPTower) tileEntity);
-        }
-        else if (tileEntity instanceof TileMissileCoordinator)
-        {
-            return new GuiMissileCoordinator(entityPlayer.inventory, (TileMissileCoordinator) tileEntity);
         }
 
         return null;

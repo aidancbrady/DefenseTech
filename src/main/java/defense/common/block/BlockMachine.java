@@ -3,6 +3,7 @@ package defense.common.block;
 import java.util.List;
 import java.util.Random;
 
+import mekanism.common.Tier.BaseTier;
 import mekanism.common.base.IBoundingBlock;
 import mekanism.common.tile.TileEntityBasicBlock;
 import mekanism.common.util.MekanismUtils;
@@ -23,7 +24,6 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import defense.api.ITier;
 import defense.client.render.block.BlockRenderingHandler;
-import defense.common.DefenseTech;
 import defense.common.DefenseTechBlocks;
 import defense.common.DefenseTechItems;
 import defense.common.base.IBlockActivate;
@@ -33,7 +33,6 @@ import defense.common.tile.TileEMPTower;
 import defense.common.tile.TileLauncherBase;
 import defense.common.tile.TileLauncherFrame;
 import defense.common.tile.TileLauncherScreen;
-import defense.common.tile.TileMissileCoordinator;
 import defense.common.tile.TileRadarStation;
 
 public class BlockMachine extends BlockBase
@@ -45,8 +44,7 @@ public class BlockMachine extends BlockBase
         LauncherFrame("LauncherFrame", TileLauncherFrame.class, true),
         RadarStation("RadarStation", TileRadarStation.class, false),
         EmpTower("EmpTower", TileEMPTower.class, false),
-        CruiseLauncher("CruiseLauncher", TileCruiseLauncher.class, false),
-        MissileCoordinator("MissileCoordinator", TileMissileCoordinator.class, false);
+        CruiseLauncher("CruiseLauncher", TileCruiseLauncher.class, false);
 
         public String unlocalized;
         public Class<? extends TileEntity> tileEntity;
@@ -333,11 +331,11 @@ public class BlockMachine extends BlockBase
         	if(data.hasTier)
         	{
         		ItemStack tier2 = stack.copy();
-        		((ItemBlockMachine)tier2.getItem()).setTier(tier2, 1);
+        		((ItemBlockMachine)tier2.getItem()).setBaseTier(tier2, BaseTier.ADVANCED);
         		par3List.add(tier2);
         		
         		ItemStack tier3 = stack.copy();
-        		((ItemBlockMachine)tier3.getItem()).setTier(tier3, 2);
+        		((ItemBlockMachine)tier3.getItem()).setBaseTier(tier3, BaseTier.ELITE);
         		par3List.add(tier3);
         	}
         }
@@ -351,7 +349,7 @@ public class BlockMachine extends BlockBase
         
         if(tileEntity instanceof ITier)
         {
-        	((ItemBlockMachine)stack.getItem()).setTier(stack, ((ITier)tileEntity).getTier());
+        	((ItemBlockMachine)stack.getItem()).setBaseTier(stack, BaseTier.values()[((ITier)tileEntity).getTier()]);
         }
         
         return stack;

@@ -1,8 +1,7 @@
 package defense.common.item;
 
-import defense.api.ITier;
-import defense.common.block.BlockMachine;
-import defense.common.block.BlockMachine.MachineData;
+import mekanism.common.Tier.BaseTier;
+import mekanism.common.base.ITierItem;
 import mekanism.common.tile.TileEntityBasicBlock;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
@@ -11,8 +10,11 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
+import defense.api.ITier;
+import defense.common.block.BlockMachine;
+import defense.common.block.BlockMachine.MachineData;
 
-public class ItemBlockMachine extends ItemBlock
+public class ItemBlockMachine extends ItemBlock implements ITierItem
 {
     public ItemBlockMachine(Block block)
     {
@@ -30,12 +32,18 @@ public class ItemBlockMachine extends ItemBlock
     @Override
     public String getUnlocalizedName(ItemStack itemstack)
     {
-    	MachineData type = MachineData.values()[itemstack.getItemDamage()];
+    	MachineData type = MachineData.get(itemstack.getItemDamage());
+    	
+    	if(type == null)
+    	{
+    		return "error";
+    	}
+    	
     	String name = this.getUnlocalizedName() + "." + type.unlocalized;
     	
     	if(type.hasTier)
     	{
-    		name += "." + getTier(itemstack);
+    		name += "." + getBaseTier(itemstack).ordinal();
     	}
     	
     	return name;
@@ -47,24 +55,26 @@ public class ItemBlockMachine extends ItemBlock
         return "machine";
     }
 
-    public void setTier(ItemStack itemStack, int tier)
+    @Override
+	public BaseTier getBaseTier(ItemStack itemstack)
 	{
-		if(itemStack.stackTagCompound == null)
+		if(itemstack.stackTagCompound == null)
 		{
-			itemStack.setTagCompound(new NBTTagCompound());
+			return BaseTier.BASIC;
 		}
 
-		itemStack.stackTagCompound.setInteger("tier", tier);
+		return BaseTier.values()[itemstack.stackTagCompound.getInteger("tier")];
 	}
-	
-	public int getTier(ItemStack itemStack)
+
+	@Override
+	public void setBaseTier(ItemStack itemstack, BaseTier tier)
 	{
-		if(itemStack.stackTagCompound == null)
+		if(itemstack.stackTagCompound == null)
 		{
-			return 0;
+			itemstack.setTagCompound(new NBTTagCompound());
 		}
 
-		return itemStack.stackTagCompound.getInteger("tier");
+		itemstack.stackTagCompound.setInteger("tier", tier.ordinal());
 	}
     
     @Override
@@ -89,7 +99,7 @@ public class ItemBlockMachine extends ItemBlock
         	
         	if(tileEntity instanceof ITier)
         	{
-        		((ITier)tileEntity).setTier(getTier(stack));
+        		((ITier)tileEntity).setTier(getBaseTier(stack).ordinal());
         	}
         	
             return true;

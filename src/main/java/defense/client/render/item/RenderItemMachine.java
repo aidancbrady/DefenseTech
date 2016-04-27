@@ -1,5 +1,6 @@
 package defense.client.render.item;
 
+import mekanism.common.Tier.BaseTier;
 import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.client.renderer.entity.RenderItem;
 import net.minecraft.client.renderer.entity.RenderManager;
@@ -17,7 +18,6 @@ import defense.client.render.tile.RenderEmpTower;
 import defense.client.render.tile.RenderLauncherBase;
 import defense.client.render.tile.RenderLauncherFrame;
 import defense.client.render.tile.RenderLauncherScreen;
-import defense.client.render.tile.RenderMissileCoordinator;
 import defense.client.render.tile.RenderRadarStation;
 import defense.common.block.BlockMachine.MachineData;
 import defense.common.item.ItemBlockMachine;
@@ -55,18 +55,18 @@ public class RenderItemMachine implements IItemRenderer
 
         if (metadata == MachineData.LauncherBase.ordinal())
         {
-            int tier = ((ItemBlockMachine)item.getItem()).getTier(item);
+            BaseTier tier = ((ItemBlockMachine)item.getItem()).getBaseTier(item);
 
             GL11.glRotatef(180f, 0f, 0f, 1f);
             GL11.glScalef(0.4f, 0.4f, 0.4f);
 
-            if (tier == 0)
+            if (tier == BaseTier.BASIC)
             {
                 FMLClientHandler.instance().getClient().renderEngine.bindTexture(RenderLauncherBase.TEXTURE_FILE_0);
                 RenderLauncherBase.modelBase0.render(0.0625F);
                 RenderLauncherBase.modelRail0.render(0.0625F);
             }
-            else if (tier == 1)
+            else if (tier == BaseTier.ADVANCED)
             {
                 FMLClientHandler.instance().getClient().renderEngine.bindTexture(RenderLauncherBase.TEXTURE_FILE_1);
 
@@ -75,7 +75,7 @@ public class RenderItemMachine implements IItemRenderer
                 GL11.glRotatef(180F, 0F, 180F, 1.0F);
                 RenderLauncherBase.modelRail1.render(0.0625F);
             }
-            else if (tier == 2)
+            else if (tier == BaseTier.ELITE)
             {
                 FMLClientHandler.instance().getClient().renderEngine.bindTexture(RenderLauncherBase.TEXTURE_FILE_2);
                 RenderLauncherBase.modelBase2.render(0.0625F);
@@ -86,22 +86,22 @@ public class RenderItemMachine implements IItemRenderer
         }
         else if (metadata == MachineData.LauncherScreen.ordinal())
         {
-        	int tier = ((ItemBlockMachine)item.getItem()).getTier(item);
+        	BaseTier tier = ((ItemBlockMachine)item.getItem()).getBaseTier(item);
             GL11.glTranslatef(0f, 0.9f, 0f);
             GL11.glRotatef(180f, 0f, 0f, 1f);
             GL11.glRotatef(180f, 0f, 180f, 1f);
 
-            if (tier == 0)
+            if (tier == BaseTier.BASIC)
             {
                 FMLClientHandler.instance().getClient().renderEngine.bindTexture(RenderLauncherScreen.TEXTURE_FILE_0);
                 RenderLauncherScreen.model0.render(0.0625F);
             }
-            else if (tier == 1)
+            else if (tier == BaseTier.ADVANCED)
             {
                 FMLClientHandler.instance().getClient().renderEngine.bindTexture(RenderLauncherScreen.TEXTURE_FILE_1);
                 RenderLauncherScreen.model1.render(0.0625F);
             }
-            else if (tier == 2)
+            else if (tier == BaseTier.ELITE)
             {
                 FMLClientHandler.instance().getClient().renderEngine.bindTexture(RenderLauncherScreen.TEXTURE_FILE_2);
                 RenderLauncherScreen.model2.render(0.0625F);
@@ -109,7 +109,7 @@ public class RenderItemMachine implements IItemRenderer
         }
         else if (metadata == MachineData.LauncherFrame.ordinal())
         {
-        	int tier = ((ItemBlockMachine)item.getItem()).getTier(item);
+        	BaseTier tier = ((ItemBlockMachine)item.getItem()).getBaseTier(item);
             GL11.glTranslatef(0f, -0.1f, 0f);
             GL11.glRotatef(180f, 0f, 0f, 1f);
             GL11.glScalef(0.8f, 0.4f, 0.8f);
@@ -148,16 +148,6 @@ public class RenderItemMachine implements IItemRenderer
 
             RenderCruiseLauncher.MODEL0.render(0.0625F);
             RenderCruiseLauncher.MODEL1.render(0.0625F);
-        }
-        else if (metadata == MachineData.MissileCoordinator.ordinal())
-        {
-            GL11.glTranslatef(0f, 1.1f, 0f);
-            GL11.glRotatef(180f, 0f, 0f, 1f);
-            GL11.glRotatef(180f, 0f, 1f, 0f);
-
-            FMLClientHandler.instance().getClient().renderEngine.bindTexture(RenderMissileCoordinator.TEXTURE_FILE);
-
-            RenderMissileCoordinator.MODEL.render(0, 0.0625F);
         }
 
         GL11.glEnable(GL11.GL_CULL_FACE);

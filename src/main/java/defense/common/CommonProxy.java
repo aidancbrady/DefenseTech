@@ -16,7 +16,6 @@ import defense.common.entity.EntityMissile;
 import defense.common.explosive.Explosive;
 import defense.common.explosive.ExplosiveRegistry;
 import defense.common.inventory.container.ContainerCruiseLauncher;
-import defense.common.inventory.container.ContainerMissileCoordinator;
 import defense.common.tile.TileCruiseLauncher;
 import defense.common.tile.TileEMPTower;
 import defense.common.tile.TileExplosive;
@@ -75,10 +74,6 @@ public class CommonProxy implements IGuiHandler
         else if(tileEntity instanceof TileCruiseLauncher)
         {
             return new ContainerCruiseLauncher(player.inventory, (TileCruiseLauncher)tileEntity);
-        }
-        else if(tileEntity instanceof TileMissileCoordinator)
-        {
-            return new ContainerMissileCoordinator(player.inventory, (TileMissileCoordinator)tileEntity);
         }
         else if(tileEntity instanceof TileLauncherScreen || tileEntity instanceof TileRadarStation || tileEntity instanceof TileEMPTower || tileEntity instanceof TileLauncherBase || tileEntity instanceof TileMissileCoordinator)
         {
