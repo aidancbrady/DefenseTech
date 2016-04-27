@@ -29,7 +29,7 @@ public class BlastAntimatter extends Blast
     {
         super.doPreExplode();
         this.worldObj.playSoundEffect(this.position.xPos, this.position.yPos, this.position.zPos, Reference.PREFIX + "antimatter", 7F, (float) (this.worldObj.rand.nextFloat() * 0.1 + 0.9F));
-        this.doDamageEntities(this.getRadius() * 2, Integer.MAX_VALUE);
+        this.doDamageEntities(this.getRadius(), Integer.MAX_VALUE);
     }
 
     @Override
@@ -88,7 +88,7 @@ public class BlastAntimatter extends Blast
     @Override
     public void doPostExplode()
     {
-        doDamageEntities(this.getRadius() * 2, Integer.MAX_VALUE);
+        doDamageEntities(this.getRadius(), Integer.MAX_VALUE);
     }
 
     @Override
