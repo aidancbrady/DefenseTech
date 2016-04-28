@@ -8,7 +8,6 @@ import net.minecraft.world.WorldServer;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.IChunkProvider;
 import net.minecraft.world.gen.ChunkProviderServer;
-import cpw.mods.fml.common.ObfuscationReflectionHelper;
 
 public class BlastRegen extends Blast
 {
@@ -30,7 +29,7 @@ public class BlastRegen extends Blast
                 {
                     WorldServer worldServer = (WorldServer) worldObj;
                     ChunkProviderServer chunkProviderServer = worldServer.theChunkProviderServer;
-                    IChunkProvider chunkProviderGenerate = ((IChunkProvider) ObfuscationReflectionHelper.getPrivateValue(ChunkProviderServer.class, chunkProviderServer, "currentChunkProvider", "d", "field_73246_d"));
+                    IChunkProvider chunkProviderGenerate = chunkProviderServer.currentChunkProvider;
 
                     Chunk newChunk = chunkProviderGenerate.provideChunk(oldChunk.xPosition, oldChunk.zPosition);
 
