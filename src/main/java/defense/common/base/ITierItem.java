@@ -1,4 +1,4 @@
-package mekanism.common.base;
+package defense.common.base;
 
 import mekanism.common.Tier.BaseTier;
 import net.minecraft.item.ItemStack;
