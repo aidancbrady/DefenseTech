@@ -584,6 +584,8 @@ public class EntityMissile extends Entity implements IChunkLoadHandler, IExplosi
             position.translate(delta);
             worldObj.spawnParticle("flame", position.xPos, position.yPos, position.zPos, 0, 0, 0);
             DefenseTech.proxy.spawnParticle("missile_smoke", worldObj, position, 4, 2);
+            position.rotatePitch(this.rotationPitch);
+            position.rotateYaw(this.rotationYaw);
             position.scale(1 - 0.001 * Math.random());
             DefenseTech.proxy.spawnParticle("missile_smoke", worldObj, position, 4, 2);
             position.scale(1 - 0.001 * Math.random());
