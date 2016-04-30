@@ -1,11 +1,10 @@
 package defense.client.model.missile;
 
 import net.minecraft.client.model.ModelRenderer;
-import defense.client.tmt.ModelRendererTurbo;
 import net.minecraft.entity.Entity;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import defense.common.ModelMissileBase;
+import defense.client.tmt.ModelRendererTurbo;
 
 @SideOnly(Side.CLIENT)
 public class ModelIncendiaryMissile extends ModelMissileBase

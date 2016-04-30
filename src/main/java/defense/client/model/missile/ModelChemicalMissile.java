@@ -5,7 +5,6 @@ import net.minecraft.entity.Entity;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import defense.client.tmt.ModelRendererTurbo;
-import defense.common.ModelMissileBase;
 
 @SideOnly(Side.CLIENT)
 public class ModelChemicalMissile extends ModelMissileBase
