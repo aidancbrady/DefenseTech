@@ -320,7 +320,7 @@ public final class DefenseTech
         
         /** Add all Recipes */
         // Rocket Launcher
-        CraftingManager.getInstance().getRecipeList().add(new ShapedMekanismRecipe(((ItemEnergized)DefenseTechItems.itemRocketLauncher).getUnchargedItem(), new Object[] { "SCR", "SB ", 'R', ((ItemEnergized)DefenseTechItems.itemRadarGun).getUnchargedItem(), 'C', new ItemStack(DefenseTechBlocks.blockMachine, 1, MachineData.CruiseLauncher.ordinal() + 6), 'B', Blocks.stone_button, 'S', "ingotSteel" }));
+        CraftingManager.getInstance().getRecipeList().add(new ShapedMekanismRecipe(((ItemEnergized)DefenseTechItems.itemRocketLauncher).getUnchargedItem(), new Object[] { "SCR", "SB ", 'R', ((ItemEnergized)DefenseTechItems.itemRadarGun).getUnchargedItem(), 'C', new ItemStack(DefenseTechBlocks.blockMachine, 1, MachineData.CruiseLauncher.ordinal()), 'B', Blocks.stone_button, 'S', "ingotSteel" }));
         // Radar Gun
         CraftingManager.getInstance().getRecipeList().add(new ShapedMekanismRecipe(((ItemEnergized)DefenseTechItems.itemRadarGun).getUnchargedItem(), new Object[] { "@#!", " $!", "  !", '@', "blockGlass", '!', "ingotSteel", '#', "circuitBasic", '$', Blocks.stone_button }));
         // Remote
