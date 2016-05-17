@@ -77,11 +77,11 @@ public class TileCruiseLauncher extends TileLauncherPrefab implements IBlockActi
     		
 	    	if(packetType == 1)
 	        {
-	            this.setFrequency(dataStream.readInt());
+	            setFrequency(dataStream.readInt());
 	        }
 	    	else if(packetType == 2)
 	        {
-	            this.targetPos = new Pos3D(dataStream.readInt(), dataStream.readInt(), dataStream.readInt());
+	            targetPos = new Pos3D(dataStream.readInt(), dataStream.readInt(), dataStream.readInt());
 	        }
 	    	
 	    	return;

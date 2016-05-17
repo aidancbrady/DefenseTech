@@ -52,8 +52,11 @@ public class TileExplosive extends TileEntity implements IExplosiveContainer, IT
     @Override
     public void handlePacketData(ByteBuf dataStream)
     {
-        explosiveID = dataStream.readInt();
-        worldObj.func_147479_m(xCoord, yCoord, zCoord);
+    	if(worldObj.isRemote)
+    	{
+	        explosiveID = dataStream.readInt();
+	        worldObj.func_147479_m(xCoord, yCoord, zCoord);
+    	}
     }
     
     @Override

@@ -109,7 +109,10 @@ public class TileLauncherBase extends TileEntityContainerBlock implements ILaunc
 	{
     	super.handlePacketData(dataStream);
     	
-    	tier = dataStream.readInt();
+    	if(worldObj.isRemote)
+    	{
+    		tier = dataStream.readInt();
+    	}
 	}
 
 	@Override

@@ -54,11 +54,14 @@ public abstract class TileLauncherPrefab extends TileEntityElectricBlock impleme
 	{
 		super.handlePacketData(dataStream);
 		
-		frequency = dataStream.readInt();
-		
-		if(dataStream.readBoolean())
+		if(worldObj.isRemote)
 		{
-			targetPos = new Pos3D(dataStream.readDouble(), dataStream.readDouble(), dataStream.readDouble());
+			frequency = dataStream.readInt();
+			
+			if(dataStream.readBoolean())
+			{
+				targetPos = new Pos3D(dataStream.readDouble(), dataStream.readDouble(), dataStream.readDouble());
+			}
 		}
 	}
 

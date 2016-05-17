@@ -26,7 +26,10 @@ public class TileLauncherFrame extends TileEntityBasicBlock implements ITier, IB
 	{
 		super.handlePacketData(dataStream);
 		
-		tier = dataStream.readInt();
+		if(worldObj.isRemote)
+		{
+			tier = dataStream.readInt();
+		}
 	}
 
 	@Override

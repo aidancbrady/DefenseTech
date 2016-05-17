@@ -109,31 +109,34 @@ public class TileEMPTower extends TileEntityElectricBlock implements IBoundingBl
     	
     	super.handlePacketData(dataStream);
     	
-    	int prev = empRadius;
-    	
-    	empRadius = dataStream.readInt();
-        empMode = dataStream.readByte();
-        
-        if(dataStream.readBoolean())
-        {
-        	switch (this.empMode)
-            {
-                default:
-                    new BlastEMP(this.worldObj, null, this.xCoord, this.yCoord, this.zCoord, this.empRadius).setEffectBlocks().setEffectEntities().explode();
-                    break;
-                case 1:
-                    new BlastEMP(this.worldObj, null, this.xCoord, this.yCoord, this.zCoord, this.empRadius).setEffectEntities().explode();
-                    break;
-                case 2:
-                    new BlastEMP(this.worldObj, null, this.xCoord, this.yCoord, this.zCoord, this.empRadius).setEffectBlocks().explode();
-                    break;
-            }
-        }
-        
-        if(prev != empRadius)
-        {
-        	updateCapacity();
-        }
+    	if(worldObj.isRemote)
+    	{
+	    	int prev = empRadius;
+	    	
+	    	empRadius = dataStream.readInt();
+	        empMode = dataStream.readByte();
+	        
+	        if(dataStream.readBoolean())
+	        {
+	        	switch (this.empMode)
+	            {
+	                default:
+	                    new BlastEMP(this.worldObj, null, this.xCoord, this.yCoord, this.zCoord, this.empRadius).setEffectBlocks().setEffectEntities().explode();
+	                    break;
+	                case 1:
+	                    new BlastEMP(this.worldObj, null, this.xCoord, this.yCoord, this.zCoord, this.empRadius).setEffectEntities().explode();
+	                    break;
+	                case 2:
+	                    new BlastEMP(this.worldObj, null, this.xCoord, this.yCoord, this.zCoord, this.empRadius).setEffectBlocks().explode();
+	                    break;
+	            }
+	        }
+	        
+	        if(prev != empRadius)
+	        {
+	        	updateCapacity();
+	        }
+    	}
     }
     
     @Override

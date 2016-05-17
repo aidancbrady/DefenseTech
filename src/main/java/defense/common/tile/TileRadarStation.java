@@ -70,8 +70,8 @@ public class TileRadarStation extends TileEntityElectricBlock implements IChunkL
     public void initiate()
     {
     	FrequencyGrid.instance().register(this);
-        this.worldObj.notifyBlocksOfNeighborChange(this.xCoord, this.yCoord, this.zCoord, this.worldObj.getBlock(this.xCoord, this.yCoord, this.zCoord));
-        this.chunkLoaderInit(ForgeChunkManager.requestTicket(DefenseTech.INSTANCE, this.worldObj, Type.NORMAL));
+        worldObj.notifyBlocksOfNeighborChange(xCoord, yCoord, zCoord, worldObj.getBlock(xCoord, yCoord, zCoord));
+        chunkLoaderInit(ForgeChunkManager.requestTicket(DefenseTech.INSTANCE, worldObj, Type.NORMAL));
     }
     
     @Override
@@ -81,15 +81,15 @@ public class TileRadarStation extends TileEntityElectricBlock implements IChunkL
     }
 
     @Override
-    public void chunkLoaderInit(Ticket ticket)
+    public void chunkLoaderInit(Ticket t)
     {
-        if (!this.worldObj.isRemote)
+        if(!worldObj.isRemote)
         {
-            if (this.ticket == null && ticket != null)
+            if(ticket == null && t != null)
             {
-                this.ticket = ticket;
-                Coord4D.get(this).write(this.ticket.getModData());
-                ForgeChunkManager.forceChunk(this.ticket, new ChunkCoordIntPair(this.xCoord >> 4, this.zCoord >> 4));
+                ticket = t;
+                Coord4D.get(this).write(ticket.getModData());
+                ForgeChunkManager.forceChunk(ticket, new ChunkCoordIntPair(xCoord >> 4, zCoord >> 4));
             }
         }
     }
@@ -105,58 +105,58 @@ public class TileRadarStation extends TileEntityElectricBlock implements IChunkL
         	initiated = true;
         }
 
-        if (!this.worldObj.isRemote)
+        if(!worldObj.isRemote)
         {
             //Update client every 2 seconds
-            if (this.ticker % 40 == 0)
+            if(ticker % 40 == 0)
             {
             	Mekanism.packetHandler.sendToReceivers(new TileEntityMessage(Coord4D.get(this), getNetworkedData(new ArrayList())), new Range4D(Coord4D.get(this)));;;
             }
         }
 
         //If we have energy
-        if (getEnergy() >= ENERGY_USAGE)
+        if(getEnergy() >= ENERGY_USAGE)
         {
-            this.rotation += 0.08f;
+            rotation += 0.08f;
 
-            if (this.rotation > 360)
+            if(rotation > 360)
             {
-                this.rotation = 0;
+                rotation = 0;
             }
 
-            if (!this.worldObj.isRemote)
+            if(!worldObj.isRemote)
             {
             	setEnergy(getEnergy() - ENERGY_USAGE);
             }
 
-            int prevDetectedEntities = this.detectedEntities.size();
+            int prevDetectedEntities = detectedEntities.size();
 
             // Do a radar scan
-            this.doScan();
+            doScan();
 
-            if (prevDetectedEntities != this.detectedEntities.size())
+            if(prevDetectedEntities != detectedEntities.size())
             {
-                this.worldObj.notifyBlocksOfNeighborChange(this.xCoord, this.yCoord, this.zCoord, this.getBlockType());
+                worldObj.notifyBlocksOfNeighborChange(xCoord, yCoord, zCoord, getBlockType());
             }
             //Check for incoming and launch anti-missiles if
-            if (this.ticker % 20 == 0 && this.incomingMissiles.size() > 0)
+            if(ticker % 20 == 0 && incomingMissiles.size() > 0)
             {
-                for (IBlockFrequency blockFrequency : FrequencyGrid.instance().get())
+                for(IBlockFrequency blockFrequency : FrequencyGrid.instance().get())
                 {
-                    if (blockFrequency instanceof TileLauncherPrefab)
+                    if(blockFrequency instanceof TileLauncherPrefab)
                     {
                         TileLauncherPrefab launcher = (TileLauncherPrefab) blockFrequency;
 
-                        if (new Pos3D(this).distance(new Pos3D(launcher)) < this.alarmRange && launcher.getFrequency() == this.getFrequency())
+                        if(new Pos3D(this).distance(new Pos3D(launcher)) < alarmRange && launcher.getFrequency() == getFrequency())
                         {
-                            if (launcher instanceof TileLauncherScreen)
+                            if(launcher instanceof TileLauncherScreen)
                             {
                                 double height = launcher.getTarget() != null ? launcher.getTarget().yPos : 0;
-                                launcher.setTarget(new Pos3D(this.incomingMissiles.get(0).posX, height, this.incomingMissiles.get(0).posZ));
+                                launcher.setTarget(new Pos3D(incomingMissiles.get(0).posX, height, incomingMissiles.get(0).posZ));
                             }
                             else
                             {
-                                launcher.setTarget(new Pos3D(this.incomingMissiles.get(0)));
+                                launcher.setTarget(new Pos3D(incomingMissiles.get(0)));
                             }
                         }
                     }
@@ -165,9 +165,9 @@ public class TileRadarStation extends TileEntityElectricBlock implements IChunkL
         }
         else
         {
-            if (detectedEntities.size() > 0)
+            if(detectedEntities.size() > 0)
             {
-                worldObj.notifyBlocksOfNeighborChange(this.xCoord, this.yCoord, this.zCoord, this.getBlockType());
+                worldObj.notifyBlocksOfNeighborChange(xCoord, yCoord, zCoord, getBlockType());
             }
 
             incomingMissiles.clear();
@@ -175,94 +175,94 @@ public class TileRadarStation extends TileEntityElectricBlock implements IChunkL
             detectedTiles.clear();
         }
 
-        if (ticker % 40 == 0)
+        if(ticker % 40 == 0)
         {
-            worldObj.notifyBlocksOfNeighborChange(this.xCoord, this.yCoord, this.zCoord, this.getBlockType());
+            worldObj.notifyBlocksOfNeighborChange(xCoord, yCoord, zCoord, getBlockType());
         }
     }
     
     @Override
     public int getFrequency()
     {
-        return this.frequency;
+        return frequency;
     }
 
     @Override
-    public void setFrequency(int frequency)
+    public void setFrequency(int freq)
     {
-        this.frequency = frequency;
+        frequency = freq;
     }
 
     private void doScan()
     {
-        this.incomingMissiles.clear();
-        this.detectedEntities.clear();
-        this.detectedTiles.clear();
+        incomingMissiles.clear();
+        detectedEntities.clear();
+        detectedTiles.clear();
 
         List<Entity> entities = RadarRegistry.getEntitiesWithinRadius(new Vector2(new Pos3D(this)), MAX_DETECTION_RANGE);
 
-        for (Entity entity : entities)
+        for(Entity entity : entities)
         {
-            if (entity instanceof EntityMissile)
+            if(entity instanceof EntityMissile)
             {
-                if (((EntityMissile) entity).feiXingTick > -1)
+                if(((EntityMissile) entity).feiXingTick > -1)
                 {
-                    if (!this.detectedEntities.contains(entity))
+                    if(!detectedEntities.contains(entity))
                     {
-                        this.detectedEntities.add(entity);
+                        detectedEntities.add(entity);
                     }
 
-                    if (this.isMissileGoingToHit((EntityMissile) entity))
+                    if(isMissileGoingToHit((EntityMissile) entity))
                     {
-                        if (this.incomingMissiles.size() > 0)
+                        if(incomingMissiles.size() > 0)
                         {
                             /** Sort in order of distance */
                             double dist = new Pos3D(this).distance(new Pos3D(entity));
 
-                            for (int i = 0; i < this.incomingMissiles.size(); i++)
+                            for(int i = 0; i < incomingMissiles.size(); i++)
                             {
-                                EntityMissile daoDan = this.incomingMissiles.get(i);
+                                EntityMissile daoDan = incomingMissiles.get(i);
 
-                                if (dist < new Pos3D(this).distance(new Pos3D(daoDan)))
+                                if(dist < new Pos3D(this).distance(new Pos3D(daoDan)))
                                 {
-                                    this.incomingMissiles.add(i, (EntityMissile) entity);
+                                    incomingMissiles.add(i, (EntityMissile) entity);
                                     break;
                                 }
-                                else if (i == this.incomingMissiles.size() - 1)
+                                else if(i == incomingMissiles.size() - 1)
                                 {
-                                    this.incomingMissiles.add((EntityMissile) entity);
+                                    incomingMissiles.add((EntityMissile) entity);
                                     break;
                                 }
                             }
                         }
                         else
                         {
-                            this.incomingMissiles.add((EntityMissile) entity);
+                            incomingMissiles.add((EntityMissile) entity);
                         }
                     }
                 }
             }
             else
             {
-                this.detectedEntities.add(entity);
+                detectedEntities.add(entity);
             }
         }
 
-        List<EntityPlayer> players = this.worldObj.getEntitiesWithinAABB(EntityPlayer.class, AxisAlignedBB.getBoundingBox(this.xCoord - MAX_DETECTION_RANGE, this.yCoord - MAX_DETECTION_RANGE, this.zCoord - MAX_DETECTION_RANGE, this.xCoord + MAX_DETECTION_RANGE, this.yCoord + MAX_DETECTION_RANGE, this.zCoord + MAX_DETECTION_RANGE));
+        List<EntityPlayer> players = worldObj.getEntitiesWithinAABB(EntityPlayer.class, AxisAlignedBB.getBoundingBox(xCoord - MAX_DETECTION_RANGE, yCoord - MAX_DETECTION_RANGE, zCoord - MAX_DETECTION_RANGE, xCoord + MAX_DETECTION_RANGE, yCoord + MAX_DETECTION_RANGE, zCoord + MAX_DETECTION_RANGE));
 
-        for (EntityPlayer player : players)
+        for(EntityPlayer player : players)
         {
-            if (player != null)
+            if(player != null)
             {
                 boolean youHuoLuan = false;
 
-                for (int i = 0; i < player.inventory.getSizeInventory(); i++)
+                for(int i = 0; i < player.inventory.getSizeInventory(); i++)
                 {
                     ItemStack itemStack = player.inventory.getStackInSlot(i);
 
-                    if (itemStack != null)
+                    if(itemStack != null)
                     {
-                        if (itemStack.getItem() instanceof IItemFrequency)
+                        if(itemStack.getItem() instanceof IItemFrequency)
                         {
                             youHuoLuan = true;
                             break;
@@ -270,34 +270,34 @@ public class TileRadarStation extends TileEntityElectricBlock implements IChunkL
                     }
                 }
 
-                if (!youHuoLuan)
+                if(!youHuoLuan)
                 {
-                    this.detectedEntities.add(player);
+                    detectedEntities.add(player);
                 }
             }
         }
 
-        for (TileEntity jiQi : RadarRegistry.getTileEntitiesInArea(new Vector2(this.xCoord - TileRadarStation.MAX_DETECTION_RANGE, this.zCoord - TileRadarStation.MAX_DETECTION_RANGE), new Vector2(this.xCoord + TileRadarStation.MAX_DETECTION_RANGE, this.zCoord + TileRadarStation.MAX_DETECTION_RANGE)))
+        for(TileEntity jiQi : RadarRegistry.getTileEntitiesInArea(new Vector2(xCoord - TileRadarStation.MAX_DETECTION_RANGE, zCoord - TileRadarStation.MAX_DETECTION_RANGE), new Vector2(xCoord + TileRadarStation.MAX_DETECTION_RANGE, zCoord + TileRadarStation.MAX_DETECTION_RANGE)))
         {
-            if (jiQi instanceof TileRadarStation)
+            if(jiQi instanceof TileRadarStation)
             {
-                if (((TileRadarStation) jiQi).getEnergy() > 0)
+                if(((TileRadarStation) jiQi).getEnergy() > 0)
                 {
-                    this.detectedTiles.add(jiQi);
+                    detectedTiles.add(jiQi);
                 }
             }
             else
             {
-                if (this.detectedTiles instanceof IRadarDetectable)
+                if(detectedTiles instanceof IRadarDetectable)
                 {
-                    if (((IRadarDetectable) this.detectedTiles).canDetect(this))
+                    if(((IRadarDetectable) detectedTiles).canDetect(this))
                     {
-                        this.detectedTiles.add(jiQi);
+                        detectedTiles.add(jiQi);
                     }
                 }
                 else
                 {
-                    this.detectedTiles.add(jiQi);
+                    detectedTiles.add(jiQi);
                 }
             }
         }
@@ -309,11 +309,11 @@ public class TileRadarStation extends TileEntityElectricBlock implements IChunkL
      * @return true if it will */
     public boolean isMissileGoingToHit(EntityMissile missile)
     {
-        if (missile == null || missile.targetVector == null)
+        if(missile == null || missile.targetVector == null)
         {
             return false;
         }
-        return (Vector2.distance(new Vector2(new Pos3D(missile)), new Vector2(this.xCoord, this.zCoord)) < this.alarmRange && Vector2.distance(new Vector2(missile.targetVector), new Vector2(this.xCoord, this.zCoord)) < this.safetyRange);
+        return (Vector2.distance(new Vector2(new Pos3D(missile)), new Vector2(xCoord, zCoord)) < alarmRange && Vector2.distance(new Vector2(missile.targetVector), new Vector2(xCoord, zCoord)) < safetyRange);
     }
     
     @Override
@@ -341,9 +341,12 @@ public class TileRadarStation extends TileEntityElectricBlock implements IChunkL
     	
     	super.handlePacketData(dataStream);
     	
-		this.alarmRange = dataStream.readInt();
-		this.safetyRange = dataStream.readInt();
-		this.frequency = dataStream.readInt();
+    	if(worldObj.isRemote)
+    	{
+			alarmRange = dataStream.readInt();
+			safetyRange = dataStream.readInt();
+			frequency = dataStream.readInt();
+    	}
     }
     
     @Override
@@ -367,31 +370,31 @@ public class TileRadarStation extends TileEntityElectricBlock implements IChunkL
     @Override
     public boolean isPoweringTo(ForgeDirection side)
     {
-        if (incomingMissiles.size() > 0)
+        if(incomingMissiles.size() > 0)
         {
-            if (this.emitAll)
+            if(emitAll)
             {
                 return true;
             }
 
-            for (EntityMissile incomingMissile : this.incomingMissiles)
+            for(EntityMissile incomingMissile : incomingMissiles)
             {
                 Vector2 position = new Vector2(new Pos3D(incomingMissile));
                 ForgeDirection missileTravelDirection = ForgeDirection.UNKNOWN;
                 double closest = -1;
 
-                for (int i = 2; i < 6; i++)
+                for(int i = 2; i < 6; i++)
                 {
-                    double dist = Vector2.distance(position, new Vector2(this.xCoord + ForgeDirection.getOrientation(i).offsetX, this.zCoord + ForgeDirection.getOrientation(i).offsetZ));
+                    double dist = Vector2.distance(position, new Vector2(xCoord + ForgeDirection.getOrientation(i).offsetX, zCoord + ForgeDirection.getOrientation(i).offsetZ));
 
-                    if (dist < closest || closest < 0)
+                    if(dist < closest || closest < 0)
                     {
                         missileTravelDirection = ForgeDirection.getOrientation(i);
                         closest = dist;
                     }
                 }
 
-                if (missileTravelDirection.getOpposite() == side)
+                if(missileTravelDirection.getOpposite() == side)
                 {
                     return true;
                 }
@@ -404,7 +407,7 @@ public class TileRadarStation extends TileEntityElectricBlock implements IChunkL
     @Override
     public boolean isIndirectlyPoweringTo(ForgeDirection side)
     {
-        return this.isPoweringTo(side);
+        return isPoweringTo(side);
     }
 
     /** Reads a tile entity from NBT. */
@@ -412,10 +415,10 @@ public class TileRadarStation extends TileEntityElectricBlock implements IChunkL
     public void readFromNBT(NBTTagCompound nbt)
     {
         super.readFromNBT(nbt);
-        this.safetyRange = nbt.getInteger("safetyBanJing");
-        this.alarmRange = nbt.getInteger("alarmBanJing");
-        this.emitAll = nbt.getBoolean("emitAll");
-        this.frequency = nbt.getInteger("frequency");
+        safetyRange = nbt.getInteger("safetyBanJing");
+        alarmRange = nbt.getInteger("alarmBanJing");
+        emitAll = nbt.getBoolean("emitAll");
+        frequency = nbt.getInteger("frequency");
     }
 
     /** Writes a tile entity to NBT. */
@@ -423,30 +426,30 @@ public class TileRadarStation extends TileEntityElectricBlock implements IChunkL
     public void writeToNBT(NBTTagCompound nbt)
     {
         super.writeToNBT(nbt);
-        nbt.setInteger("safetyBanJing", this.safetyRange);
-        nbt.setInteger("alarmBanJing", this.alarmRange);
-        nbt.setBoolean("emitAll", this.emitAll);
+        nbt.setInteger("safetyBanJing", safetyRange);
+        nbt.setInteger("alarmBanJing", alarmRange);
+        nbt.setBoolean("emitAll", emitAll);
         nbt.setInteger("frequency", frequency);
     }
 
     @Override
     public boolean onActivated(EntityPlayer entityPlayer)
     {
-        if (entityPlayer.inventory.getCurrentItem() != null)
+        if(entityPlayer.inventory.getCurrentItem() != null)
         {
-            if (MekanismUtils.hasUsableWrench(entityPlayer, xCoord, yCoord, zCoord))
+            if(MekanismUtils.hasUsableWrench(entityPlayer, xCoord, yCoord, zCoord))
             {
-                if (!this.worldObj.isRemote)
+                if(!worldObj.isRemote)
                 {
-                    this.emitAll = !this.emitAll;
-                    entityPlayer.addChatMessage(new ChatComponentText(LangUtils.localize("message.radar.redstone") + " " + this.emitAll));
+                    emitAll = !emitAll;
+                    entityPlayer.addChatMessage(new ChatComponentText(LangUtils.localize("message.radar.redstone") + " " + emitAll));
                 }
 
                 return true;
             }
         }
 
-        entityPlayer.openGui(DefenseTech.INSTANCE, 0, this.worldObj, this.xCoord, this.yCoord, this.zCoord);
+        entityPlayer.openGui(DefenseTech.INSTANCE, 0, worldObj, xCoord, yCoord, zCoord);
         return true;
     }
 
@@ -459,7 +462,7 @@ public class TileRadarStation extends TileEntityElectricBlock implements IChunkL
     @Override
     public Object[] invoke(int method, Object[] arguments) throws Exception
     {
-        if (getEnergy() < ENERGY_USAGE)
+        if(getEnergy() < ENERGY_USAGE)
         {
             throw new Exception("Radar has insufficient electricity!");
         }
@@ -470,9 +473,9 @@ public class TileRadarStation extends TileEntityElectricBlock implements IChunkL
         switch (method)
         {
             case 0:
-                List<Entity> entities = RadarRegistry.getEntitiesWithinRadius(new Vector2(new Pos3D(this)), this.alarmRange);
+                List<Entity> entities = RadarRegistry.getEntitiesWithinRadius(new Vector2(new Pos3D(this)), alarmRange);
 
-                for (Entity entity : entities)
+                for(Entity entity : entities)
                 {
                     returnArray.put("x_" + count, entity.posX);
                     returnArray.put("y_" + count, entity.posY);
@@ -482,7 +485,7 @@ public class TileRadarStation extends TileEntityElectricBlock implements IChunkL
 
                 return new Object[] { returnArray };
             case 1:
-                for (TileEntity jiQi : RadarRegistry.getTileEntitiesInArea(new Vector2(this.xCoord - TileRadarStation.MAX_DETECTION_RANGE, this.zCoord - TileRadarStation.MAX_DETECTION_RANGE), new Vector2(this.xCoord + TileRadarStation.MAX_DETECTION_RANGE, this.zCoord + TileRadarStation.MAX_DETECTION_RANGE)))
+                for(TileEntity jiQi : RadarRegistry.getTileEntitiesInArea(new Vector2(xCoord - TileRadarStation.MAX_DETECTION_RANGE, zCoord - TileRadarStation.MAX_DETECTION_RANGE), new Vector2(xCoord + TileRadarStation.MAX_DETECTION_RANGE, zCoord + TileRadarStation.MAX_DETECTION_RANGE)))
                 {
                     returnArray.put("x_" + count, (double) jiQi.xCoord);
                     returnArray.put("y_" + count, (double) jiQi.yCoord);
@@ -499,8 +502,9 @@ public class TileRadarStation extends TileEntityElectricBlock implements IChunkL
     public void invalidate()
     {
     	FrequencyGrid.instance().unregister(this);
-        ForgeChunkManager.releaseTicket(this.ticket);
+        ForgeChunkManager.releaseTicket(ticket);
         RadarRegistry.unregister(this);
+        
         super.invalidate();
     }
 }
