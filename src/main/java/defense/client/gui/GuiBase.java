@@ -25,10 +25,10 @@ public abstract class GuiBase extends GuiContainer
         super(new ContainerNull());
     }
 
-    public GuiBase(TileEntityContainerBlock tileEntity)
+    public GuiBase(TileEntityContainerBlock tile)
     {
-        super(new ContainerNull(tileEntity));
-        this.tileEntity = tileEntity;
+        super(new ContainerNull(tile));
+        tileEntity = tile;
     }
 
     @Override
@@ -37,9 +37,8 @@ public abstract class GuiBase extends GuiContainer
         FMLClientHandler.instance().getClient().renderEngine.bindTexture(TEXTURE);
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 
-        this.containerWidth = (this.width - this.xSize) / 2;
-        this.containerHeight = (this.height - this.ySize) / 2;
-        this.drawTexturedModalRect(containerWidth, containerHeight, 0, 0, this.xSize, this.ySize);
+        containerWidth = (width - xSize) / 2;
+        containerHeight = (height - ySize) / 2;
+        drawTexturedModalRect(containerWidth, containerHeight, 0, 0, xSize, ySize);
     }
-
 }

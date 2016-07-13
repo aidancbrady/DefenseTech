@@ -1,6 +1,7 @@
 package defense.common.item;
 
 import mekanism.common.Tier.BaseTier;
+import mekanism.common.base.ITierItem;
 import mekanism.common.tile.TileEntityBasicBlock;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
@@ -10,7 +11,6 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import defense.api.ITier;
-import defense.common.base.ITierItem;
 import defense.common.block.BlockMachine;
 import defense.common.block.BlockMachine.MachineData;
 
@@ -39,7 +39,7 @@ public class ItemBlockMachine extends ItemBlock implements ITierItem
     		return "error";
     	}
     	
-    	String name = this.getUnlocalizedName() + "." + type.unlocalized;
+    	String name = getUnlocalizedName() + "." + type.unlocalized;
     	
     	if(type.hasTier)
     	{

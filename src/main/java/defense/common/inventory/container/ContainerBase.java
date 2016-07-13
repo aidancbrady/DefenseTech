@@ -22,19 +22,17 @@ public class ContainerBase extends Container
 
     public void addPlayerInventory(EntityPlayer player)
     {
-
-        for (int y = 0; y < 3; y++)
+        for(int y = 0; y < 3; y++)
         {
-            for (int x = 0; x < 9; x++)
+            for(int x = 0; x < 9; x++)
             {
-                this.addSlotToContainer(new Slot(player.inventory, x + y * 9 + 9, this.xInventoryDisplacement + x * 18, this.yInventoryDisplacement + y * 18));
+                addSlotToContainer(new Slot(player.inventory, x + y * 9 + 9, this.xInventoryDisplacement + x * 18, this.yInventoryDisplacement + y * 18));
             }
-
         }
 
-        for (int x = 0; x < 9; x++)
+        for(int x = 0; x < 9; x++)
         {
-            this.addSlotToContainer(new Slot(player.inventory, x, this.xInventoryDisplacement + x * 18, this.yHotBarDisplacement));
+            addSlotToContainer(new Slot(player.inventory, x, this.xInventoryDisplacement + x * 18, this.yHotBarDisplacement));
         }
     }
 
@@ -85,21 +83,20 @@ public class ContainerBase extends Container
                     }
                 }
             }
-            else if (!this.mergeItemStack(itemStack, this.slotCount, 36 + this.slotCount, false))
+            else if(!mergeItemStack(itemStack, this.slotCount, 36 + this.slotCount, false))
             {
                 return null;
             }
 
-            if (itemStack.stackSize == 0)
+            if(itemStack.stackSize == 0)
             {
                 var3.putStack((ItemStack) null);
             }
-            else
-            {
+            else {
                 var3.onSlotChanged();
             }
 
-            if (itemStack.stackSize == var2.stackSize)
+            if(itemStack.stackSize == var2.stackSize)
             {
                 return null;
             }
@@ -113,6 +110,6 @@ public class ContainerBase extends Container
     @Override
     public boolean canInteractWith(EntityPlayer entityplayer)
     {
-        return this.inventory.isUseableByPlayer(entityplayer);
+        return inventory.isUseableByPlayer(entityplayer);
     }
 }

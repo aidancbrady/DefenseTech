@@ -131,25 +131,25 @@ public class ClientProxy extends CommonProxy
     {
         TileEntity tileEntity = world.getTileEntity(x, y, z);
 
-        if (entityPlayer.inventory.getCurrentItem() != null && entityPlayer.inventory.getCurrentItem().getItem() instanceof IItemFrequency)
+        if(entityPlayer.inventory.getCurrentItem() != null && entityPlayer.inventory.getCurrentItem().getItem() instanceof IItemFrequency)
         {
             return new GuiFrequency(entityPlayer, entityPlayer.inventory.getCurrentItem());
         }
-        else if (tileEntity instanceof TileCruiseLauncher)
+        else if(tileEntity instanceof TileCruiseLauncher)
         {
-            return new GuiCruiseLauncher(entityPlayer.inventory, (TileCruiseLauncher) tileEntity);
+            return new GuiCruiseLauncher(entityPlayer.inventory, (TileCruiseLauncher)tileEntity);
         }
-        else if (tileEntity instanceof TileLauncherScreen)
+        else if(tileEntity instanceof TileLauncherScreen)
         {
-            return new GuiLauncherScreen(((TileLauncherScreen) tileEntity));
+            return new GuiLauncherScreen(((TileLauncherScreen)tileEntity));
         }
-        else if (tileEntity instanceof TileRadarStation)
+        else if(tileEntity instanceof TileRadarStation)
         {
-            return new GuiRadarStation(((TileRadarStation) tileEntity));
+            return new GuiRadarStation(((TileRadarStation)tileEntity));
         }
-        else if (tileEntity instanceof TileEMPTower)
+        else if(tileEntity instanceof TileEMPTower)
         {
-            return new GuiEMPTower((TileEMPTower) tileEntity);
+            return new GuiEMPTower((TileEMPTower)tileEntity);
         }
 
         return null;

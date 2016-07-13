@@ -32,7 +32,7 @@ public class TileLauncherScreen extends TileLauncherPrefab implements IBlockActi
     // screen is connected with
     public TileLauncherBase laucherBase = null;
 
-    public short gaoDu = 3;
+    public short launchHeight = 3;
 
     private final Set<EntityPlayer> playersUsing = new HashSet<EntityPlayer>();
 
@@ -59,14 +59,13 @@ public class TileLauncherScreen extends TileLauncherPrefab implements IBlockActi
                 {
                     if(tileEntity instanceof TileLauncherBase)
                     {
-                        laucherBase = (TileLauncherBase) tileEntity;
+                        laucherBase = (TileLauncherBase)tileEntity;
                         setFacing((short)side.getOpposite().ordinal());
                     }
                 }
             }
         }
-        else
-        {
+        else {
             if(laucherBase.isInvalid())
             {
                 laucherBase = null;
@@ -120,7 +119,7 @@ public class TileLauncherScreen extends TileLauncherPrefab implements IBlockActi
     		}
     		else if(packetType == 3)
     		{
-    			gaoDu = (short) Math.max(Math.min(dataStream.readShort(), Short.MAX_VALUE), 3);
+    			launchHeight = (short) Math.max(Math.min(dataStream.readShort(), Short.MAX_VALUE), 3);
     		}
     		
     		return;
@@ -131,7 +130,7 @@ public class TileLauncherScreen extends TileLauncherPrefab implements IBlockActi
 		if(worldObj.isRemote)
 		{
 	        tier = dataStream.readInt();
-	        gaoDu = dataStream.readShort();
+	        launchHeight = dataStream.readShort();
 		}
 	}
 
@@ -141,7 +140,7 @@ public class TileLauncherScreen extends TileLauncherPrefab implements IBlockActi
 		super.getNetworkedData(data);
 		
 		data.add(tier);
-		data.add(gaoDu);
+		data.add(launchHeight);
 		
 		return data;
 	}
@@ -169,6 +168,7 @@ public class TileLauncherScreen extends TileLauncherPrefab implements IBlockActi
                 return laucherBase.isInRange(targetPos);
             }
         }
+        
         return false;
     }
 
@@ -179,7 +179,7 @@ public class TileLauncherScreen extends TileLauncherPrefab implements IBlockActi
         if(canLaunch())
         {
             setEnergy(getEnergy()-getLaunchCost());
-            laucherBase.launchMissile(targetPos.clone(), gaoDu);
+            laucherBase.launchMissile(targetPos.clone(), launchHeight);
         }
     }
 
@@ -231,7 +231,7 @@ public class TileLauncherScreen extends TileLauncherPrefab implements IBlockActi
         super.readFromNBT(par1NBTTagCompound);
 
         tier = par1NBTTagCompound.getInteger("tier");
-        gaoDu = par1NBTTagCompound.getShort("gaoDu");
+        launchHeight = par1NBTTagCompound.getShort("launchHeight");
     }
 
     /** Writes a tile entity to NBT. */
@@ -241,7 +241,7 @@ public class TileLauncherScreen extends TileLauncherPrefab implements IBlockActi
         super.writeToNBT(par1NBTTagCompound);
 
         par1NBTTagCompound.setInteger("tier", tier);
-        par1NBTTagCompound.setShort("gaoDu", gaoDu);
+        par1NBTTagCompound.setShort("launchHeight", launchHeight);
     }
     
     @Override
