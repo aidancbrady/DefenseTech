@@ -50,16 +50,16 @@ public class BlockMachine extends BlockBase
         public Class<? extends TileEntity> tileEntity;
         public boolean hasTier;
 
-        MachineData(String s, Class<? extends TileEntity> tileEntity, boolean tier)
+        MachineData(String s, Class<? extends TileEntity> tile, boolean tier)
         {
-        	this.unlocalized = s;
-            this.tileEntity = tileEntity;
-            this.hasTier = tier;
+        	unlocalized = s;
+            tileEntity = tile;
+            hasTier = tier;
         }
 
         public static MachineData get(int id)
         {
-            if (id < MachineData.values().length && id >= 0)
+            if(id < MachineData.values().length && id >= 0)
             {
                 return MachineData.values()[id];
             }
@@ -73,8 +73,6 @@ public class BlockMachine extends BlockBase
         super("machine", Material.iron);
     }
 
-    /** Can this block provide power. Only wire currently seems to have this change based on its
-     * state. */
     @Override
     public boolean canProvidePower()
     {
@@ -95,7 +93,6 @@ public class BlockMachine extends BlockBase
 		}
 	}
 
-    /** Called when the block is placed in the world. */
     @Override
     public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase entityliving, ItemStack itemStack)
     {
@@ -140,32 +137,29 @@ public class BlockMachine extends BlockBase
 		}
     }
 
-    /** Checks if the machine can be placed at the location */
     public static boolean canBePlacedAt(World world, int x, int y, int z, int m, int side)
     {
         ForgeDirection d = MekanismUtils.getRight(side);
 
-        if (m == 0)
+        if(m == MachineData.LauncherBase.ordinal())
         {
-            //Launcher Pad multi block placement check
-            for (int yp = 0; yp <= 2; yp++)
+            for(int yp = 0; yp <= 2; yp++)
             {
             	Block b = world.getBlock(x + d.offsetX, y + yp, z + d.offsetZ);
             	
-                if (!b.isReplaceable(world, x + d.offsetX, y + yp, z + d.offsetZ))
+                if(!b.isReplaceable(world, x + d.offsetX, y + yp, z + d.offsetZ))
                     return false;
-                if (!b.isReplaceable(world, x - d.offsetX, y + yp, z - d.offsetZ))
+                if(!b.isReplaceable(world, x - d.offsetX, y + yp, z - d.offsetZ))
                     return false;
             }
             
             return world.getBlock(x, y, z).isReplaceable(world, x, y, z);
         }
-        else if (m == 2)
+        else if(m == MachineData.LauncherFrame.ordinal())
         {
-            // Launcher Frame
             return world.getBlock(x, y - 1, z).getMaterial().isSolid() && world.isAirBlock(x, y, z) && world.isAirBlock(x, y + 1, z) && world.isAirBlock(x, y + 2, z);
         }
-        else if (m == 4)
+        else if(m == MachineData.EmpTower.ordinal())
         {
             return world.isAirBlock(x, y, z) && world.isAirBlock(x, y + 1, z);
         }
@@ -201,17 +195,16 @@ public class BlockMachine extends BlockBase
 		}
     }
 
-    /** Called when the block is right clicked by the player */
     @Override
     public boolean onMachineActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ)
     {
-        if (player.inventory.getCurrentItem() != null)
+        if(player.inventory.getCurrentItem() != null)
         {
-            if (player.inventory.getCurrentItem().getItem() == DefenseTechItems.itemLaserDesignator)
+            if(player.inventory.getCurrentItem().getItem() == DefenseTechItems.itemLaserDesignator)
             {
                 return false;
             }
-            else if (player.inventory.getCurrentItem().getItem() == DefenseTechItems.itemRadarGun)
+            else if(player.inventory.getCurrentItem().getItem() == DefenseTechItems.itemRadarGun)
             {
                 return false;
             }
@@ -219,11 +212,11 @@ public class BlockMachine extends BlockBase
 
         TileEntity tileEntity = world.getTileEntity(x, y, z);
 
-        if (tileEntity != null)
+        if(tileEntity != null)
         {
-            if (tileEntity instanceof IBlockActivate)
+            if(tileEntity instanceof IBlockActivate)
             {
-                return ((IBlockActivate) tileEntity).onActivated(player);
+                return ((IBlockActivate)tileEntity).onActivated(player);
             }
         }
 
@@ -280,18 +273,11 @@ public class BlockMachine extends BlockBase
     @Override
     public TileEntity createTileEntity(World world, int metadata)
     {
-        if (MachineData.get(metadata) != null)
+        if(MachineData.get(metadata) != null)
         {
-            try
-            {
+            try {
                 return MachineData.get(metadata).tileEntity.newInstance();
-            }
-            catch (InstantiationException e)
-            {
-                e.printStackTrace();
-            }
-            catch (IllegalAccessException e)
-            {
+            } catch(Exception e) {
                 e.printStackTrace();
             }
         }
@@ -299,14 +285,12 @@ public class BlockMachine extends BlockBase
         return null;
     }
 
-    /** Returns the quantity of items to drop on block destruction. */
     @Override
     public int quantityDropped(Random par1Random)
     {
         return 0;
     }
 
-    /** The type of render function that is called for this block */
     @SideOnly(Side.CLIENT)
     @Override
     public int getRenderType()

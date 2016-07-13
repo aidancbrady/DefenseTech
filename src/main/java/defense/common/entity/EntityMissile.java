@@ -600,7 +600,9 @@ public class EntityMissile extends Entity implements IChunkLoadHandler, IExplosi
     public AxisAlignedBB getCollisionBox(Entity entity)
     {
         if(ignoreEntity.contains(entity))
+        {
             return null;
+        }
 
         // Make sure the entity is not an item
         if(!(entity instanceof EntityItem) && entity != riddenByEntity && protectionTime <= 0)

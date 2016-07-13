@@ -32,8 +32,8 @@ public class Vector2 implements Cloneable
     
     public Vector2(Vector2 vec)
     {
-        this.x = vec.x();
-        this.y = vec.y();
+        x = vec.x();
+        y = vec.y();
     }
     
     public Vector2(ByteArrayDataInput data)
@@ -48,12 +48,12 @@ public class Vector2 implements Cloneable
 
     public double x()
     {
-        return this.x;
+        return x;
     }
 
     public double y()
     {
-        return this.y;
+        return y;
     }
 
     /** Returns the integer floor value.
@@ -124,22 +124,25 @@ public class Vector2 implements Cloneable
 
     public Vector2 add(Vector2 par1)
     {
-        this.x += par1.x;
-        this.y += par1.y;
+        x += par1.x;
+        y += par1.y;
+        
         return this;
     }
 
     public Vector2 add(double par1)
     {
-        this.x += par1;
-        this.y += par1;
+        x += par1;
+        y += par1;
+        
         return this;
     }
 
     public Vector2 subtract(Vector2 par1)
     {
-        this.x -= par1.x;
-        this.y -= par1.y;
+        x -= par1.x;
+        y -= par1.y;
+        
         return this;
     }
 
@@ -156,25 +159,19 @@ public class Vector2 implements Cloneable
         return this;
     }
 
-    @Deprecated
-    public Vector2 multiply(double amount)
-    {
-        return this.scale(amount);
-    }
-
     public Vector2 round()
     {
-        return new Vector2(Math.round(this.x), Math.round(this.y));
+        return new Vector2(Math.round(x), Math.round(y));
     }
 
     public Vector2 ceil()
     {
-        return new Vector2(Math.ceil(this.x), Math.ceil(this.y));
+        return new Vector2(Math.ceil(x), Math.ceil(y));
     }
 
     public Vector2 floor()
     {
-        return new Vector2(Math.floor(this.x), Math.floor(this.y));
+        return new Vector2(Math.floor(x), Math.floor(y));
     }
 
     @Override
@@ -182,16 +179,16 @@ public class Vector2 implements Cloneable
     {
         long x = Double.doubleToLongBits(this.x);
         long y = Double.doubleToLongBits(this.y);
-        return 31 * (int) (x ^ (x >>> 32)) + (int) (y ^ (y >>> 32));
+        return 31 * (int) (x ^ (x >>> 32)) + (int)(y ^ (y >>> 32));
     }
 
     @Override
     public boolean equals(Object o)
     {
-        if (o instanceof Vector2)
+        if(o instanceof Vector2)
         {
             Vector2 vector = (Vector2) o;
-            return this.x == vector.x && this.y == vector.y;
+            return x == vector.x && y == vector.y;
         }
 
         return false;
@@ -200,6 +197,6 @@ public class Vector2 implements Cloneable
     @Override
     public String toString()
     {
-        return "Vector2 [" + this.x + "," + this.y + "]";
+        return "Vector2 [" + x + "," + y + "]";
     }
 }

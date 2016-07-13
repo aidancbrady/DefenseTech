@@ -33,20 +33,20 @@ public class TextureTracker extends TextureAtlasSprite
 
         double angel = 0;
 
-        if (world != null)
+        if(world != null)
         {
             double xDifference = 0;
             double zDifference = 0;
 
             ItemStack itemStack = player.getCurrentEquippedItem();
 
-            if (itemStack != null)
+            if(itemStack != null)
             {
-                if (itemStack.getItem() instanceof IItemTracker)
+                if(itemStack.getItem() instanceof IItemTracker)
                 {
                     Entity trackingEntity = ((IItemTracker) itemStack.getItem()).getTrackingEntity(FMLClientHandler.instance().getClient().theWorld, itemStack);
 
-                    if (trackingEntity != null)
+                    if(trackingEntity != null)
                     {
                         xDifference = trackingEntity.posX - player.posX;
                         zDifference = trackingEntity.posZ - player.posZ;
@@ -60,41 +60,35 @@ public class TextureTracker extends TextureAtlasSprite
 
         double d6;
 
-        for (d6 = angel - this.currentAngle; d6 < -Math.PI; d6 += (Math.PI * 2D))
-        {
-            ;
-        }
+        for(d6 = angel - currentAngle; d6 < -Math.PI; d6 += (Math.PI * 2D)) {}
 
-        while (d6 >= Math.PI)
+        while(d6 >= Math.PI)
         {
             d6 -= (Math.PI * 2D);
         }
 
-        if (d6 < -1.0D)
+        if(d6 < -1.0D)
         {
             d6 = -1.0D;
         }
 
-        if (d6 > 1.0D)
+        if(d6 > 1.0D)
         {
             d6 = 1.0D;
         }
 
-        this.angleDelta += d6 * 0.1D;
-        this.angleDelta *= 0.8D;
-        this.currentAngle += this.angleDelta;
+        angleDelta += d6 * 0.1D;
+        angleDelta *= 0.8D;
+        currentAngle += angleDelta;
 
         int i;
 
-        for (i = (int) ((this.currentAngle / (Math.PI * 2D) + 1.0D) * this.framesTextureData.size()) % this.framesTextureData.size(); i < 0; i = (i + this.framesTextureData.size()) % this.framesTextureData.size())
-        {
-            ;
-        }
+        for(i = (int)((currentAngle / (Math.PI * 2D) + 1.0D) * framesTextureData.size()) % framesTextureData.size(); i < 0; i = (i + framesTextureData.size()) % framesTextureData.size()) {}
 
-        if (i != this.frameCounter)
+        if(i != frameCounter)
         {
-            this.frameCounter = i;
-            TextureUtil.uploadTextureMipmap((int[][]) this.framesTextureData.get(this.frameCounter), this.width, this.height, this.originX, this.originY, false, false);
+            frameCounter = i;
+            TextureUtil.uploadTextureMipmap((int[][]) this.framesTextureData.get(frameCounter), width, height, originX, originY, false, false);
         }
     }
 }

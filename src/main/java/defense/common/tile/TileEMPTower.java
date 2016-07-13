@@ -253,7 +253,11 @@ public class TileEMPTower extends TileEntityElectricBlock implements IBoundingBl
     @Override
     public boolean onActivated(EntityPlayer entityPlayer)
     {
-        entityPlayer.openGui(DefenseTech.INSTANCE, 0, this.worldObj, this.xCoord, this.yCoord, this.zCoord);
+    	if(!worldObj.isRemote)
+    	{
+    		entityPlayer.openGui(DefenseTech.INSTANCE, 0, worldObj, xCoord, yCoord, zCoord);
+    	}
+    	
         return true;
     }
     

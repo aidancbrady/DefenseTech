@@ -22,7 +22,6 @@ import defense.common.tile.TileExplosive;
 import defense.common.tile.TileLauncherBase;
 import defense.common.tile.TileLauncherFrame;
 import defense.common.tile.TileLauncherScreen;
-import defense.common.tile.TileMissileCoordinator;
 import defense.common.tile.TileRadarStation;
 
 public class CommonProxy implements IGuiHandler
@@ -37,7 +36,6 @@ public class CommonProxy implements IGuiHandler
         GameRegistry.registerTileEntity(TileLauncherFrame.class, "LauncherFrame");
         GameRegistry.registerTileEntity(TileRadarStation.class, "RadarStation");
         GameRegistry.registerTileEntity(TileEMPTower.class, "EMPTower");
-        GameRegistry.registerTileEntity(TileMissileCoordinator.class, "MissileCoordinator");
         GameRegistry.registerTileEntity(TileExplosive.class, "Explosive");
     }
     
@@ -75,7 +73,7 @@ public class CommonProxy implements IGuiHandler
         {
             return new ContainerCruiseLauncher(player.inventory, (TileCruiseLauncher)tileEntity);
         }
-        else if(tileEntity instanceof TileLauncherScreen || tileEntity instanceof TileRadarStation || tileEntity instanceof TileEMPTower || tileEntity instanceof TileLauncherBase || tileEntity instanceof TileMissileCoordinator)
+        else if(tileEntity instanceof TileLauncherScreen || tileEntity instanceof TileRadarStation || tileEntity instanceof TileEMPTower || tileEntity instanceof TileLauncherBase)
         {
             return new ContainerNull(player, (TileEntityContainerBlock)tileEntity);
         }
