@@ -16,7 +16,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.ChunkCoordIntPair;
 import net.minecraft.world.World;
@@ -502,6 +501,13 @@ public class EntityMissile extends Entity implements IChunkLoadHandler, IExplosi
                 setDead();
             }
         }
+        
+    	List<Entity> list = worldObj.getEntitiesWithinAABBExcludingEntity(this, boundingBox.expand(0.5, 0.5, 0.5));
+    	
+    	for(Entity e : list)
+    	{
+    		entityBoundCheck(e);
+    	}
 
         super.onUpdate();
     }
@@ -592,13 +598,11 @@ public class EntityMissile extends Entity implements IChunkLoadHandler, IExplosi
         }
     }
 
-    /** Checks to see if and entity is touching the missile. If so, blow up! */
-    @Override
-    public AxisAlignedBB getCollisionBox(Entity entity)
+    public void entityBoundCheck(Entity entity)
     {
         if(ignoreEntity.contains(entity))
         {
-            return null;
+        	return;
         }
 
         // Make sure the entity is not an item
@@ -611,8 +615,6 @@ public class EntityMissile extends Entity implements IChunkLoadHandler, IExplosi
 
             setExplode();
         }
-
-        return null;
     }
 
     @Override
@@ -623,7 +625,7 @@ public class EntityMissile extends Entity implements IChunkLoadHandler, IExplosi
 
         if(feiXingTick > 20)
         {
-            for (int i = 0; i < t; i++)
+            for(int i = 0; i < t; i++)
             {
                 if(missileType == MissileType.CruiseMissile || missileType == MissileType.LAUNCHER)
                 {
@@ -631,8 +633,7 @@ public class EntityMissile extends Entity implements IChunkLoadHandler, IExplosi
                     guJiDiDian.yPos += xiaoDanMotion.yPos;
                     guJiDiDian.zPos += xiaoDanMotion.zPos;
                 }
-                else
-                {
+                else {
                     guJiDiDian.xPos += motionX;
                     guJiDiDian.yPos += tempMotionY;
                     guJiDiDian.zPos += motionZ;
@@ -675,8 +676,7 @@ public class EntityMissile extends Entity implements IChunkLoadHandler, IExplosi
     @Override
     public void explode()
     {
-        try
-        {
+        try {
             // Make sure the missile is not already exploding
             if(!isExpoding)
             {
@@ -693,14 +693,11 @@ public class EntityMissile extends Entity implements IChunkLoadHandler, IExplosi
 
                 isExpoding = true;
 
-                DefenseTech.LOGGER.info(getCommandSenderName() + " (" + getEntityId() + ") exploded in " + (int) posX + ", " + (int) posY + ", " + (int) posZ);
+                DefenseTech.LOGGER.info(getCommandSenderName() + " (" + getEntityId() + ") exploded in " + (int)posX + ", " + (int)posY + ", " + (int)posZ);
             }
 
             setDead();
-
-        }
-        catch (Exception e)
-        {
+        } catch(Exception e) {
             DefenseTech.LOGGER.severe("Missile failed to explode properly. Report this to the developers.");
             e.printStackTrace();
         }
@@ -764,6 +761,7 @@ public class EntityMissile extends Entity implements IChunkLoadHandler, IExplosi
         {
             nbt.setTag("kaiShi", startPos.write(new NBTTagCompound()));
         }
+        
         if(targetVector != null)
         {
             nbt.setTag("muBiao", targetVector.write(new NBTTagCompound()));

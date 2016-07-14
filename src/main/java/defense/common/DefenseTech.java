@@ -330,21 +330,21 @@ public final class DefenseTech
         // Defuser
         CraftingManager.getInstance().getRecipeList().add(new ShapedMekanismRecipe(((ItemEnergized)DefenseTechItems.itemDefuser).getUnchargedItem(), new Object[] { "I  ", " W ", "  C", 'C', "circuitAdvanced", 'W', MekanismItems.Configurator.getUnchargedItem(), 'I', new ItemStack(MekanismItems.PartTransmitter, 1, 0) }));
         // Missile Launcher Platform
-        CraftingManager.getInstance().getRecipeList().add(new ShapedMekanismRecipe(DefenseUtils.getLauncherBase(BaseTier.BASIC), new Object[] { "! !", "!C!", "!!!", '!', "ingotBronze", 'C', "circuitBasic" }));
-        CraftingManager.getInstance().getRecipeList().add(new ShapedMekanismRecipe(DefenseUtils.getLauncherBase(BaseTier.ADVANCED), new Object[] { "! !", "!C!", "!@!", '@', DefenseUtils.getLauncherBase(BaseTier.BASIC), '!', "ingotSteel", 'C', "circuitAdvanced" }));
-        CraftingManager.getInstance().getRecipeList().add(new ShapedMekanismRecipe(DefenseUtils.getLauncherBase(BaseTier.ELITE), new Object[] { "! !", "!C!", "!@!", '@', DefenseUtils.getLauncherBase(BaseTier.ADVANCED), '!', "alloyAdvanced", 'C', "circuitElite" }));
+        CraftingManager.getInstance().getRecipeList().add(new ShapedMekanismRecipe(DefenseUtils.getLauncherBase(BaseTier.BASIC), new Object[] { "! !", "!C!", "!!!", '!', "ingotIron", 'C', "circuitBasic" }));
+        CraftingManager.getInstance().getRecipeList().add(new ShapedMekanismRecipe(DefenseUtils.getLauncherBase(BaseTier.ADVANCED), new Object[] { "! !", "!C!", "!@!", '@', DefenseUtils.getLauncherBase(BaseTier.BASIC), '!', "ingotOsmium", 'C', "circuitAdvanced" }));
+        CraftingManager.getInstance().getRecipeList().add(new ShapedMekanismRecipe(DefenseUtils.getLauncherBase(BaseTier.ELITE), new Object[] { "! !", "!C!", "!@!", '@', DefenseUtils.getLauncherBase(BaseTier.ADVANCED), '!', "ingotGold", 'C', "circuitElite" }));
         // Missile Launcher Panel
         CraftingManager.getInstance().getRecipeList().add(new ShapedMekanismRecipe(DefenseUtils.getLauncherScreen(BaseTier.BASIC), new Object[] { "!!!", "!#!", "!?!", '#', "circuitBasic", '!', "blockGlass", '?', new ItemStack(MekanismItems.PartTransmitter, 1, 0) }));
-        CraftingManager.getInstance().getRecipeList().add(new ShapedMekanismRecipe(DefenseUtils.getLauncherScreen(BaseTier.ADVANCED), new Object[] { "!$!", "!#!", "!?!", '#', "circuitAdvanced", '!', "ingotSteel", '?', new ItemStack(MekanismItems.PartTransmitter, 1, 0), '$', DefenseUtils.getLauncherScreen(BaseTier.BASIC) }));
+        CraftingManager.getInstance().getRecipeList().add(new ShapedMekanismRecipe(DefenseUtils.getLauncherScreen(BaseTier.ADVANCED), new Object[] { "!$!", "!#!", "!?!", '#', "circuitAdvanced", '!', "ingotOsmium", '?', new ItemStack(MekanismItems.PartTransmitter, 1, 0), '$', DefenseUtils.getLauncherScreen(BaseTier.BASIC) }));
         CraftingManager.getInstance().getRecipeList().add(new ShapedMekanismRecipe(DefenseUtils.getLauncherScreen(BaseTier.ELITE), new Object[] { "!$!", "!#!", "!?!", '#', "circuitElite", '!', "ingotGold", '?', new ItemStack(MekanismItems.PartTransmitter, 1, 0), '$', DefenseUtils.getLauncherScreen(BaseTier.ADVANCED) }));
         // Missile Launcher Support Frame
-        CraftingManager.getInstance().getRecipeList().add(new ShapedMekanismRecipe(DefenseUtils.getLauncherFrame(BaseTier.BASIC), new Object[] { "! !", "!!!", "! !", '!', "ingotBronze" }));
-        CraftingManager.getInstance().getRecipeList().add(new ShapedMekanismRecipe(DefenseUtils.getLauncherFrame(BaseTier.ADVANCED), new Object[] { "! !", "!@!", "! !", '!', "ingotSteel", '@', DefenseUtils.getLauncherFrame(BaseTier.BASIC) }));
-        CraftingManager.getInstance().getRecipeList().add(new ShapedMekanismRecipe(DefenseUtils.getLauncherFrame(BaseTier.ELITE), new Object[] { "! !", "!@!", "! !", '!', "alloyAdvanced", '@', DefenseUtils.getLauncherFrame(BaseTier.ADVANCED) }));
+        CraftingManager.getInstance().getRecipeList().add(new ShapedMekanismRecipe(DefenseUtils.getLauncherFrame(BaseTier.BASIC), new Object[] { "! !", "!!!", "! !", '!', "ingotIron" }));
+        CraftingManager.getInstance().getRecipeList().add(new ShapedMekanismRecipe(DefenseUtils.getLauncherFrame(BaseTier.ADVANCED), new Object[] { "! !", "!@!", "! !", '!', "ingotOsmium", '@', DefenseUtils.getLauncherFrame(BaseTier.BASIC) }));
+        CraftingManager.getInstance().getRecipeList().add(new ShapedMekanismRecipe(DefenseUtils.getLauncherFrame(BaseTier.ELITE), new Object[] { "! !", "!@!", "! !", '!', "ingotGold", '@', DefenseUtils.getLauncherFrame(BaseTier.ADVANCED) }));
         // Radar Station
         CraftingManager.getInstance().getRecipeList().add(new ShapedMekanismRecipe(new ItemStack(DefenseTechBlocks.blockMachine, 1, 3), new Object[] { "?@?", " ! ", "!#!", '@', ((ItemEnergized)DefenseTechItems.itemRadarGun).getUnchargedItem(), '!', "alloyAdvanced", '#', "circuitBasic", '?', "ingotGold" }));
         // EMP Tower
-        GameRegistry.addRecipe(new ShapedMekanismRecipe(new ItemStack(DefenseTechBlocks.blockMachine, 1, 4), new Object[] { "?W?", "@!@", "?#?", '?', "alloyAdvanced", '!', "circuitElite", '@', MekanismUtils.getEnergyCube(EnergyCubeTier.BASIC), '#', new ItemStack(MekanismBlocks.BasicBlock, 1, 8), 'W', new ItemStack(MekanismItems.PartTransmitter, 1, 0) }));
+        GameRegistry.addRecipe(new ShapedMekanismRecipe(new ItemStack(DefenseTechBlocks.blockMachine, 1, 4), new Object[] { "?W?", "@!@", "?#?", '?', "alloyElite", '!', "circuitElite", '@', MekanismUtils.getEnergyCube(EnergyCubeTier.BASIC), '#', new ItemStack(MekanismBlocks.BasicBlock, 1, 8), 'W', new ItemStack(MekanismItems.PartTransmitter, 1, 0) }));
         // Cruise Launcher
         CraftingManager.getInstance().getRecipeList().add(new ShapedMekanismRecipe(new ItemStack(DefenseTechBlocks.blockMachine, 1, 5), new Object[] { "?! ", "@@@", '@', "alloyAdvanced", '!', new ItemStack(DefenseTechBlocks.blockMachine, 1, 2), '?', new ItemStack(DefenseTechBlocks.blockMachine, 1, 8) }));
         // Missile module
@@ -360,7 +360,9 @@ public final class DefenseTech
 
         // Add all explosive recipes.
         if(!Loader.isModLoaded("ResonantInduction|Atomic")) //TODO wither skull? what?
+        {
             OreDictionary.registerOre("strangeMatter", new ItemStack(Items.skull, 1, 1));
+        }
 
         for(Explosive explosive : ExplosiveRegistry.getExplosives())
         {

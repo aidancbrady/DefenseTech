@@ -211,7 +211,7 @@ public class TileRadarStation extends TileEntityElectricBlock implements IChunkL
                         detectedEntities.add(entity);
                     }
 
-                    if(isMissileGoingToHit((EntityMissile) entity))
+                    if(isMissileGoingToHit((EntityMissile)entity))
                     {
                         if(incomingMissiles.size() > 0)
                         {
@@ -234,8 +234,7 @@ public class TileRadarStation extends TileEntityElectricBlock implements IChunkL
                                 }
                             }
                         }
-                        else
-                        {
+                        else {
                             incomingMissiles.add((EntityMissile) entity);
                         }
                     }

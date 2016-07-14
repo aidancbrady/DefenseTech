@@ -99,7 +99,7 @@ missile.redMatter.name=Red Matter Missile
 
 ## Special Missiles
 missile.missileModule.name=Missile Module
-missile.antiBallistic.name=Anti-ballistic Missile
+missile.antiBallistic.name=Anti-Ballistic Missile
 missile.cluster.name=Cluster Missile
 missile.nuclearCluster.name=Nuclear Cluster Missile
 missile.homing.name=Homing Missile
