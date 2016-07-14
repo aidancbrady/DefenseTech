@@ -30,7 +30,7 @@ public class TileLauncherScreen extends TileLauncherPrefab implements IBlockActi
 
     // The missile launcher base in which this
     // screen is connected with
-    public TileLauncherBase laucherBase = null;
+    public TileLauncherBase launcherBase = null;
 
     public short launchHeight = 3;
 
@@ -46,7 +46,7 @@ public class TileLauncherScreen extends TileLauncherPrefab implements IBlockActi
     {
         super.onUpdate();
 
-        if(laucherBase == null)
+        if(launcherBase == null)
         {
             for(ForgeDirection side : MekanismUtils.SIDE_DIRS)
             {
@@ -59,16 +59,16 @@ public class TileLauncherScreen extends TileLauncherPrefab implements IBlockActi
                 {
                     if(tileEntity instanceof TileLauncherBase)
                     {
-                        laucherBase = (TileLauncherBase)tileEntity;
+                        launcherBase = (TileLauncherBase)tileEntity;
                         setFacing((short)side.getOpposite().ordinal());
                     }
                 }
             }
         }
         else {
-            if(laucherBase.isInvalid())
+            if(launcherBase.isInvalid())
             {
-                laucherBase = null;
+                launcherBase = null;
             }
         }
 
@@ -119,7 +119,7 @@ public class TileLauncherScreen extends TileLauncherPrefab implements IBlockActi
     		}
     		else if(packetType == 3)
     		{
-    			launchHeight = (short) Math.max(Math.min(dataStream.readShort(), Short.MAX_VALUE), 3);
+    			launchHeight = (short)Math.max(Math.min(dataStream.readShort(), Short.MAX_VALUE), 3);
     		}
     		
     		return;
@@ -148,11 +148,11 @@ public class TileLauncherScreen extends TileLauncherPrefab implements IBlockActi
     @Override
     public void placeMissile(ItemStack itemStack)
     {
-        if(laucherBase != null)
+        if(launcherBase != null)
         {
-            if(!laucherBase.isInvalid())
+            if(!launcherBase.isInvalid())
             {
-                laucherBase.setInventorySlotContents(0, itemStack);
+                launcherBase.setInventorySlotContents(0, itemStack);
             }
         }
     }
@@ -161,11 +161,11 @@ public class TileLauncherScreen extends TileLauncherPrefab implements IBlockActi
     @Override
     public boolean canLaunch()
     {
-        if(laucherBase != null && laucherBase.missile != null)
+        if(launcherBase != null && launcherBase.missile != null)
         {
             if(getEnergy() >= getLaunchCost())
             {
-                return laucherBase.isInRange(targetPos);
+                return launcherBase.isInRange(targetPos);
             }
         }
         
@@ -179,7 +179,7 @@ public class TileLauncherScreen extends TileLauncherPrefab implements IBlockActi
         if(canLaunch())
         {
             setEnergy(getEnergy()-getLaunchCost());
-            laucherBase.launchMissile(targetPos.clone(), launchHeight);
+            launcherBase.launchMissile(targetPos.clone(), launchHeight);
         }
     }
 
@@ -192,7 +192,7 @@ public class TileLauncherScreen extends TileLauncherPrefab implements IBlockActi
         String color = "\u00a74";
         String status = LangUtils.localize("gui.misc.idle");
 
-        if(laucherBase == null)
+        if(launcherBase == null)
         {
             status = LangUtils.localize("gui.launcherScreen.statusMissing");
         }
@@ -200,7 +200,7 @@ public class TileLauncherScreen extends TileLauncherPrefab implements IBlockActi
         {
             status = LangUtils.localize("gui.launcherScreen.statusNoPower");
         }
-        else if(laucherBase.missile == null)
+        else if(launcherBase.missile == null)
         {
             status = LangUtils.localize("gui.launcherScreen.statusEmpty");
         }
@@ -208,11 +208,11 @@ public class TileLauncherScreen extends TileLauncherPrefab implements IBlockActi
         {
             status = LangUtils.localize("gui.launcherScreen.statusInvalid");
         }
-        else if(laucherBase.shiTaiJin(targetPos))
+        else if(launcherBase.isTargetTooClose(targetPos))
         {
             status = LangUtils.localize("gui.launcherScreen.statusClose");
         }
-        else if(laucherBase.shiTaiYuan(targetPos))
+        else if(launcherBase.isTargetTooFar(targetPos))
         {
             status = LangUtils.localize("gui.launcherScreen.statusFar");
         }
@@ -295,9 +295,9 @@ public class TileLauncherScreen extends TileLauncherPrefab implements IBlockActi
     @Override
     public IMissile getMissile()
     {
-        if(laucherBase != null)
+        if(launcherBase != null)
         {
-            return laucherBase.missile;
+            return launcherBase.missile;
         }
 
         return null;

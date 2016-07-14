@@ -4,18 +4,6 @@ import io.netty.buffer.ByteBuf;
 
 import java.util.ArrayList;
 
-import defense.api.ExplosiveType;
-import defense.api.ILauncherContainer;
-import defense.api.ILauncherController;
-import defense.api.IMissile;
-import defense.api.ITier;
-import defense.api.ExplosionEvent.ExplosivePreDetonationEvent;
-import defense.common.Settings;
-import defense.common.base.IBlockActivate;
-import defense.common.entity.EntityMissile;
-import defense.common.explosion.Explosion;
-import defense.common.explosive.ExplosiveRegistry;
-import defense.common.item.ItemMissile;
 import mekanism.api.Coord4D;
 import mekanism.api.Pos3D;
 import mekanism.api.Range4D;
@@ -33,6 +21,18 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.util.ForgeDirection;
+import defense.api.ExplosionEvent.ExplosivePreDetonationEvent;
+import defense.api.ExplosiveType;
+import defense.api.ILauncherContainer;
+import defense.api.ILauncherController;
+import defense.api.IMissile;
+import defense.api.ITier;
+import defense.common.Settings;
+import defense.common.base.IBlockActivate;
+import defense.common.entity.EntityMissile;
+import defense.common.explosion.Explosion;
+import defense.common.explosive.ExplosiveRegistry;
+import defense.common.item.ItemMissile;
 
 /** This tile entity is for the base of the missile launcher
  * 
@@ -175,17 +175,16 @@ public class TileLauncherBase extends TileEntityContainerBlock implements ILaunc
     /** Launches the missile
      * 
      * @param target - The target in which the missile will land in */
-    public void launchMissile(Pos3D target, int gaoDu)
+    public void launchMissile(Pos3D target, int launchHeight)
     {
         // Apply inaccuracy
         float inaccuracy;
 
-        if (this.supportFrame != null)
+        if(supportFrame != null)
         {
             inaccuracy = this.supportFrame.getInaccuracy();
         }
-        else
-        {
+        else  {
             inaccuracy = 30f;
         }
 
@@ -194,16 +193,18 @@ public class TileLauncherBase extends TileEntityContainerBlock implements ILaunc
         target.xPos += inaccuracy;
         target.zPos += inaccuracy;
 
-        this.decrStackSize(0, 1);
-        this.missile.launch(target, gaoDu);
-        this.missile = null;
+        decrStackSize(0, 1);
+        missile.launch(target, launchHeight);
+        missile = null;
     }
 
     // Checks if the missile target is in range
     public boolean isInRange(Pos3D target)
     {
-        if (target != null)
-            return !shiTaiYuan(target) && !shiTaiJin(target);
+        if(target != null)
+        {
+            return !isTargetTooFar(target) && !isTargetTooClose(target);
+        }
 
         return false;
     }
@@ -212,7 +213,7 @@ public class TileLauncherBase extends TileEntityContainerBlock implements ILaunc
      * 
      * @param target
      * @return */
-    public boolean shiTaiJin(Pos3D target)
+    public boolean isTargetTooClose(Pos3D target)
     {
         // Check if it is greater than the minimum range
         if (new Pos3D(this.xCoord, 0, this.zCoord).distance(new Pos3D(target.xPos, 0, target.zPos)) < 10)
@@ -224,7 +225,7 @@ public class TileLauncherBase extends TileEntityContainerBlock implements ILaunc
     }
 
     // Is the target too far?
-    public boolean shiTaiYuan(Pos3D target)
+    public boolean isTargetTooFar(Pos3D target)
     {
         // Checks if it is greater than the maximum range for the launcher base
         if (this.tier == 0)

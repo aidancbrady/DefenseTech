@@ -145,7 +145,7 @@ public class TileRadarStation extends TileEntityElectricBlock implements IChunkL
                 {
                     if(blockFrequency instanceof TileLauncherPrefab)
                     {
-                        TileLauncherPrefab launcher = (TileLauncherPrefab) blockFrequency;
+                        TileLauncherPrefab launcher = (TileLauncherPrefab)blockFrequency;
 
                         if(new Pos3D(this).distance(new Pos3D(launcher)) < alarmRange && launcher.getFrequency() == getFrequency())
                         {
@@ -154,8 +154,7 @@ public class TileRadarStation extends TileEntityElectricBlock implements IChunkL
                                 double height = launcher.getTarget() != null ? launcher.getTarget().yPos : 0;
                                 launcher.setTarget(new Pos3D(incomingMissiles.get(0).posX, height, incomingMissiles.get(0).posZ));
                             }
-                            else
-                            {
+                            else {
                                 launcher.setTarget(new Pos3D(incomingMissiles.get(0)));
                             }
                         }

@@ -186,11 +186,11 @@ public class GuiLauncherScreen extends GuiBase
 
         int inaccuracy = 30;
 
-        if(tileEntity.laucherBase != null)
+        if(tileEntity.launcherBase != null)
         {
-            if(tileEntity.laucherBase.supportFrame != null)
+            if(tileEntity.launcherBase.supportFrame != null)
             {
-                inaccuracy = tileEntity.laucherBase.supportFrame.getInaccuracy();
+                inaccuracy = tileEntity.launcherBase.supportFrame.getInaccuracy();
             }
         }
 

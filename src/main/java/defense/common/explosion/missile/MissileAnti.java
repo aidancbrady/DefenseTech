@@ -37,21 +37,21 @@ public class MissileAnti extends Missile
     @Override
     public void update(EntityMissile missileObj)
     {
-        if (missileObj.lockedTarget != null)
+        if(missileObj.lockedTarget != null)
         {
             Pos3D target = new Pos3D(missileObj.lockedTarget);
 
-            if (missileObj.lockedTarget.isDead)
+            if(missileObj.lockedTarget.isDead)
             {
                 missileObj.explode();
                 return;
             }
 
-            if (missileObj.lockedTarget instanceof ITarget && ((ITarget) missileObj.lockedTarget).getType() == TargetType.MISSILE)
+            if(missileObj.lockedTarget instanceof ITarget && ((ITarget)missileObj.lockedTarget).getType() == TargetType.MISSILE)
             {
-                if (((ITarget) missileObj.lockedTarget).canBeTargeted(this))
+                if(((ITarget)missileObj.lockedTarget).canBeTargeted(this))
                 {
-                    target = ((ITarget) missileObj.lockedTarget).getPredictedPosition(4);
+                    target = ((ITarget)missileObj.lockedTarget).getPredictedPosition(4);
                 }
             }
 
@@ -66,9 +66,9 @@ public class MissileAnti extends Missile
         // TODO: Check if this works.
         Entity nearestEntity = missileObj.worldObj.findNearestEntityWithinAABB(ITarget.class, bounds, missileObj);
 
-        if (nearestEntity instanceof ITarget && ((ITarget) nearestEntity).getType() == TargetType.MISSILE)
+        if(nearestEntity instanceof ITarget && ((ITarget) nearestEntity).getType() == TargetType.MISSILE)
         {
-            if (((ITarget) nearestEntity).canBeTargeted(this))
+            if(((ITarget)nearestEntity).canBeTargeted(this))
             {
                 // Lock target onto missileObj missile
                 missileObj.lockedTarget = nearestEntity;
@@ -76,12 +76,11 @@ public class MissileAnti extends Missile
                 missileObj.worldObj.playSoundAtEntity(missileObj, Reference.PREFIX + "targetlocked", 5F, 0.9F);
             }
         }
-        else
-        {
+        else {
             missileObj.motionX = missileObj.deltaPathX / missileObj.missileFlightTime;
             missileObj.motionZ = missileObj.deltaPathZ / missileObj.missileFlightTime;
 
-            if (missileObj.didTargetLockBefore == true)
+            if(missileObj.didTargetLockBefore == true)
             {
                 missileObj.explode();
             }

@@ -104,16 +104,16 @@ public class EntityMissile extends Entity implements IChunkLoadHandler, IExplosi
 
     public Pos3D xiaoDanMotion = new Pos3D();
 
-    private double qiFeiGaoDu = 3;
+    private double lockHeight = 3;
 
     // Used for the rocket launcher preventing the players from killing themselves.
     private final HashSet<Entity> ignoreEntity = new HashSet<Entity>();
 
     public NBTTagCompound nbtData = new NBTTagCompound();
 
-    public EntityMissile(World par1World)
+    public EntityMissile(World world)
     {
-        super(par1World);
+        super(world);
         
         setSize(1F, 1F);
         renderDistanceWeight = 3;
@@ -207,7 +207,7 @@ public class EntityMissile extends Entity implements IChunkLoadHandler, IExplosi
         startPos = new Pos3D(this);
         targetVector = target;
         targetHeight = (int)targetVector.yPos;
-        ((Explosion) ExplosiveRegistry.get(explosiveID)).launch(this);
+        ((Explosion)ExplosiveRegistry.get(explosiveID)).launch(this);
         feiXingTick = 0;
         recalculatePath();
         worldObj.playSoundAtEntity(this, Reference.PREFIX + "missilelaunch", 4F, (1.0F + (worldObj.rand.nextFloat() - worldObj.rand.nextFloat()) * 0.2F) * 0.7F);
@@ -219,7 +219,7 @@ public class EntityMissile extends Entity implements IChunkLoadHandler, IExplosi
     @Override
     public void launch(Pos3D target, int height)
     {
-        qiFeiGaoDu = height;
+        lockHeight = height;
         launch(target);
     }
 
@@ -285,8 +285,10 @@ public class EntityMissile extends Entity implements IChunkLoadHandler, IExplosi
     {
         if(!worldObj.isRemote && Settings.LOAD_CHUNKS && chunkTicket != null)
         {
-            for (ChunkCoordIntPair chunk : loadedChunks)
+            for(ChunkCoordIntPair chunk : loadedChunks)
+            {
                 ForgeChunkManager.unforceChunk(chunkTicket, chunk);
+            }
 
             loadedChunks.clear();
             loadedChunks.add(new ChunkCoordIntPair(newChunkX, newChunkZ));
@@ -299,9 +301,10 @@ public class EntityMissile extends Entity implements IChunkLoadHandler, IExplosi
             loadedChunks.add(new ChunkCoordIntPair(newChunkX - 1, newChunkZ));
             loadedChunks.add(new ChunkCoordIntPair(newChunkX, newChunkZ - 1));
 
-            for (ChunkCoordIntPair chunk : loadedChunks)
+            for(ChunkCoordIntPair chunk : loadedChunks)
+            {
                 ForgeChunkManager.forceChunk(chunkTicket, chunk);
-
+            }
         }
     }
 
@@ -339,14 +342,13 @@ public class EntityMissile extends Entity implements IChunkLoadHandler, IExplosi
         	}
         }
 
-        try
-        {
+        try {
             if(worldObj.isRemote)
             {
                 feiXingTick = dataWatcher.getWatchableObjectInt(16);
                 int status = dataWatcher.getWatchableObjectInt(17);
 
-                switch (status)
+                switch(status)
                 {
                     case 1:
                         setNormalExplode = true;
@@ -356,13 +358,10 @@ public class EntityMissile extends Entity implements IChunkLoadHandler, IExplosi
                         break;
                 }
             }
-            else
-            {
+            else {
                 dataWatcher.updateObject(16, feiXingTick);
             }
-        }
-        catch (Exception e)
-        {
+        } catch(Exception e) {
             e.printStackTrace();
         }
 
@@ -394,10 +393,10 @@ public class EntityMissile extends Entity implements IChunkLoadHandler, IExplosi
                         motionZ = xiaoDanMotion.zPos;
                     }
 
-                    rotationPitch = (float) (Math.atan(motionY / (Math.sqrt(motionX * motionX + motionZ * motionZ))) * 180 / Math.PI);
+                    rotationPitch = (float)(Math.atan(motionY / (Math.sqrt(motionX * motionX + motionZ * motionZ))) * 180 / Math.PI);
 
                     // Look at the next point
-                    rotationYaw = (float) (Math.atan2(motionX, motionZ) * 180 / Math.PI);
+                    rotationYaw = (float)(Math.atan2(motionX, motionZ) * 180 / Math.PI);
 
                     ((Explosion)ExplosiveRegistry.get(explosiveID)).update(this);
 
@@ -413,29 +412,28 @@ public class EntityMissile extends Entity implements IChunkLoadHandler, IExplosi
                 }
                 else {
                     // Start the launch
-                    if(qiFeiGaoDu > 0)
+                    if(lockHeight > 0)
                     {
                         motionY = SPEED * feiXingTick * (feiXingTick / 2);
                         motionX = 0;
                         motionZ = 0;
-                        qiFeiGaoDu -= motionY;
+                        lockHeight -= motionY;
                         moveEntity(motionX, motionY, motionZ);
 
-                        if(qiFeiGaoDu <= 0)
+                        if(lockHeight <= 0)
                         {
                             motionY = acceleration * (missileFlightTime / 2);
                             motionX = deltaPathX / missileFlightTime;
                             motionZ = deltaPathZ / missileFlightTime;
                         }
                     }
-                    else
-                    {
+                    else {
                         motionY -= acceleration;
 
-                        rotationPitch = (float) (Math.atan(motionY / (Math.sqrt(motionX * motionX + motionZ * motionZ))) * 180 / Math.PI);
+                        rotationPitch = (float)(Math.atan(motionY / (Math.sqrt(motionX * motionX + motionZ * motionZ))) * 180 / Math.PI);
 
                         // Look at the next point
-                        rotationYaw = (float) (Math.atan2(motionX, motionZ) * 180 / Math.PI);
+                        rotationYaw = (float)(Math.atan2(motionX, motionZ) * 180 / Math.PI);
 
                         ((Explosion)ExplosiveRegistry.get(explosiveID)).update(this);
 
@@ -451,7 +449,7 @@ public class EntityMissile extends Entity implements IChunkLoadHandler, IExplosi
                         if(targetHeight > 0 && motionY < 0)
                         {
                             // Check the block below it.
-                            Block blockBelow = worldObj.getBlock((int) posX, (int) posY - targetHeight, (int) posZ);
+                            Block blockBelow = worldObj.getBlock((int)posX, (int)posY - targetHeight, (int)posZ);
 
                             if(blockBelow != null)
                             {
@@ -459,13 +457,13 @@ public class EntityMissile extends Entity implements IChunkLoadHandler, IExplosi
                                 explode();
                             }
                         }
-                    } // end else
+                    }
                 }
             }
             else {
-                rotationPitch = (float) (Math.atan(motionY / (Math.sqrt(motionX * motionX + motionZ * motionZ))) * 180 / Math.PI);
+                rotationPitch = (float)(Math.atan(motionY / (Math.sqrt(motionX * motionX + motionZ * motionZ))) * 180 / Math.PI);
                 // Look at the next point
-                rotationYaw = (float) (Math.atan2(motionX, motionZ) * 180 / Math.PI);
+                rotationYaw = (float)(Math.atan2(motionX, motionZ) * 180 / Math.PI);
             }
 
             lastTickPosX = posX;
@@ -493,15 +491,14 @@ public class EntityMissile extends Entity implements IChunkLoadHandler, IExplosi
 
                     if(worldObj.isRemote)
                     {
-                        rotationYaw = -((TileCruiseLauncher) launcher).rotationYaw + 90;
-                        rotationPitch = ((TileCruiseLauncher) launcher).rotationPitch;
+                        rotationYaw = -((TileCruiseLauncher)launcher).rotationYaw + 90;
+                        rotationPitch = ((TileCruiseLauncher)launcher).rotationPitch;
                     }
 
-                    posY = ((TileCruiseLauncher) launcher).yCoord + 1;
+                    posY = ((TileCruiseLauncher)launcher).yCoord + 1;
                 }
             }
-            else
-            {
+            else {
                 setDead();
             }
         }
@@ -531,9 +528,9 @@ public class EntityMissile extends Entity implements IChunkLoadHandler, IExplosi
     @Override
     public boolean interactFirst(EntityPlayer entityPlayer)
     {
-        if(((Explosion) ExplosiveRegistry.get(explosiveID)) != null)
+        if(((Explosion)ExplosiveRegistry.get(explosiveID)) != null)
         {
-            if(((Explosion) ExplosiveRegistry.get(explosiveID)).onInteract(this, entityPlayer))
+            if(((Explosion)ExplosiveRegistry.get(explosiveID)).onInteract(this, entityPlayer))
             {
                 return true;
             }
@@ -609,7 +606,7 @@ public class EntityMissile extends Entity implements IChunkLoadHandler, IExplosi
         {
             if(entity instanceof EntityMissile)
             {
-                ((EntityMissile) entity).setNormalExplode();
+                ((EntityMissile)entity).setNormalExplode();
             }
 
             setExplode();
@@ -754,7 +751,7 @@ public class EntityMissile extends Entity implements IChunkLoadHandler, IExplosi
         targetHeight = nbt.getInteger("baoZhaGaoDu");
         explosiveID = nbt.getInteger("haoMa");
         feiXingTick = nbt.getInteger("feiXingTick");
-        qiFeiGaoDu = nbt.getDouble("qiFeiGaoDu");
+        lockHeight = nbt.getDouble("qiFeiGaoDu");
         missileType = MissileType.values()[nbt.getInteger("xingShi")];
         nbtData = nbt.getCompoundTag("data");
     }
@@ -781,7 +778,7 @@ public class EntityMissile extends Entity implements IChunkLoadHandler, IExplosi
         nbt.setInteger("haoMa", explosiveID);
         nbt.setInteger("baoZhaGaoDu", targetHeight);
         nbt.setInteger("feiXingTick", feiXingTick);
-        nbt.setDouble("qiFeiGaoDu", qiFeiGaoDu);
+        nbt.setDouble("qiFeiGaoDu", lockHeight);
         nbt.setInteger("xingShi", missileType.ordinal());
         nbt.setTag("data", nbtData);
     }
