@@ -29,7 +29,7 @@ public class ExDebilitation extends Explosion
     @Override
     public void init()
     {
-        GameRegistry.addRecipe(new ShapedMekanismRecipe(this.getItemStack(3), new Object[] { "SSS", "WRW", "SSS", 'R', Explosive.replsive.getItemStack(), 'W', Items.water_bucket, 'S', "dustSulfur" }));
+        GameRegistry.addRecipe(new ShapedMekanismRecipe(this.getItemStack(3), new Object[] { "SSS", "WRW", "SSS", 'R', Explosive.repulsive.getItemStack(), 'W', Items.water_bucket, 'S', "dustSulfur" }));
     }
 
     @Override

@@ -28,7 +28,7 @@ public class ExAntiGravitational extends Explosion
     @Override
     public void init()
     {
-        GameRegistry.addRecipe(new ShapedMekanismRecipe(this.getItemStack(), new Object[] { "EEE", "ETE", "EEE", 'T', replsive.getItemStack(), 'E', Items.ender_eye }));
+        GameRegistry.addRecipe(new ShapedMekanismRecipe(this.getItemStack(), new Object[] { "EEE", "ETE", "EEE", 'T', repulsive.getItemStack(), 'E', Items.ender_eye }));
     }
 
     @Override

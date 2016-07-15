@@ -7,13 +7,14 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import defense.common.DefenseTech;
+import defense.common.DefenseUtils;
 import defense.common.Reference;
 import defense.common.explosive.thread.ThreadLargeExplosion;
 
 public class BlastNuclear extends Blast
 {
     private ThreadLargeExplosion thread;
-    private float energy;
+    private float explosionEnergy;
     private boolean spawnMoreParticles = false;
     private boolean isRadioactive = false;
 
@@ -25,43 +26,44 @@ public class BlastNuclear extends Blast
     public BlastNuclear(World world, Entity entity, double x, double y, double z, float size, float energy)
     {
         this(world, entity, x, y, z, size);
-        this.energy = energy;
+        explosionEnergy = energy;
     }
 
     public BlastNuclear setNuclear()
     {
-        this.spawnMoreParticles = true;
-        this.isRadioactive = true;
+        spawnMoreParticles = true;
+        isRadioactive = true;
+        
         return this;
     }
 
     @Override
     public void doPreExplode()
     {
-        if (!this.worldObj.isRemote)
+        if(!worldObj.isRemote)
         {
-            this.thread = new ThreadLargeExplosion(worldObj, this.position, (int) this.getRadius(), this.energy, this.exploder);
+            thread = new ThreadLargeExplosion(worldObj, position, (int)getRadius(), explosionEnergy, exploder);
 
-            this.thread.start();
+            thread.start();
 
         }
-        else if (this.spawnMoreParticles && DefenseTech.proxy.isFancyGraphicsEnabled())
+        else if(spawnMoreParticles && DefenseTech.proxy.isFancyGraphicsEnabled())
         {
             // Spawn nuclear cloud.
-            for (int y = 0; y < 26; y++)
+            for(int y = 0; y < 26; y++)
             {
                 int r = 4;
 
-                if (y < 8)
+                if(y < 8)
                 {
                     r = Math.max(Math.min((8 - y) * 2, 10), 4);
                 }
-                else if (y > 15)
+                else if(y > 15)
                 {
                     r = Math.max(Math.min((y - 15) * 2, 15), 5);
                 }
 
-                for (int x = -r; x < r; x++)
+                for(int x = -r; x < r; x++)
                 {
                     for (int z = -r; z < r; z++)
                     {
@@ -72,40 +74,40 @@ public class BlastNuclear extends Blast
                             Pos3D spawnPosition = position.clone().translate(new Pos3D(x * 2, (y - 2) * 2, z * 2));
                             float xDiff = (float) (spawnPosition.xPos - position.xPos);
                             float zDiff = (float) (spawnPosition.zPos - position.zPos);
-                            DefenseTech.proxy.spawnParticle("smoke", worldObj, spawnPosition, xDiff * 0.3 * worldObj.rand.nextFloat(), -worldObj.rand.nextFloat(), zDiff * 0.3 * worldObj.rand.nextFloat(), (float) (distance / this.getRadius()) * worldObj.rand.nextFloat(), 0, 0, 8F, 1.2F);
+                            DefenseTech.proxy.spawnParticle("smoke", worldObj, spawnPosition, xDiff * 0.3 * worldObj.rand.nextFloat(), -worldObj.rand.nextFloat(), zDiff * 0.3 * worldObj.rand.nextFloat(), (float) (distance / getRadius()) * worldObj.rand.nextFloat(), 0, 0, 8F, 1.2F);
                         }
                     }
                 }
             }
         }
 
-        this.doDamageEntities(this.getRadius(), this.energy * 1000);
+        doDamageEntities(getRadius(), explosionEnergy * 1000);
 
-        this.worldObj.playSoundEffect(this.position.xPos, this.position.yPos, this.position.zPos, Reference.PREFIX + "explosion", 7.0F, (1.0F + (this.worldObj.rand.nextFloat() - this.worldObj.rand.nextFloat()) * 0.2F) * 0.7F);
+        worldObj.playSoundEffect(position.xPos, position.yPos, position.zPos, Reference.PREFIX + "explosion", 7.0F, (1.0F + (worldObj.rand.nextFloat() - worldObj.rand.nextFloat()) * 0.2F) * 0.7F);
     }
 
     @Override
     public void doExplode()
     {
-        int r = this.callCount;
+        int r = callCount;
 
-        if (this.worldObj.isRemote)
+        if(worldObj.isRemote)
         {
-            if (DefenseTech.proxy.isFancyGraphicsEnabled())
+            if(DefenseTech.proxy.isFancyGraphicsEnabled())
             {
-                for (int x = -r; x < r; x++)
+                for(int x = -r; x < r; x++)
                 {
-                    for (int z = -r; z < r; z++)
+                    for(int z = -r; z < r; z++)
                     {
                         double distance = MathHelper.sqrt_double(x * x + z * z);
 
-                        if (distance < r && distance > r - 1)
+                        if(distance < r && distance > r - 1)
                         {
-                            Pos3D targetPosition = this.position.clone().translate(new Pos3D(x, 0, z));
+                            Pos3D targetPosition = position.clone().translate(new Pos3D(x, 0, z));
 
-                            if (this.worldObj.rand.nextFloat() < Math.max(0.001 * r, 0.05))
+                            if(worldObj.rand.nextFloat() < Math.max(0.001 * r, 0.05))
                             {
-                                DefenseTech.proxy.spawnParticle("smoke", this.worldObj, targetPosition, 5F, 1F);
+                                DefenseTech.proxy.spawnParticle("smoke", worldObj, targetPosition, 5F, 1F);
                             }
                         }
                     }
@@ -113,18 +115,16 @@ public class BlastNuclear extends Blast
             }
 
         }
-        else
-        {
-            if (this.thread != null)
+        else {
+            if(thread != null)
             {
-                if (this.thread.isComplete)
+                if(thread.isComplete)
                 {
-                    this.controller.endExplosion();
+                    controller.endExplosion();
                 }
             }
-            else
-            {
-                this.controller.endExplosion();
+            else {
+                controller.endExplosion();
                 DefenseTech.LOGGER.severe("Something went wrong with multi-threading while detonating the nuclear explosive.");
             }
         }
@@ -133,39 +133,41 @@ public class BlastNuclear extends Blast
     @Override
     public void doPostExplode()
     {
-        try
-        {
-            if (!this.worldObj.isRemote && this.thread.isComplete)
+        try {
+            if(!worldObj.isRemote && thread.isComplete)
             {
-                for (Pos3D p : this.thread.results)
+                for(Pos3D p : thread.results)
                 {
-                    Block block = this.worldObj.getBlock((int)p.xPos, (int)p.yPos, (int)p.zPos);
-                    if (!worldObj.isAirBlock((int)p.xPos, (int)p.yPos, (int)p.zPos))
-                        block.onBlockExploded(this.worldObj, (int)p.xPos, (int)p.yPos, (int)p.zPos, this);
-
+                    Block block = worldObj.getBlock((int)p.xPos, (int)p.yPos, (int)p.zPos);
+                    
+                    if(!worldObj.isAirBlock((int)p.xPos, (int)p.yPos, (int)p.zPos))
+                    {
+                        if(DefenseUtils.canBreak(worldObj, block, p.xPos, p.yPos, p.zPos))
+                        {
+                        	block.onBlockExploded(worldObj, (int)p.xPos, (int)p.yPos, (int)p.zPos, this);
+                        }
+                    }
                 }
             }
-        }
-        catch (Exception e)
-        {
-            DefenseTech.LOGGER.severe("Nuclear-type detonation Failed!");
+        } catch(Exception e) {
+            DefenseTech.LOGGER.severe("Nuclear-type detonation failed!");
             e.printStackTrace();
         }
 
-        this.doDamageEntities(this.getRadius(), this.energy * 1000);
+        doDamageEntities(getRadius(), explosionEnergy * 1000);
 
-        if (this.isRadioactive)
+        if(isRadioactive)
         {
-            new BlastRot(worldObj, this.exploder, position.xPos, position.yPos, position.zPos, this.getRadius(), this.energy).explode();
-            new BlastMutation(worldObj, this.exploder, position.xPos, position.yPos, position.zPos, this.getRadius()).explode();
+            new BlastRot(worldObj, exploder, position.xPos, position.yPos, position.zPos, getRadius(), explosionEnergy).explode();
+            new BlastMutation(worldObj, exploder, position.xPos, position.yPos, position.zPos, getRadius()).explode();
 
-            if (this.worldObj.rand.nextInt(3) == 0)
+            if(worldObj.rand.nextInt(3) == 0)
             {
             	worldObj.getWorldInfo().setRaining(true);
             }
         }
 
-        this.worldObj.playSoundEffect(this.position.xPos, this.position.yPos, this.position.zPos, Reference.PREFIX + "explosion", 10.0F, (1.0F + (this.worldObj.rand.nextFloat() - this.worldObj.rand.nextFloat()) * 0.2F) * 0.7F);
+        worldObj.playSoundEffect(position.xPos, position.yPos, position.zPos, Reference.PREFIX + "explosion", 10.0F, (1.0F + (worldObj.rand.nextFloat() - worldObj.rand.nextFloat()) * 0.2F) * 0.7F);
     }
 
     /** The interval in ticks before the next procedural call of this explosive
@@ -180,21 +182,20 @@ public class BlastNuclear extends Blast
     @Override
     public long getEnergy()
     {
-        return (long) (41840000 * this.energy);
+        return (long)(41840000 * explosionEnergy);
     }
 
     @Override
     public void readFromNBT(NBTTagCompound nbt)
     {
         super.readFromNBT(nbt);
-        this.spawnMoreParticles = nbt.getBoolean("spawnMoreParticles");
+        spawnMoreParticles = nbt.getBoolean("spawnMoreParticles");
     }
 
     @Override
     public void writeToNBT(NBTTagCompound nbt)
     {
         super.writeToNBT(nbt);
-        nbt.setBoolean("spawnMoreParticles", this.spawnMoreParticles);
-
+        nbt.setBoolean("spawnMoreParticles", spawnMoreParticles);
     }
 }

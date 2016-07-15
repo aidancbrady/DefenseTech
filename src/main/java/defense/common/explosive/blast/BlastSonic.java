@@ -13,6 +13,7 @@ import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.IFluidBlock;
 import defense.common.DefenseTechBlocks;
+import defense.common.DefenseUtils;
 import defense.common.Reference;
 import defense.common.block.BlockExplosive;
 import defense.common.entity.EntityFlyingBlock;
@@ -60,6 +61,11 @@ public class BlastSonic extends Blast
                             Pos3D targetPosition = position.clone().translate(new Pos3D(x, y, z));
                             Block block = worldObj.getBlock((int)targetPosition.xPos, (int)targetPosition.yPos, (int)targetPosition.zPos);
 
+                            if(!DefenseUtils.canBreak(worldObj, block, targetPosition.xPos, targetPosition.yPos, targetPosition.zPos))
+                            {
+                            	continue;
+                            }
+                            
                             if (!worldObj.isAirBlock((int)targetPosition.xPos, (int)targetPosition.yPos, (int)targetPosition.zPos))
                             {
                                 Material material = block.getMaterial();
@@ -110,15 +116,15 @@ public class BlastSonic extends Blast
     @Override
     public void doExplode()
     {
-        int r = this.callCount;
+        int r = callCount;
 
-        if (!this.worldObj.isRemote)
+        if(!worldObj.isRemote)
         {
-            if (this.thread != null && this.thread.isComplete)
+            if(thread != null && thread.isComplete)
             {
-                Iterator<Pos3D> it = this.thread.results.iterator();
+                Iterator<Pos3D> it = thread.results.iterator();
 
-                while (it.hasNext())
+                while(it.hasNext())
                 {
                     Pos3D targetPosition = it.next();
                     double distance = targetPosition.clone().distance(position);
@@ -128,8 +134,15 @@ public class BlastSonic extends Blast
 
                     Block block = this.worldObj.getBlock((int)targetPosition.xPos, (int)targetPosition.yPos, (int)targetPosition.zPos);
 
-                    if (worldObj.isAirBlock((int)targetPosition.xPos, (int)targetPosition.yPos, (int)targetPosition.zPos) || block == Blocks.bedrock || block == Blocks.obsidian)
+                    if(!DefenseUtils.canBreak(worldObj, block, targetPosition.xPos, targetPosition.yPos, targetPosition.zPos))
+                    {
+                    	continue;
+                    }
+                    
+                    if(worldObj.isAirBlock((int)targetPosition.xPos, (int)targetPosition.yPos, (int)targetPosition.zPos) || block == Blocks.bedrock || block == Blocks.obsidian)
+                    {
                         continue;
+                    }
 
                     int metadata = this.worldObj.getBlockMetadata((int)targetPosition.xPos, (int)targetPosition.yPos, (int)targetPosition.zPos);
 
@@ -174,8 +187,7 @@ public class BlastSonic extends Blast
                     ((EntityMissile) entity).setExplode();
                     break;
                 }
-                else
-                {
+                else {
                     double xDifference = entity.posX - position.xPos;
                     double zDifference = entity.posZ - position.zPos;
 

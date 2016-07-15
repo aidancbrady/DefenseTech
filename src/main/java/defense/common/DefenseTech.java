@@ -189,7 +189,7 @@ public final class DefenseTech
                     else {
                         if(var14 != null || !BlockRailBase.func_150051_a(var4.getBlock(var11, var12 - 1, var13)))
                         {
-                            return this.defaultItemDispenseBehavior.dispense(blockSource, itemStack);
+                            return defaultItemDispenseBehavior.dispense(blockSource, itemStack);
                         }
 
                         var15 = -1.0D;

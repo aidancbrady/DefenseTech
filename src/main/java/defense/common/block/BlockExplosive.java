@@ -61,26 +61,27 @@ public class BlockExplosive extends BlockBase
     /** gets the way this piston should face for that entity that placed it. */
     private static byte determineOrientation(World world, int x, int y, int z, EntityLivingBase entityLiving)
     {
-        if (entityLiving != null)
+        if(entityLiving != null)
         {
-            if (MathHelper.abs((float) entityLiving.posX - x) < 2.0F && MathHelper.abs((float) entityLiving.posZ - z) < 2.0F)
+            if(MathHelper.abs((float) entityLiving.posX - x) < 2.0F && MathHelper.abs((float) entityLiving.posZ - z) < 2.0F)
             {
                 double var5 = entityLiving.posY + 1.82D - entityLiving.yOffset;
 
-                if (var5 - y > 2.0D)
+                if(var5 - y > 2.0D)
                 {
                     return 1;
                 }
 
-                if (y - var5 > 0.0D)
+                if(y - var5 > 0.0D)
                 {
                     return 0;
                 }
             }
 
             int rotation = MathHelper.floor_double(entityLiving.rotationYaw * 4.0F / 360.0F + 0.5D) & 3;
-            return (byte) (rotation == 0 ? 2 : (rotation == 1 ? 5 : (rotation == 2 ? 3 : (rotation == 3 ? 4 : 0))));
+            return (byte)(rotation == 0 ? 2 : (rotation == 1 ? 5 : (rotation == 2 ? 3 : (rotation == 3 ? 4 : 0))));
         }
+        
         return 0;
     }
 
@@ -89,25 +90,25 @@ public class BlockExplosive extends BlockBase
     {
         TileEntity tileEntity = par1IBlockAccess.getTileEntity(x, y, z);
 
-        if (tileEntity != null)
+        if(tileEntity != null)
         {
-            if (tileEntity instanceof TileExplosive)
+            if(tileEntity instanceof TileExplosive)
             {
-                if (((TileExplosive) tileEntity).explosiveID == Explosive.sMine.getID())
+                if(((TileExplosive)tileEntity).explosiveID == Explosive.sMine.getID())
                 {
-                    this.setBlockBounds(0, 0, 0, 1f, 0.2f, 1f);
+                    setBlockBounds(0, 0, 0, 1f, 0.2f, 1f);
                     return;
                 }
             }
         }
 
-        this.setBlockBounds(0, 0, 0, 1f, 1f, 1f);
+        setBlockBounds(0, 0, 0, 1f, 1f, 1f);
     }
 
     @Override
     public void setBlockBoundsForItemRender()
     {
-        this.setBlockBounds(0, 0, 0, 1f, 1f, 1f);
+        setBlockBounds(0, 0, 0, 1f, 1f, 1f);
     }
 
     /** Returns a bounding box from the pool of bounding boxes (this means this box can change after
@@ -117,13 +118,13 @@ public class BlockExplosive extends BlockBase
     {
         TileEntity tileEntity = par1World.getTileEntity(x, y, z);
 
-        if (tileEntity != null)
+        if(tileEntity != null)
         {
-            if (tileEntity instanceof TileExplosive)
+            if(tileEntity instanceof TileExplosive)
             {
-                if (((TileExplosive) tileEntity).explosiveID == Explosive.sMine.getID())
+                if(((TileExplosive)tileEntity).explosiveID == Explosive.sMine.getID())
                 {
-                    return AxisAlignedBB.getBoundingBox(x + this.minX, y + this.minY, z + this.minZ, x + this.maxX, y + 0.2, z + this.maxZ);
+                    return AxisAlignedBB.getBoundingBox(x + minX, y + minY, z + minZ, x + maxX, y + 0.2, z + maxZ);
                 }
             }
         }
@@ -135,17 +136,17 @@ public class BlockExplosive extends BlockBase
     @Override
     public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase entityLiving, ItemStack itemStack)
     {
-        ((TileExplosive) world.getTileEntity(x, y, z)).explosiveID = itemStack.getItemDamage();
+        ((TileExplosive)world.getTileEntity(x, y, z)).explosiveID = itemStack.getItemDamage();
         int explosiveID = ((TileExplosive) world.getTileEntity(x, y, z)).explosiveID;
 
-        if (!world.isRemote)
+        if(!world.isRemote)
         {
             ExplosivePreDetonationEvent evt = new ExplosivePreDetonationEvent(world, x, y, z, ExplosiveType.BLOCK, ExplosiveRegistry.get(explosiveID));
             MinecraftForge.EVENT_BUS.post(evt);
 
-            if (evt.isCanceled())
+            if(evt.isCanceled())
             {
-                this.dropBlockAsItem(world, x, y, z, explosiveID, 0);
+                dropBlockAsItem(world, x, y, z, explosiveID, 0);
                 world.setBlockToAir(x, y, z);
                 return;
             }
@@ -153,27 +154,27 @@ public class BlockExplosive extends BlockBase
 
         world.setBlockMetadataWithNotify(x, y, z, MekanismUtils.getBaseOrientation(ForgeDirection.NORTH.ordinal(), determineOrientation(world, x, y, z, entityLiving)), 2);
 
-        if (world.isBlockIndirectlyGettingPowered(x, y, z))
+        if(world.isBlockIndirectlyGettingPowered(x, y, z))
         {
             BlockExplosive.detonate(world, x, y, z, explosiveID, 0);
         }
 
         // Check to see if there is fire nearby.
         // If so, then detonate.
-        for (byte i = 0; i < 6; i++)
+        for(byte i = 0; i < 6; i++)
         {
             Pos3D position = new Pos3D(x, y, z);
             position.translate(ForgeDirection.getOrientation(i), 1);
 
             Block block = position.getCoord(world.provider.dimensionId).getBlock(world);
 
-            if (block == Blocks.fire || block == Blocks.flowing_lava || block == Blocks.lava)
+            if(block == Blocks.fire || block == Blocks.flowing_lava || block == Blocks.lava)
             {
                 BlockExplosive.detonate(world, x, y, z, explosiveID, 2);
             }
         }
 
-        if (entityLiving != null)
+        if(entityLiving != null)
         {
             FMLLog.fine(entityLiving.getCommandSenderName() + " placed " + ExplosiveRegistry.get(explosiveID).getExplosiveName() + " in: " + x + ", " + y + ", " + z + ".");
         }
@@ -183,18 +184,18 @@ public class BlockExplosive extends BlockBase
     @Override
     public IIcon getIcon(IBlockAccess par1IBlockAccess, int x, int y, int z, int side)
     {
-        int explosiveID = ((TileExplosive) par1IBlockAccess.getTileEntity(x, y, z)).explosiveID;
+        int explosiveID = ((TileExplosive)par1IBlockAccess.getTileEntity(x, y, z)).explosiveID;
         return getIcon(side, explosiveID);
     }
 
     @Override
     public IIcon getIcon(int side, int explosiveID)
     {
-        if (side == 0)
+        if(side == 0)
         {
             return ICON_BOTTOM[explosiveID];
         }
-        else if (side == 1)
+        else if(side == 1)
         {
             return ICON_TOP[explosiveID];
         }
@@ -207,11 +208,11 @@ public class BlockExplosive extends BlockBase
     public void registerBlockIcons(IIconRegister iconRegister)
     {
         /** Register every single texture for all explosives. */
-        for (Explosive zhaPin : ExplosiveRegistry.getExplosives())
+        for(Explosive zhaPin : ExplosiveRegistry.getExplosives())
         {
-            ICON_TOP[zhaPin.getID()] = this.getIcon(iconRegister, zhaPin, "_top");
-            ICON_SIDE[zhaPin.getID()] = this.getIcon(iconRegister, zhaPin, "_side");
-            ICON_BOTTOM[zhaPin.getID()] = this.getIcon(iconRegister, zhaPin, "_bottom");
+            ICON_TOP[zhaPin.getID()] = getIcon(iconRegister, zhaPin, "_top");
+            ICON_SIDE[zhaPin.getID()] = getIcon(iconRegister, zhaPin, "_side");
+            ICON_BOTTOM[zhaPin.getID()] = getIcon(iconRegister, zhaPin, "_bottom");
         }
     }
 
@@ -220,22 +221,18 @@ public class BlockExplosive extends BlockBase
     {
         String iconName = "explosive_" + zhaPin.getUnlocalizedName() + suffix;
 
-        try
-        {
+        try {
             ResourceLocation resourcelocation = new ResourceLocation(Reference.DOMAIN, Reference.BLOCK_PATH + iconName + ".png");
             InputStream inputstream = Minecraft.getMinecraft().getResourceManager().getResource(resourcelocation).getInputStream();
             BufferedImage bufferedimage = ImageIO.read(inputstream);
 
-            if (bufferedimage != null)
+            if(bufferedimage != null)
             {
                 return iconRegister.registerIcon(Reference.PREFIX + iconName);
             }
-        }
-        catch (Exception e)
-        {
-        }
+        } catch(Exception e) {}
 
-        if (suffix.equals("_bottom"))
+        if(suffix.equals("_bottom"))
         {
             return iconRegister.registerIcon(Reference.PREFIX + "explosive_bottom_" + zhaPin.getTier());
         }
@@ -243,7 +240,6 @@ public class BlockExplosive extends BlockBase
         return iconRegister.registerIcon(Reference.PREFIX + "explosive_base_" + zhaPin.getTier());
     }
 
-    /** Called whenever the block is added into the world. Args: world, x, y, z */
     @Override
     public void onBlockAdded(World par1World, int x, int y, int z)
     {
@@ -252,8 +248,6 @@ public class BlockExplosive extends BlockBase
         par1World.func_147479_m(x, y, z);
     }
 
-    /** Lets the block know when one of its neighbor changes. Doesn't know which neighbor changed
-     * (coordinates passed are their own) Args: x, y, z, neighbor blockID */
     @Override
     public void onNeighborBlockChange(World world, int x, int y, int z, Block block)
     {
@@ -275,23 +269,23 @@ public class BlockExplosive extends BlockBase
      */
     public static void detonate(World world, int x, int y, int z, int explosiveID, int causeOfExplosion)
     {
-        if (!world.isRemote)
+        if(!world.isRemote)
         {
             TileEntity tileEntity = world.getTileEntity(x, y, z);
 
-            if (tileEntity != null)
+            if(tileEntity != null)
             {
-                if (tileEntity instanceof TileExplosive)
+                if(tileEntity instanceof TileExplosive)
                 {
                     ExplosivePreDetonationEvent evt = new ExplosivePreDetonationEvent(world, x, y, z, ExplosiveType.BLOCK, ExplosiveRegistry.get(((TileExplosive) tileEntity).explosiveID));
                     MinecraftForge.EVENT_BUS.post(evt);
 
-                    if (!evt.isCanceled())
+                    if(!evt.isCanceled())
                     {
-                        ((TileExplosive) tileEntity).exploding = true;
-                        EntityExplosive eZhaDan = new EntityExplosive(world, new Pos3D(x, y, z).translate(0.5, 0.5, 0.5), ((TileExplosive) tileEntity).explosiveID, (byte) world.getBlockMetadata(x, y, z), ((TileExplosive) tileEntity).nbtData);
+                        ((TileExplosive)tileEntity).exploding = true;
+                        EntityExplosive eZhaDan = new EntityExplosive(world, new Pos3D(x, y, z).translate(0.5, 0.5, 0.5), ((TileExplosive)tileEntity).explosiveID, (byte)world.getBlockMetadata(x, y, z), ((TileExplosive)tileEntity).nbtData);
 
-                        switch (causeOfExplosion)
+                        switch(causeOfExplosion)
                         {
                             case 2:
                                 eZhaDan.setFire(100);
@@ -310,7 +304,7 @@ public class BlockExplosive extends BlockBase
     @Override
     public void onBlockExploded(World world, int x, int y, int z, Explosion explosion)
     {
-        if (world.getTileEntity(x, y, z) != null)
+        if(world.getTileEntity(x, y, z) != null)
         {
             int explosiveID = ((TileExplosive) world.getTileEntity(x, y, z)).explosiveID;
             BlockExplosive.detonate(world, x, y, z, explosiveID, 1);
@@ -326,20 +320,20 @@ public class BlockExplosive extends BlockBase
     {
         TileEntity tileEntity = world.getTileEntity(x, y, z);
 
-        if (entityPlayer.getCurrentEquippedItem() != null)
+        if(entityPlayer.getCurrentEquippedItem() != null)
         {
-            if (entityPlayer.getCurrentEquippedItem().getItem() == Items.flint_and_steel)
+            if(entityPlayer.getCurrentEquippedItem().getItem() == Items.flint_and_steel)
             {
                 int explosiveID = ((TileExplosive) tileEntity).explosiveID;
                 BlockExplosive.detonate(world, x, y, z, explosiveID, 0);
                 return true;
             }
-            else if (MekanismUtils.hasUsableWrench(entityPlayer, x, y, z))
+            else if(MekanismUtils.hasUsableWrench(entityPlayer, x, y, z))
             {
                 byte change = 3;
 
                 // Reorient the block
-                switch (world.getBlockMetadata(x, y, z))
+                switch(world.getBlockMetadata(x, y, z))
                 {
                     case 0:
                         change = 2;
@@ -362,16 +356,15 @@ public class BlockExplosive extends BlockBase
                 }
 
                 world.setBlockMetadataWithNotify(x, y, z, ForgeDirection.getOrientation(change).ordinal(), 3);
-
                 world.notifyBlockChange(x, y, z, this);
+               
                 return true;
             }
-
         }
 
-        if (tileEntity instanceof TileExplosive)
+        if(tileEntity instanceof TileExplosive)
         {
-            return ExplosiveRegistry.get(((TileExplosive) tileEntity).explosiveID).onBlockActivated(world, x, y, z, entityPlayer, par6, par7, par8, par9);
+            return ExplosiveRegistry.get(((TileExplosive)tileEntity).explosiveID).onBlockActivated(world, x, y, z, entityPlayer, par6, par7, par8, par9);
         }
 
         return false;
@@ -387,9 +380,9 @@ public class BlockExplosive extends BlockBase
     @Override
     public ItemStack getPickBlock(MovingObjectPosition target, World world, int x, int y, int z)
     {
-        if (world.getTileEntity(x, y, z) != null)
+        if(world.getTileEntity(x, y, z) != null)
         {
-            int explosiveID = ((TileExplosive) world.getTileEntity(x, y, z)).explosiveID;
+            int explosiveID = ((TileExplosive)world.getTileEntity(x, y, z)).explosiveID;
 
             return new ItemStack(this, 1, explosiveID);
         }
@@ -402,16 +395,16 @@ public class BlockExplosive extends BlockBase
     {
         TileEntity tileEntity = world.getTileEntity(x, y, z);
 
-        if (tileEntity != null)
+        if(tileEntity != null)
         {
-            if (tileEntity instanceof TileExplosive)
+            if(tileEntity instanceof TileExplosive)
             {
-                if (!((TileExplosive) tileEntity).exploding)
+                if(!((TileExplosive)tileEntity).exploding)
                 {
-                    int explosiveID = ((TileExplosive) tileEntity).explosiveID;
+                    int explosiveID = ((TileExplosive)tileEntity).explosiveID;
                     Item item = getItemDropped(world.getBlockMetadata(x, y, z), world.rand, 0);
 
-                    this.dropBlockAsItem(world, x, y, z, new ItemStack(item, 1, explosiveID));
+                    dropBlockAsItem(world, x, y, z, new ItemStack(item, 1, explosiveID));
                 }
             }
         }
@@ -428,11 +421,11 @@ public class BlockExplosive extends BlockBase
     @Override
     public void getSubBlocks(Item par1, CreativeTabs par2CreativeTabs, List par3List)
     {
-        for (Explosive zhaPin : ExplosiveRegistry.getExplosives())
+        for(Explosive explosive : ExplosiveRegistry.getExplosives())
         {
-            if (zhaPin.hasBlockForm())
+            if(explosive.hasBlockForm())
             {
-                par3List.add(new ItemStack(par1, 1, zhaPin.getID()));
+                par3List.add(new ItemStack(par1, 1, explosive.getID()));
             }
         }
     }

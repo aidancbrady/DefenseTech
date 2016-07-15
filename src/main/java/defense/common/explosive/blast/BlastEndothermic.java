@@ -3,9 +3,6 @@ package defense.common.explosive.blast;
 import java.util.Iterator;
 import java.util.List;
 
-import defense.common.Reference;
-import defense.common.potion.CustomPotionEffect;
-import defense.common.potion.PoisonFrostBite;
 import mekanism.api.Pos3D;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
@@ -15,10 +12,14 @@ import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.World;
+import defense.common.DefenseUtils;
+import defense.common.Reference;
+import defense.common.potion.CustomPotionEffect;
+import defense.common.potion.PoisonFrostBite;
 
-public class BlastSky extends BlastBeam
+public class BlastEndothermic extends BlastBeam
 {
-    public BlastSky(World world, Entity entity, double x, double y, double z, float size)
+    public BlastEndothermic(World world, Entity entity, double x, double y, double z, float size)
     {
         super(world, entity, x, y, z, size);
         this.red = 0f;
@@ -77,13 +78,16 @@ public class BlastSky extends BlastBeam
                          */
                         Block block = this.worldObj.getBlock((int)targetPosition.xPos, (int)targetPosition.yPos, (int)targetPosition.zPos);
 
-                        if (block == Blocks.fire || block == Blocks.flowing_lava || block == Blocks.lava)
+                        if(DefenseUtils.canBreak(worldObj, block, targetPosition.xPos, targetPosition.yPos, targetPosition.zPos))
                         {
-                            this.worldObj.setBlock((int)targetPosition.xPos, (int)targetPosition.yPos, (int)targetPosition.zPos, Blocks.snow, 0, 2);
-                        }
-                        else if (worldObj.isAirBlock((int)targetPosition.xPos, (int)targetPosition.yPos, (int)targetPosition.zPos) && this.worldObj.getBlock((int)targetPosition.xPos, (int)targetPosition.yPos - 1, (int)targetPosition.zPos) != Blocks.ice && !worldObj.isAirBlock((int)targetPosition.xPos, (int)targetPosition.yPos - 1, (int)targetPosition.zPos))
-                        {
-                            this.worldObj.setBlock((int)targetPosition.xPos, (int)targetPosition.yPos, (int)targetPosition.zPos, Blocks.ice, 0, 2);
+	                        if (block == Blocks.fire || block == Blocks.flowing_lava || block == Blocks.lava)
+	                        {
+	                            this.worldObj.setBlock((int)targetPosition.xPos, (int)targetPosition.yPos, (int)targetPosition.zPos, Blocks.snow, 0, 2);
+	                        }
+	                        else if (worldObj.isAirBlock((int)targetPosition.xPos, (int)targetPosition.yPos, (int)targetPosition.zPos) && this.worldObj.getBlock((int)targetPosition.xPos, (int)targetPosition.yPos - 1, (int)targetPosition.zPos) != Blocks.ice && !worldObj.isAirBlock((int)targetPosition.xPos, (int)targetPosition.yPos - 1, (int)targetPosition.zPos))
+	                        {
+	                            this.worldObj.setBlock((int)targetPosition.xPos, (int)targetPosition.yPos, (int)targetPosition.zPos, Blocks.ice, 0, 2);
+	                        }
                         }
                     }
                 }

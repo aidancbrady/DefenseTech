@@ -11,6 +11,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
+import defense.common.DefenseUtils;
 
 public class BlastRepulsive extends Blast
 {
@@ -105,28 +106,28 @@ public class BlastRepulsive extends Blast
                 break;
         }
 
-        if (!this.worldObj.isRemote)
+        if(!this.worldObj.isRemote)
         {
             int var3;
             Pos3D blownPosition;
-            int var5;
-            int var6;
-            int var7;
+            int x;
+            int y;
+            int z;
             Block block;
             int metadata;
 
-            for (var3 = blownBlocks.size() - 1; var3 >= 0; --var3)
+            for(var3 = blownBlocks.size() - 1; var3 >= 0; --var3)
             {
                 blownPosition = blownBlocks.get(var3);
-                var5 = (int)blownPosition.xPos;
-                var6 = (int)blownPosition.yPos;
-                var7 = (int)blownPosition.zPos;
-                block = this.worldObj.getBlock(var5, var6, var7);
-                metadata = this.worldObj.getBlockMetadata(var5, var6, var7);
+                x = (int)blownPosition.xPos;
+                y = (int)blownPosition.yPos;
+                z = (int)blownPosition.zPos;
+                block = this.worldObj.getBlock(x, y, z);
+                metadata = this.worldObj.getBlockMetadata(x, y, z);
 
-                double var9 = (var5 + this.worldObj.rand.nextFloat());
-                double var11 = (var6 + this.worldObj.rand.nextFloat());
-                double var13 = (var7 + this.worldObj.rand.nextFloat());
+                double var9 = (x + this.worldObj.rand.nextFloat());
+                double var11 = (y + this.worldObj.rand.nextFloat());
+                double var13 = (z + this.worldObj.rand.nextFloat());
                 double var151 = var9 - this.position.yPos;
                 double var171 = var11 - this.position.yPos;
                 double var191 = var13 - this.position.zPos;
@@ -142,19 +143,16 @@ public class BlastRepulsive extends Blast
                 this.worldObj.spawnParticle("explode", (var9 + this.position.xPos * 1.0D) / 2.0D, (var11 + this.position.yPos * 1.0D) / 2.0D, (var13 + this.position.zPos * 1.0D) / 2.0D, var151, var171, var191);
                 this.worldObj.spawnParticle("smoke", var9, var11, var13, var151, var171, var191);
 
-                if (!worldObj.isAirBlock(var5, var6, var7))
+                if(!worldObj.isAirBlock(x, y, z) && DefenseUtils.canBreak(worldObj, block, x, y, z))
                 {
-                    try
-                    {
-                        if (block.canDropFromExplosion(null))
+                    try {
+                        if(block.canDropFromExplosion(null))
                         {
-                            block.dropBlockAsItemWithChance(this.worldObj, var5, var6, var7, this.worldObj.getBlockMetadata(var5, var6, var7), 1F, 0);
+                            block.dropBlockAsItemWithChance(worldObj, x, y, z, worldObj.getBlockMetadata(x, y, z), 1F, 0);
                         }
 
-                        block.onBlockExploded(this.worldObj, var5, var6, var7, this);
-                    }
-                    catch (Exception e)
-                    {
+                        block.onBlockExploded(worldObj, x, y, z, this);
+                    } catch(Exception e) {
                         e.printStackTrace();
                     }
                 }

@@ -102,8 +102,7 @@ public abstract class BlastBeam extends Blast
                     }
                 }*/
             }
-            else
-            {
+            else {
                 this.controller.endExplosion();
             }
 
@@ -154,5 +153,4 @@ public abstract class BlastBeam extends Blast
     {
         return 10000;
     }
-
 }

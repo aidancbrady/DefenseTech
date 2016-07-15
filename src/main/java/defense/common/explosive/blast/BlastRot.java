@@ -8,6 +8,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidRegistry;
 import defense.common.DefenseTechBlocks;
+import defense.common.DefenseUtils;
 import defense.common.explosive.thread.ThreadLargeExplosion;
 
 /** Creates radiation spawning
@@ -51,6 +52,11 @@ public class BlastRot extends Blast
                     /** Decay the blocks. */
                     Block block = new Coord4D((int)targetPosition.xPos, (int)targetPosition.yPos, (int)targetPosition.zPos).getBlock(worldObj);
 
+                    if(!DefenseUtils.canBreak(worldObj, block, targetPosition.xPos, targetPosition.yPos, targetPosition.zPos))
+                    {
+                    	continue;
+                    }
+                    
                     if (!worldObj.isAirBlock((int)targetPosition.xPos, (int)targetPosition.yPos, (int)targetPosition.zPos))
                     {
                         if (block == Blocks.grass || block == Blocks.sand)

@@ -29,7 +29,7 @@ public class ExIncendiary extends Explosion
     @Override
     public void init()
     {
-        GameRegistry.addRecipe(new ShapedMekanismRecipe(this.getItemStack(), new Object[] { "@@@", "@?@", "@!@", '@', "dustSulfur", '?', replsive.getItemStack(), '!', Items.lava_bucket }));
+        GameRegistry.addRecipe(new ShapedMekanismRecipe(this.getItemStack(), new Object[] { "@@@", "@?@", "@!@", '@', "dustSulfur", '?', repulsive.getItemStack(), '!', Items.lava_bucket }));
     }
 
     @Override

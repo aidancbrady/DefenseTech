@@ -9,7 +9,7 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import defense.client.model.missile.ModelEndothermicMissile;
 import defense.client.model.missile.ModelMissileBase;
-import defense.common.explosive.blast.BlastSky;
+import defense.common.explosive.blast.BlastEndothermic;
 
 public class ExEndothermic extends Explosion
 {
@@ -34,6 +34,6 @@ public class ExEndothermic extends Explosion
     @Override
     public void doCreateExplosion(World world, double x, double y, double z, Entity entity)
     {
-        new BlastSky(world, entity, x, y, z, 50).explode();
+        new BlastEndothermic(world, entity, x, y, z, 50).explode();
     }
 }

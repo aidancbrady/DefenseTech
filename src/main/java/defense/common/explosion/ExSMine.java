@@ -30,7 +30,7 @@ public class ExSMine extends Explosive
     @Override
     public void init()
     {
-        GameRegistry.addRecipe(new ShapedMekanismRecipe(this.getItemStack(), new Object[] { "S", "L", "R", 'S', Explosive.fragmentation.getItemStack(), 'L', Explosive.attractive.getItemStack(), 'R', Explosive.replsive.getItemStack() }));
+        GameRegistry.addRecipe(new ShapedMekanismRecipe(this.getItemStack(), new Object[] { "S", "L", "R", 'S', Explosive.fragmentation.getItemStack(), 'L', Explosive.attractive.getItemStack(), 'R', Explosive.repulsive.getItemStack() }));
     }
 
     @SideOnly(Side.CLIENT)

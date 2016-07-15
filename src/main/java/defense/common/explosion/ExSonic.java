@@ -43,7 +43,7 @@ public class ExSonic extends Explosion
         }
         else
         {
-            GameRegistry.addRecipe(new ShapedMekanismRecipe(this.getItemStack(), new Object[] { "@?@", "?R?", "@?@", 'R', Explosive.replsive.getItemStack(), '?', Blocks.noteblock, '@', "ingotBronze" }));
+            GameRegistry.addRecipe(new ShapedMekanismRecipe(this.getItemStack(), new Object[] { "@?@", "?R?", "@?@", 'R', Explosive.repulsive.getItemStack(), '?', Blocks.noteblock, '@', "ingotBronze" }));
         }
     }
 

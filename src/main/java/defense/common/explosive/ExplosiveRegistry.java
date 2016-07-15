@@ -68,11 +68,11 @@ public class ExplosiveRegistry
     {
         Collection<Explosion> missiles = new HashSet<Explosion>();
 
-        for(Explosive zhaPin : idToExplosiveMap.values())
+        for(Explosive explosive : idToExplosiveMap.values())
         {
-            if(zhaPin instanceof Explosion)
+            if(explosive instanceof Explosion)
             {
-                missiles.add((Explosion) zhaPin);
+                missiles.add((Explosion)explosive);
             }
         }
 

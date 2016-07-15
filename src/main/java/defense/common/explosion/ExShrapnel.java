@@ -44,7 +44,7 @@ public class ExShrapnel extends Explosion
     {
         if (this.getID() == Explosive.shrapnel.getID())
         {
-            GameRegistry.addRecipe(new ShapedMekanismRecipe(this.getItemStack(), new Object[] { "???", "?@?", "???", '@', replsive.getItemStack(), '?', Items.arrow }));
+            GameRegistry.addRecipe(new ShapedMekanismRecipe(this.getItemStack(), new Object[] { "???", "?@?", "???", '@', repulsive.getItemStack(), '?', Items.arrow }));
         }
         else if (this.getID() == Explosive.anvil.getID())
         {

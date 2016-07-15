@@ -35,6 +35,6 @@ public class ExEMP extends Explosion
     @Override
     public void init()
     {
-        GameRegistry.addRecipe(new ShapedMekanismRecipe(this.getItemStack(), new Object[] { "RBR", "BTB", "RBR", 'T', replsive.getItemStack(), 'R', Blocks.redstone_block, 'B', MekanismItems.EnergyTablet.getUnchargedItem() }));
+        GameRegistry.addRecipe(new ShapedMekanismRecipe(this.getItemStack(), new Object[] { "RBR", "BTB", "RBR", 'T', repulsive.getItemStack(), 'R', Blocks.redstone_block, 'B', MekanismItems.EnergyTablet.getUnchargedItem() }));
     }
 }

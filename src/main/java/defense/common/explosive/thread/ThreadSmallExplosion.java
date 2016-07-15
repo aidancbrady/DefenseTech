@@ -21,22 +21,22 @@ public class ThreadSmallExplosion extends ThreadExplosion
     {
         if (!worldObj.isRemote)
         {
-            for (int x = 0; x < this.radius; ++x)
+            for (int x = 0; x < this.explosionRadius; ++x)
             {
-                for (int y = 0; y < this.radius; ++y)
+                for (int y = 0; y < this.explosionRadius; ++y)
                 {
-                    for (int z = 0; z < this.radius; ++z)
+                    for (int z = 0; z < this.explosionRadius; ++z)
                     {
-                        if (x == 0 || x == this.radius - 1 || y == 0 || y == this.radius - 1 || z == 0 || z == this.radius - 1)
+                        if (x == 0 || x == this.explosionRadius - 1 || y == 0 || y == this.explosionRadius - 1 || z == 0 || z == this.explosionRadius - 1)
                         {
-                            double xStep = x / (this.radius - 1.0F) * 2.0F - 1.0F;
-                            double yStep = y / (this.radius - 1.0F) * 2.0F - 1.0F;
-                            double zStep = z / (this.radius - 1.0F) * 2.0F - 1.0F;
+                            double xStep = x / (this.explosionRadius - 1.0F) * 2.0F - 1.0F;
+                            double yStep = y / (this.explosionRadius - 1.0F) * 2.0F - 1.0F;
+                            double zStep = z / (this.explosionRadius - 1.0F) * 2.0F - 1.0F;
                             double diagonalDistance = Math.sqrt(xStep * xStep + yStep * yStep + zStep * zStep);
                             xStep /= diagonalDistance;
                             yStep /= diagonalDistance;
                             zStep /= diagonalDistance;
-                            float power = this.radius * (0.7F + this.worldObj.rand.nextFloat() * 0.6F);
+                            float power = this.explosionRadius * (0.7F + this.worldObj.rand.nextFloat() * 0.6F);
                             double var15 = position.xPos;
                             double var17 = position.yPos;
                             double var19 = position.zPos;
@@ -57,7 +57,7 @@ public class ThreadSmallExplosion extends ThreadExplosion
                                     }
                                     else
                                     {
-                                        resistance = block.getExplosionResistance(this.source, this.worldObj, (int)targetPosition.xPos, (int)targetPosition.yPos, (int)targetPosition.zPos, position.xPos, position.yPos, position.zPos);
+                                        resistance = block.getExplosionResistance(this.explosionSource, this.worldObj, (int)targetPosition.xPos, (int)targetPosition.yPos, (int)targetPosition.zPos, position.xPos, position.yPos, position.zPos);
                                     }
                                     // TODO rather than remove power divert a percentage to the
                                     // sides, and then calculate how much is absorbed by the block

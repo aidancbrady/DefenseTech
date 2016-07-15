@@ -19,13 +19,12 @@ public class BlastRegen extends Blast
     @Override
     public void doExplode()
     {
-        if (!worldObj.isRemote)
+        if(!worldObj.isRemote)
         {
-            try
-            {
+            try {
                 Chunk oldChunk = worldObj.getChunkFromBlockCoords((int)position.xPos, (int)position.zPos);
 
-                if (worldObj instanceof WorldServer)
+                if(worldObj instanceof WorldServer)
                 {
                     WorldServer worldServer = (WorldServer) worldObj;
                     ChunkProviderServer chunkProviderServer = worldServer.theChunkProviderServer;
@@ -46,7 +45,7 @@ public class BlastRegen extends Blast
 
                                 TileEntity tileEntity = newChunk.getTileEntityUnsafe(x, y, z);
 
-                                if (tileEntity != null)
+                                if(tileEntity != null)
                                 {
                                     worldServer.setTileEntity(x + oldChunk.xPosition * 16, y, z + oldChunk.zPosition * 16, tileEntity);
                                 }
@@ -57,9 +56,7 @@ public class BlastRegen extends Blast
                     oldChunk.isTerrainPopulated = false;
                     chunkProviderGenerate.populate(chunkProviderGenerate, oldChunk.xPosition, oldChunk.zPosition);
                 }
-            }
-            catch (Exception e)
-            {
+            } catch(Exception e) {
                 System.out.println("Rejuvenation Failed!");
                 e.printStackTrace();
             }

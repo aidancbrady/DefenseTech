@@ -5,6 +5,7 @@ import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
+import defense.common.DefenseUtils;
 import defense.common.Reference;
 import defense.common.Settings;
 
@@ -13,16 +14,16 @@ public class BlastExothermic extends BlastBeam
     public BlastExothermic(World world, Entity entity, double x, double y, double z, float size)
     {
         super(world, entity, x, y, z, size);
-        this.red = 0.7f;
-        this.green = 0.3f;
-        this.blue = 0;
+        red = 0.7f;
+        green = 0.3f;
+        blue = 0;
     }
 
     @Override
     public void doExplode()
     {
         super.doExplode();
-        this.worldObj.playSoundEffect(position.xPos, position.yPos, position.zPos, Reference.PREFIX + "beamcharging", 4.0F, 0.8F);
+        worldObj.playSoundEffect(position.xPos, position.yPos, position.zPos, Reference.PREFIX + "beamcharging", 4.0F, 0.8F);
     }
 
     @Override
@@ -30,66 +31,73 @@ public class BlastExothermic extends BlastBeam
     {
         super.doPostExplode();
 
-        if (!this.worldObj.isRemote)
+        if (!worldObj.isRemote)
         {
-            this.worldObj.playSoundEffect(position.xPos, position.yPos, position.zPos, Reference.PREFIX + "powerdown", 4.0F, 0.8F);
+            worldObj.playSoundEffect(position.xPos, position.yPos, position.zPos, Reference.PREFIX + "powerdown", 4.0F, 0.8F);
 
-            if (this.canFocusBeam(this.worldObj, position) && this.thread.isComplete)
+            if (canFocusBeam(worldObj, position) && thread.isComplete)
             {
-                for (Pos3D targetPosition : this.thread.results)
+                for (Pos3D targetPosition : thread.results)
                 {
                     double distanceFromCenter = position.distance(targetPosition);
 
-                    if (distanceFromCenter > this.getRadius())
+                    if(distanceFromCenter > getRadius())
+                    {
                         continue;
+                    }
 
                     /*
                      * Reduce the chance of setting blocks on fire based on distance from center.
                      */
-                    double chance = this.getRadius() - (Math.random() * distanceFromCenter);
+                    double chance = getRadius() - (Math.random() * distanceFromCenter);
 
-                    if (chance > distanceFromCenter * 0.55)
+                    if(chance > distanceFromCenter * 0.55)
                     {
                         /*
                          * Check to see if the block is an air block and there is a block below it
                          * to support the fire.
                          */
-                        Block block = this.worldObj.getBlock((int)targetPosition.xPos, (int)targetPosition.yPos, (int)targetPosition.zPos);
+                        Block block = worldObj.getBlock((int)targetPosition.xPos, (int)targetPosition.yPos, (int)targetPosition.zPos);
 
-                        if (block == Blocks.water || block == Blocks.flowing_water || block == Blocks.ice)
+                        if(DefenseUtils.canBreak(worldObj, block, targetPosition.xPos, targetPosition.yPos, targetPosition.zPos))
                         {
-                            this.worldObj.setBlockToAir((int)targetPosition.xPos, (int)targetPosition.yPos, (int)targetPosition.zPos);
-                        }
-
-                        if ((worldObj.isAirBlock((int)targetPosition.xPos, (int)targetPosition.yPos, (int)targetPosition.zPos) || block == Blocks.snow) && this.worldObj.getBlock((int)targetPosition.xPos, (int)targetPosition.yPos - 1, (int)targetPosition.zPos).getMaterial().isSolid())
-                        {
-                            if (this.worldObj.rand.nextFloat() > 0.999)
-                            {
-                                this.worldObj.setBlock((int)targetPosition.xPos, (int)targetPosition.yPos, (int)targetPosition.zPos, Blocks.flowing_lava, 0, 2);
-                            }
-                            else
-                            {
-                                this.worldObj.setBlock((int)targetPosition.xPos, (int)targetPosition.yPos, (int)targetPosition.zPos, Blocks.fire, 0, 2);
-
-                                block = this.worldObj.getBlock((int)targetPosition.xPos, (int)targetPosition.yPos - 1, (int)targetPosition.zPos);
-
-                                if (Settings.CREATE_NETHERRACK && (block == Blocks.stone || block == Blocks.grass || block == Blocks.dirt) && this.worldObj.rand.nextFloat() > 0.75)
-                                {
-                                    this.worldObj.setBlock((int)targetPosition.xPos, (int)targetPosition.yPos - 1, (int)targetPosition.zPos, Blocks.netherrack, 0, 2);
-                                }
-                            }
-                        }
-                        else if (block == Blocks.ice)
-                        {
-                            this.worldObj.setBlockToAir((int)targetPosition.xPos, (int)targetPosition.yPos, (int)targetPosition.zPos);
+	                        if(block == Blocks.water || block == Blocks.flowing_water || block == Blocks.ice)
+	                        {
+	                        	worldObj.setBlockToAir((int)targetPosition.xPos, (int)targetPosition.yPos, (int)targetPosition.zPos);
+	                        }
+	
+	                        if((worldObj.isAirBlock((int)targetPosition.xPos, (int)targetPosition.yPos, (int)targetPosition.zPos) || block == Blocks.snow) && worldObj.getBlock((int)targetPosition.xPos, (int)targetPosition.yPos - 1, (int)targetPosition.zPos).getMaterial().isSolid())
+	                        {
+	                            if(worldObj.rand.nextFloat() > 0.999)
+	                            {
+	                                worldObj.setBlock((int)targetPosition.xPos, (int)targetPosition.yPos, (int)targetPosition.zPos, Blocks.flowing_lava, 0, 2);
+	                            }
+	                            else {
+	                                worldObj.setBlock((int)targetPosition.xPos, (int)targetPosition.yPos, (int)targetPosition.zPos, Blocks.fire, 0, 2);
+	
+	                                block = worldObj.getBlock((int)targetPosition.xPos, (int)targetPosition.yPos - 1, (int)targetPosition.zPos);
+	
+	                                if (Settings.CREATE_NETHERRACK && (block == Blocks.stone || block == Blocks.grass || block == Blocks.dirt) && worldObj.rand.nextFloat() > 0.75)
+	                                {
+	                                    worldObj.setBlock((int)targetPosition.xPos, (int)targetPosition.yPos - 1, (int)targetPosition.zPos, Blocks.netherrack, 0, 2);
+	                                }
+	                            }
+	                        }
+	                        else if(block == Blocks.ice)
+	                        {
+	                        	if(DefenseUtils.canBreak(worldObj, block, targetPosition.xPos, targetPosition.yPos, targetPosition.zPos))
+	                        	{
+	                        		worldObj.setBlockToAir((int)targetPosition.xPos, (int)targetPosition.yPos, (int)targetPosition.zPos);
+	                        	}
+	                        }
                         }
                     }
                 }
 
-                this.worldObj.playSoundEffect(position.xPos + 0.5D, position.yPos + 0.5D, position.zPos + 0.5D, Reference.PREFIX + "explosionfire", 6.0F, (1.0F + (worldObj.rand.nextFloat() - worldObj.rand.nextFloat()) * 0.2F) * 1F);
+                worldObj.playSoundEffect(position.xPos + 0.5D, position.yPos + 0.5D, position.zPos + 0.5D, Reference.PREFIX + "explosionfire", 6.0F, (1.0F + (worldObj.rand.nextFloat() - worldObj.rand.nextFloat()) * 0.2F) * 1F);
             }
 
-            this.worldObj.setWorldTime(18000);
+            worldObj.setWorldTime(18000);
         }
     }
 
@@ -98,7 +106,7 @@ public class BlastExothermic extends BlastBeam
     {
         long worldTime = worldObj.getWorldTime();
 
-        while (worldTime > 23999)
+        while(worldTime > 23999)
         {
             worldTime -= 23999;
         }

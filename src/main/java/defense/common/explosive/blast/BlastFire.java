@@ -1,11 +1,12 @@
 package defense.common.explosive.blast;
 
-import defense.common.Reference;
 import mekanism.api.Pos3D;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
+import defense.common.DefenseUtils;
+import defense.common.Reference;
 
 public class BlastFire extends Blast
 {
@@ -47,30 +48,33 @@ public class BlastFire extends Blast
                                 double distanceFromCenter = position.distance(targetPosition);
                                 Block block = worldObj.getBlock((int)targetPosition.xPos, (int)targetPosition.yPos, (int)targetPosition.zPos);
 
-                                if (!worldObj.isAirBlock((int)targetPosition.xPos, (int)targetPosition.yPos, (int)targetPosition.zPos))
+                                if(!worldObj.isAirBlock((int)targetPosition.xPos, (int)targetPosition.yPos, (int)targetPosition.zPos))
                                 {
                                     var14 -= (block.getExplosionResistance(this.exploder, worldObj, (int)targetPosition.xPos, (int)targetPosition.yPos, (int)targetPosition.zPos, position.xPos, position.yPos, position.zPos) + 0.3F) * var21;
                                 }
 
-                                if (var14 > 0.0F)
+                                if(var14 > 0.0F)
                                 {
                                     // Set fire by chance and distance
                                     double chance = radius - (Math.random() * distanceFromCenter);
 
-                                    if (chance > distanceFromCenter * 0.55)
+                                    if(chance > distanceFromCenter * 0.55)
                                     {
                                         /*
                                          * Check to see if the block is an air block and there is a
                                          * block below it to support the fire.
                                          */
                                     	
-                                        if ((worldObj.isAirBlock((int)targetPosition.xPos, (int)targetPosition.yPos, (int)targetPosition.zPos) || block == Blocks.snow) && worldObj.getBlock((int)targetPosition.xPos, (int)targetPosition.yPos - 1, (int)targetPosition.zPos).getMaterial().isSolid())
+                                        if((worldObj.isAirBlock((int)targetPosition.xPos, (int)targetPosition.yPos, (int)targetPosition.zPos) || block == Blocks.snow) && worldObj.getBlock((int)targetPosition.xPos, (int)targetPosition.yPos - 1, (int)targetPosition.zPos).getMaterial().isSolid())
                                         {
                                             worldObj.setBlock((int)targetPosition.xPos, (int)targetPosition.yPos, (int)targetPosition.zPos, Blocks.fire, 0, 2);
                                         }
-                                        else if (block == Blocks.ice)
+                                        else if(block == Blocks.ice)
                                         {
-                                            worldObj.setBlock((int)targetPosition.xPos, (int)targetPosition.yPos, (int)targetPosition.zPos, Blocks.air, 0, 2);
+                                        	if(DefenseUtils.canBreak(worldObj, block, targetPosition.xPos, targetPosition.yPos, targetPosition.zPos))
+                                        	{
+                                        		worldObj.setBlockToAir((int)targetPosition.xPos, (int)targetPosition.yPos, (int)targetPosition.zPos);
+                                        	}
                                         }
                                     }
                                 }

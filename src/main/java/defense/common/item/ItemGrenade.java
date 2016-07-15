@@ -15,8 +15,8 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import defense.api.ExplosiveType;
 import defense.api.ExplosionEvent.ExplosivePreDetonationEvent;
+import defense.api.ExplosiveType;
 import defense.common.Reference;
 import defense.common.entity.EntityGrenade;
 import defense.common.explosive.Explosive;
@@ -55,20 +55,9 @@ public class ItemGrenade extends ItemBase
     @Override
     public ItemStack onItemRightClick(ItemStack itemStack, World world, EntityPlayer entityPlayer)
     {
-        if (itemStack != null)
+        if(itemStack != null)
         {
-            Explosive zhaPin = ExplosiveRegistry.get(itemStack.getItemDamage());
-            ExplosivePreDetonationEvent evt = new ExplosivePreDetonationEvent(world, entityPlayer, ExplosiveType.ITEM, zhaPin);
-            MinecraftForge.EVENT_BUS.post(evt);
-
-            if (!evt.isCanceled())
-            {
-                entityPlayer.setItemInUse(itemStack, this.getMaxItemUseDuration(itemStack));
-            }
-            else
-            {
-                entityPlayer.addChatMessage(new ChatComponentText("Grenades are banned in this region."));
-            }
+            entityPlayer.setItemInUse(itemStack, getMaxItemUseDuration(itemStack));
         }
 
         return itemStack;
@@ -77,29 +66,28 @@ public class ItemGrenade extends ItemBase
     @Override
     public void onPlayerStoppedUsing(ItemStack itemStack, World world, EntityPlayer entityPlayer, int nengLiang)
     {
-        if (!world.isRemote)
+        if(!world.isRemote)
         {
-            Explosive zhaPin = ExplosiveRegistry.get(itemStack.getItemDamage());
-            ExplosivePreDetonationEvent evt = new ExplosivePreDetonationEvent(world, entityPlayer, ExplosiveType.ITEM, zhaPin);
+            Explosive explosive = ExplosiveRegistry.get(itemStack.getItemDamage());
+            ExplosivePreDetonationEvent evt = new ExplosivePreDetonationEvent(world, entityPlayer, ExplosiveType.ITEM, explosive);
             MinecraftForge.EVENT_BUS.post(evt);
 
-            if (!evt.isCanceled())
+            if(!evt.isCanceled())
             {
-                if (!entityPlayer.capabilities.isCreativeMode)
+                if(!entityPlayer.capabilities.isCreativeMode)
                 {
                     itemStack.stackSize--;
 
-                    if (itemStack.stackSize <= 0)
+                    if(itemStack.stackSize <= 0)
                     {
                         entityPlayer.inventory.setInventorySlotContents(entityPlayer.inventory.currentItem, null);
                     }
                 }
 
                 world.playSoundAtEntity(entityPlayer, "game.tnt.primed", 0.5F, 0.4F / (itemRand.nextFloat() * 0.4F + 0.8F));
-                world.spawnEntityInWorld(new EntityGrenade(world, entityPlayer, zhaPin.getID(), (float) (this.getMaxItemUseDuration(itemStack) - nengLiang) / (float) this.getMaxItemUseDuration(itemStack)));
+                world.spawnEntityInWorld(new EntityGrenade(world, entityPlayer, explosive.getID(), (float)(getMaxItemUseDuration(itemStack) - nengLiang) / (float)getMaxItemUseDuration(itemStack)));
             }
-            else
-            {
+            else {
                 entityPlayer.addChatMessage(new ChatComponentText("Grenades are banned in this region."));
             }
         }
@@ -114,7 +102,7 @@ public class ItemGrenade extends ItemBase
     @Override
     public String getUnlocalizedName(ItemStack itemstack)
     {
-        return this.getUnlocalizedName() + "." + ExplosiveRegistry.get(itemstack.getItemDamage()).getUnlocalizedName();
+        return getUnlocalizedName() + "." + ExplosiveRegistry.get(itemstack.getItemDamage()).getUnlocalizedName();
     }
 
     @Override
@@ -135,7 +123,7 @@ public class ItemGrenade extends ItemBase
     @Override
     public void registerIcons(IIconRegister iconRegister)
     {
-        for (int i = 0; i < ExplosiveRegistry.getExplosives().size(); i++)
+        for(int i = 0; i < ExplosiveRegistry.getExplosives().size(); i++)
         {
         	if(ExplosiveRegistry.get(i).hasGrenadeForm())
         	{
@@ -153,12 +141,11 @@ public class ItemGrenade extends ItemBase
     @Override
     public void getSubItems(Item par1, CreativeTabs par2CreativeTabs, List par3List)
     {
-        for (Explosive zhaPin : ExplosiveRegistry.getExplosives())
+        for(Explosive explosive : ExplosiveRegistry.getExplosives())
         {
-            if (zhaPin.hasGrenadeForm())
+            if(explosive.hasGrenadeForm())
             {
-                par3List.add(new ItemStack(par1, 1, zhaPin.getID()));
-
+                par3List.add(new ItemStack(par1, 1, explosive.getID()));
             }
         }
     }

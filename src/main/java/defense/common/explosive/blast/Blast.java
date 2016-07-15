@@ -39,27 +39,28 @@ public abstract class Blast extends Explosion implements IExplosion
     public Blast(World world, Entity entity, double x, double y, double z, float size)
     {
         super(world, entity, x, y, z, size);
-        this.position = new Pos3D(x, y, z);
-        this.worldObj = world;
+        
+        position = new Pos3D(x, y, z);
+        worldObj = world;
     }
 
     public Blast(World world, Pos3D pos, Entity entity, float size)
     {
         super(world, entity, pos.xPos, pos.yPos, pos.zPos, size);
-        this.position = pos;
-        this.worldObj = world;
+        
+        position = pos;
+        worldObj = world;
     }
 
     public Blast(Entity entity, float size)
     {
         super(entity.worldObj, entity, entity.posX, entity.posY, entity.posZ, size);
-        this.position = new Pos3D(entity);
-        this.worldObj = entity.worldObj;
+        
+        position = new Pos3D(entity);
+        worldObj = entity.worldObj;
     }
 
-    protected void doPreExplode()
-    {
-    }
+    protected void doPreExplode() {}
 
     /** Called before an explosion happens. */
     public final void preExplode()
@@ -69,7 +70,7 @@ public abstract class Blast extends Explosion implements IExplosion
 
         if(!evt.isCanceled())
         {
-            this.doPreExplode();
+            doPreExplode();
         }
     }
 
@@ -83,14 +84,12 @@ public abstract class Blast extends Explosion implements IExplosion
         
         if(!evt.isCanceled())
         {
-            this.doExplode();
-            this.callCount++;
+            doExplode();
+            callCount++;
         }
     }
 
-    protected void doPostExplode()
-    {
-    }
+    protected void doPostExplode() {}
 
     /** Called after the explosion is completed. */
     public final void postExplode()
@@ -106,14 +105,10 @@ public abstract class Blast extends Explosion implements IExplosion
 
     /** Make the default functions useless. */
     @Override
-    public void doExplosionA()
-    {
-    }
+    public void doExplosionA() {}
 
     @Override
-    public void doExplosionB(boolean par1)
-    {
-    }
+    public void doExplosionB(boolean par1) {}
 
     /** All outside classes should call this. */
     @Override
@@ -124,18 +119,17 @@ public abstract class Blast extends Explosion implements IExplosion
 
         if(!evt.isCanceled())
         {
-            if(this.proceduralInterval() > 0)
+            if(proceduralInterval() > 0)
             {
-                if(!this.worldObj.isRemote)
+                if(!worldObj.isRemote)
                 {
-                    this.worldObj.spawnEntityInWorld(new EntityExplosion(this));
+                    worldObj.spawnEntityInWorld(new EntityExplosion(this));
                 }
             }
-            else
-            {
-                this.doPreExplode();
-                this.doExplode();
-                this.doPostExplode();
+            else {
+                doPreExplode();
+                doExplode();
+                doPostExplode();
             }
         }
     }
@@ -148,7 +142,7 @@ public abstract class Blast extends Explosion implements IExplosion
     @Override
     public float getRadius()
     {
-        return this.explosionSize;
+        return explosionSize;
     }
 
     @Override

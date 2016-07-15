@@ -54,7 +54,7 @@ public class ThreadSky extends ThreadExplosion
     @Override
     public void run()
     {
-        int steps = (int) Math.ceil(Math.PI / Math.atan(1.0D / this.radius));
+        int steps = (int) Math.ceil(Math.PI / Math.atan(1.0D / this.explosionRadius));
 
         for (int phi_n = 0; phi_n < 2 * steps; phi_n++)
         {
@@ -64,13 +64,13 @@ public class ThreadSky extends ThreadExplosion
                 double theta = Math.PI / steps * theta_n;
 
                 Pos3D delta = new Pos3D(Math.sin(theta) * Math.cos(phi), Math.cos(theta), Math.sin(theta) * Math.sin(phi));
-                float power = this.energy - (this.energy * this.worldObj.rand.nextFloat() / 2);
+                float power = this.explosionEnergy - (this.explosionEnergy * this.worldObj.rand.nextFloat() / 2);
 
                 Pos3D targetPosition = this.position.clone();
 
                 for (float var21 = 0.3F; power > 0f; power -= var21 * 0.75F * 10)
                 {
-                    if (targetPosition.distance(position) > this.radius)
+                    if (targetPosition.distance(position) > this.explosionRadius)
                         break;
 
                     Block block = this.worldObj.getBlock((int)targetPosition.xPos, (int)targetPosition.yPos, (int)targetPosition.zPos);
@@ -82,7 +82,7 @@ public class ThreadSky extends ThreadExplosion
                             break;
                         }
 
-                        float resistance = this.callBack.getResistance(this.worldObj, position, targetPosition, source, block);
+                        float resistance = this.callBack.getResistance(this.worldObj, position, targetPosition, explosionSource, block);
 
                         power -= resistance;
 

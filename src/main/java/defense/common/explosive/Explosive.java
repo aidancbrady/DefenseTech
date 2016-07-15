@@ -47,7 +47,7 @@ public abstract class Explosive implements IExplosive
     public static Explosive debilitation;
     public static Explosive chemical;
     public static Explosive anvil;
-    public static Explosive replsive;
+    public static Explosive repulsive;
     public static Explosive attractive;
 
     public static Explosive fragmentation;
@@ -87,7 +87,7 @@ public abstract class Explosive implements IExplosive
 	        debilitation = ExplosiveRegistry.register(new ExDebilitation("debilitation", 1));
 	        chemical = ExplosiveRegistry.register(new ExChemical("chemical", 1));
 	        anvil = ExplosiveRegistry.register(new ExShrapnel("anvil", 1));
-	        replsive = ExplosiveRegistry.register(new ExRepulsive("repulsive", 1));
+	        repulsive = ExplosiveRegistry.register(new ExRepulsive("repulsive", 1));
 	        attractive = ExplosiveRegistry.register(new ExRepulsive("attractive", 1));
 	
 	        fragmentation = ExplosiveRegistry.register(new ExShrapnel("fragmentation", 2));
@@ -109,11 +109,11 @@ public abstract class Explosive implements IExplosive
 	        redMatter = ExplosiveRegistry.register(new ExRedMatter());
 	
 	        /** Missiles */
-	        missileModule = (Explosion) ExplosiveRegistry.register(new MissileModule());
-	        homing = (Explosion) ExplosiveRegistry.register(new MissileHoming());
-	        antiBallistic = (Explosion) ExplosiveRegistry.register(new MissileAntiBallistic());
-	        cluster = (Explosion) ExplosiveRegistry.register(new MissileCluster("cluster", 2));
-	        nuclearCluster = (Explosion) ExplosiveRegistry.register(new MissileNuclearCluster());
+	        missileModule = (Explosion)ExplosiveRegistry.register(new MissileModule());
+	        homing = (Explosion)ExplosiveRegistry.register(new MissileHoming());
+	        antiBallistic = (Explosion)ExplosiveRegistry.register(new MissileAntiBallistic());
+	        cluster = (Explosion)ExplosiveRegistry.register(new MissileCluster("cluster", 2));
+	        nuclearCluster = (Explosion)ExplosiveRegistry.register(new MissileNuclearCluster());
     	}
         
         registered = true;
@@ -135,22 +135,22 @@ public abstract class Explosive implements IExplosive
     protected boolean hasMinecart;
     protected boolean hasMissile;
 
-    protected Explosive(String name, int tier)
+    protected Explosive(String name, int t)
     {
-        this.nameID = name;
-        this.tier = tier;
-        this.fuseTime = 100;
+        nameID = name;
+        tier = t;
+        fuseTime = 100;
 
-        this.hasBlock = true;
-        this.hasMissile = true;
-        this.hasGrenade = this.tier <= 1;
-        this.hasMinecart = this.tier <= 2;
+        hasBlock = true;
+        hasMissile = true;
+        hasGrenade = tier <= 1;
+        hasMinecart = tier <= 2;
     }
 
     @Override
     public final int getID()
     {
-        return ExplosiveRegistry.getID(this.getUnlocalizedName());
+        return ExplosiveRegistry.getID(getUnlocalizedName());
     }
 
     @Override
@@ -162,42 +162,42 @@ public abstract class Explosive implements IExplosive
     @Override
     public String getExplosiveName()
     {
-        return LangUtils.localize("explosive." + this.nameID + ".name");
+        return LangUtils.localize("explosive." + nameID + ".name");
     }
 
     @Override
     public String getGrenadeName()
     {
-        return LangUtils.localize("grenade." + this.nameID + ".name");
+        return LangUtils.localize("grenade." + nameID + ".name");
     }
 
     @Override
     public String getMissileName()
     {
-        return LangUtils.localize("missile." + this.nameID + ".name");
+        return LangUtils.localize("missile." + nameID + ".name");
     }
 
     @Override
     public String getMinecartName()
     {
-        return LangUtils.localize("minecart." + this.nameID + ".name");
+        return LangUtils.localize("minecart." + nameID + ".name");
     }
 
     @Override
     public int getTier()
     {
-        return this.tier;
+        return tier;
     }
 
     @Override
-    public void setTier(int tier)
+    public void setTier(int t)
     {
-        this.tier = tier;
+        tier = t;
     }
 
     public Explosive setFuseTime(int fuse)
     {
-        this.fuseTime = fuse;
+        fuseTime = fuse;
         return this;
     }
 
@@ -231,7 +231,7 @@ public abstract class Explosive implements IExplosive
      * @return - Fuse left */
     public int onBlockExploded()
     {
-        return (int)(fuseTime / 2 + Math.random() * this.fuseTime / 4);
+        return (int)(fuseTime / 2 + Math.random() * fuseTime / 4);
     }
 
     @Override
@@ -264,7 +264,7 @@ public abstract class Explosive implements IExplosive
 
     public boolean hasGrenadeForm()
     {
-        return this.hasGrenade;
+        return hasGrenade;
     }
 
     public boolean hasMissileForm()
@@ -290,12 +290,12 @@ public abstract class Explosive implements IExplosive
 
     public ItemStack getItemStack()
     {
-        return this.getItemStack(1);
+        return getItemStack(1);
     }
 
     public ItemStack getItemStack(int amount)
     {
-        return new ItemStack(DefenseTechBlocks.blockExplosive, amount, this.getID());
+        return new ItemStack(DefenseTechBlocks.blockExplosive, amount, getID());
     }
 
     public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer entityPlayer, int par6, float par7, float par8, float par9)
@@ -306,9 +306,9 @@ public abstract class Explosive implements IExplosive
     @Override
     public void createExplosion(World world, double x, double y, double z, Entity entity)
     {
-        if (!this.isDisabled)
+        if(!isDisabled)
         {
-            this.doCreateExplosion(world, x, y, z, entity);
+            doCreateExplosion(world, x, y, z, entity);
         }
     }
 

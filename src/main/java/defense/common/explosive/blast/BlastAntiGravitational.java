@@ -4,14 +4,15 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import defense.common.Reference;
-import defense.common.entity.EntityFlyingBlock;
-import defense.common.explosive.thread.ThreadSmallExplosion;
 import mekanism.api.Pos3D;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.World;
+import defense.common.DefenseUtils;
+import defense.common.Reference;
+import defense.common.entity.EntityFlyingBlock;
+import defense.common.explosive.thread.ThreadSmallExplosion;
 
 public class BlastAntiGravitational extends Blast
 {
@@ -26,45 +27,54 @@ public class BlastAntiGravitational extends Blast
     @Override
     public void doPreExplode()
     {
-        if (!this.worldObj.isRemote)
+        if(!worldObj.isRemote)
         {
-            this.thread = new ThreadSmallExplosion(worldObj, this.position, (int) this.getRadius(), this.exploder);
-            this.thread.start();
+            thread = new ThreadSmallExplosion(worldObj, this.position, (int) this.getRadius(), this.exploder);
+            thread.start();
         }
 
-        this.worldObj.playSoundEffect(position.xPos, position.yPos, position.zPos, Reference.PREFIX + "antigravity", 6.0F, (1.0F + (worldObj.rand.nextFloat() - worldObj.rand.nextFloat()) * 0.2F) * 0.7F);
+        worldObj.playSoundEffect(position.xPos, position.yPos, position.zPos, Reference.PREFIX + "antigravity", 6.0F, (1.0F + (worldObj.rand.nextFloat() - worldObj.rand.nextFloat()) * 0.2F) * 0.7F);
     }
 
     @Override
     public void doExplode()
     {
-        int r = this.callCount;
+        int r = callCount;
 
-        if (!this.worldObj.isRemote && this.thread.isComplete)
+        if(!worldObj.isRemote && thread.isComplete)
         {
             int blocksToTake = 20;
 
-            for (Pos3D targetPosition : this.thread.results)
+            for(Pos3D targetPosition : thread.results)
             {
                 double distance = targetPosition.distance(position);
 
-                if (distance > r || distance < r - 2 || blocksToTake <= 0)
+                if(distance > r || distance < r - 2 || blocksToTake <= 0)
+                {
                     continue;
+                }
 
-               Block block = worldObj.getBlock((int)targetPosition.xPos, (int)targetPosition.yPos, (int)targetPosition.zPos);
+                Block block = worldObj.getBlock((int)targetPosition.xPos, (int)targetPosition.yPos, (int)targetPosition.zPos);
 
-                if (worldObj.isAirBlock((int)targetPosition.xPos, (int)targetPosition.yPos, (int)targetPosition.zPos) || block.getBlockHardness(worldObj, (int)targetPosition.xPos, (int)targetPosition.yPos, (int)targetPosition.zPos) < 0)
+                if(worldObj.isAirBlock((int)targetPosition.xPos, (int)targetPosition.yPos, (int)targetPosition.zPos) || block.getBlockHardness(worldObj, (int)targetPosition.xPos, (int)targetPosition.yPos, (int)targetPosition.zPos) < 0)
+                {
                     continue;
+                }
 
                 int metadata = worldObj.getBlockMetadata((int)targetPosition.xPos, (int)targetPosition.yPos, (int)targetPosition.zPos);
 
-                if (distance < r - 1 || worldObj.rand.nextInt(3) > 0)
+                if(distance < r - 1 || worldObj.rand.nextInt(3) > 0)
                 {
-                    this.worldObj.setBlockToAir((int)targetPosition.xPos, (int)targetPosition.yPos, (int)targetPosition.zPos);
+                	if(!DefenseUtils.canBreak(worldObj, block, targetPosition.xPos, targetPosition.yPos, targetPosition.zPos))
+                	{
+                		continue;
+                	}
+                	
+                    worldObj.setBlockToAir((int)targetPosition.xPos, (int)targetPosition.yPos, (int)targetPosition.zPos);
 
                     targetPosition.translate(0.5D, 0.5D, 0.5D);
 
-                    if (worldObj.rand.nextFloat() < 0.3 * (this.getRadius() - r))
+                    if(worldObj.rand.nextFloat() < 0.3 * (this.getRadius() - r))
                     {
                         EntityFlyingBlock entity = new EntityFlyingBlock(worldObj, targetPosition, block, metadata, 0);
                         worldObj.spawnEntityInWorld(entity);
@@ -79,24 +89,24 @@ public class BlastAntiGravitational extends Blast
             }
         }
 
-        int radius = (int) this.getRadius();
+        int radius = (int)getRadius();
         AxisAlignedBB bounds = AxisAlignedBB.getBoundingBox(position.xPos - radius, position.yPos - radius, position.zPos - radius, position.xPos + radius, 100, position.zPos + radius);
         List<Entity> allEntities = worldObj.getEntitiesWithinAABB(Entity.class, bounds);
 
-        for (Entity entity : allEntities)
+        for(Entity entity : allEntities)
         {
-            if (!(entity instanceof EntityFlyingBlock) && entity.posY < 100 + position.yPos)
+            if(!(entity instanceof EntityFlyingBlock) && entity.posY < 100 + position.yPos)
             {
-                if (entity.motionY < 0.4)
+                if(entity.motionY < 0.4)
                 {
                     entity.motionY += 0.15;
                 }
             }
         }
 
-        if (this.callCount > 20 * 120)
+        if(callCount > 20 * 120)
         {
-            this.controller.endExplosion();
+            controller.endExplosion();
         }
     }
 

@@ -16,6 +16,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fluids.IFluidBlock;
 import defense.api.IExplosiveIgnore;
 import defense.common.DefenseTech;
+import defense.common.DefenseUtils;
 import defense.common.Reference;
 import defense.common.Settings;
 import defense.common.entity.EntityExplosion;
@@ -101,26 +102,34 @@ public class BlastRedmatter extends Blast
                             block = currentPos.getCoord(worldObj.provider.dimensionId).getBlock(this.worldObj);
                             metadata = currentPos.getCoord(worldObj.provider.dimensionId).getMetadata(this.worldObj);
 
-                            if (!worldObj.isAirBlock((int)currentPos.xPos, (int)currentPos.yPos, (int)currentPos.zPos) && block.getBlockHardness(this.worldObj, (int)currentPos.xPos, (int)currentPos.yPos, (int)currentPos.zPos) >= 0)
+                            if(!worldObj.isAirBlock((int)currentPos.xPos, (int)currentPos.yPos, (int)currentPos.zPos) && block.getBlockHardness(this.worldObj, (int)currentPos.xPos, (int)currentPos.yPos, (int)currentPos.zPos) >= 0)
                             {
-                                this.worldObj.setBlock((int)currentPos.xPos, (int)currentPos.yPos, (int)currentPos.zPos, Blocks.air, 0, block instanceof BlockLiquid ? 0 : 2);
-                                //TODO: render fluid streams
-                                if (block instanceof BlockLiquid || block instanceof IFluidBlock)
-                                    continue;
-
-                                currentPos.translate(0.5D, 0.5D, 0.5D);
-
-                                if (this.worldObj.rand.nextFloat() > 0.8)
-                                {
-                                    EntityFlyingBlock entity = new EntityFlyingBlock(this.worldObj, currentPos, block, metadata);
-                                    this.worldObj.spawnEntityInWorld(entity);
-                                    entity.yawChange = 50 * this.worldObj.rand.nextFloat();
-                                    entity.pitchChange = 50 * this.worldObj.rand.nextFloat();
-                                }
-
-                                takenBlocks++;
-                                if (takenBlocks > this.maxTakeBlocks)
-                                    break loop;
+                            	if(DefenseUtils.canBreak(worldObj, block, currentPos.xPos, currentPos.yPos, currentPos.zPos))
+                            	{
+	                                worldObj.setBlock((int)currentPos.xPos, (int)currentPos.yPos, (int)currentPos.zPos, Blocks.air, 0, block instanceof BlockLiquid ? 0 : 2);
+	                                //TODO: render fluid streams
+	                                if(block instanceof BlockLiquid || block instanceof IFluidBlock)
+	                                {
+	                                    continue;
+	                                }
+	
+	                                currentPos.translate(0.5D, 0.5D, 0.5D);
+	
+	                                if(worldObj.rand.nextFloat() > 0.8)
+	                                {
+	                                    EntityFlyingBlock entity = new EntityFlyingBlock(worldObj, currentPos, block, metadata);
+	                                    worldObj.spawnEntityInWorld(entity);
+	                                    entity.yawChange = 50 * this.worldObj.rand.nextFloat();
+	                                    entity.pitchChange = 50 * this.worldObj.rand.nextFloat();
+	                                }
+	
+	                                takenBlocks++;
+	                                
+	                                if(takenBlocks > maxTakeBlocks)
+	                                {
+	                                    break loop;
+	                                }
+                            	}
                             }
                         }
                     }
@@ -134,7 +143,7 @@ public class BlastRedmatter extends Blast
         List<Entity> allEntities = this.worldObj.getEntitiesWithinAABB(Entity.class, bounds);
         boolean doExplosion = true;
 
-        for (Entity entity : allEntities)
+        for(Entity entity : allEntities)
         {
             doExplosion = !this.affectEntity(radius, entity, doExplosion);
         }
@@ -166,22 +175,22 @@ public class BlastRedmatter extends Blast
     {
         boolean explosionCreated = false;
 
-        if (entity == this.controller)
+        if(entity == controller)
         {
             return false;
         }
 
-        if (entity instanceof IExplosiveIgnore)
+        if(entity instanceof IExplosiveIgnore)
         {
-            if (((IExplosiveIgnore) entity).canIgnore(this))
+            if(((IExplosiveIgnore)entity).canIgnore(this))
             {
                 return false;
             }
         }
 
-        if (entity instanceof EntityPlayer)
+        if(entity instanceof EntityPlayer)
         {
-            if (((EntityPlayer) entity).capabilities.isCreativeMode)
+            if (((EntityPlayer)entity).capabilities.isCreativeMode)
             {
                 return false;
             }
@@ -206,9 +215,9 @@ public class BlastRedmatter extends Blast
         // Gravity Velocity
         entity.addVelocity(-xDifference * 0.015 * xPercentage, -yDifference * 0.015 * yPercentage, -zDifference * 0.015 * zPercentage);
 
-        if (this.worldObj.isRemote)
+        if(worldObj.isRemote)
         {
-            if (entity instanceof EntityFlyingBlock)
+            if(entity instanceof EntityFlyingBlock)
             {
                 if (DefenseTech.proxy.getParticleSetting() == 0)
                 {
@@ -220,9 +229,9 @@ public class BlastRedmatter extends Blast
             }
         }
 
-        if (new Pos3D(entity.posX, entity.posY, entity.posZ).distance(position) < 4)
+        if(new Pos3D(entity.posX, entity.posY, entity.posZ).distance(position) < 4)
         {
-            if (doExplosion && !explosionCreated && callCount % 5 == 0)
+            if(doExplosion && !explosionCreated && callCount % 5 == 0)
             {
                 /** Inject velocities to prevent this explosion to move RedMatter. */
                 Pos3D tempMotion = new Pos3D(this.controller.motionX, this.controller.motionY, this.controller.motionZ);
@@ -238,27 +247,25 @@ public class BlastRedmatter extends Blast
                 entity.fallDistance = 0;
                 entity.attackEntityFrom(DamageSource.setExplosionSource(this), 4F);
             }
-            else
-            {
-                if (entity instanceof EntityExplosion)
+            else {
+                if(entity instanceof EntityExplosion)
                 {
-                    if (((EntityExplosion) entity).blast instanceof BlastAntimatter || ((EntityExplosion) entity).blast instanceof BlastRedmatter)
+                    if(((EntityExplosion)entity).blast instanceof BlastAntimatter || ((EntityExplosion)entity).blast instanceof BlastRedmatter)
                     {
-                        this.worldObj.playSoundEffect(position.xPos, position.yPos, position.zPos, Reference.PREFIX + "explosion", 7.0F, (1.0F + (this.worldObj.rand.nextFloat() - this.worldObj.rand.nextFloat()) * 0.2F) * 0.7F);
+                        worldObj.playSoundEffect(position.xPos, position.yPos, position.zPos, Reference.PREFIX + "explosion", 7.0F, (1.0F + (this.worldObj.rand.nextFloat() - this.worldObj.rand.nextFloat()) * 0.2F) * 0.7F);
 
-                        if (this.worldObj.rand.nextFloat() > 0.85 && !this.worldObj.isRemote)
+                        if(worldObj.rand.nextFloat() > 0.85 && !worldObj.isRemote)
                         {
                             entity.setDead();
                             return explosionCreated;
                         }
                     }
                 }
-                else if (entity instanceof EntityExplosive)
+                else if(entity instanceof EntityExplosive)
                 {
-                    ((EntityExplosive) entity).explode();
+                    ((EntityExplosive)entity).explode();
                 }
-                else
-                {
+                else {
                     entity.setDead();
                 }
             }

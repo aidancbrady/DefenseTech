@@ -446,10 +446,7 @@ public class EntityMissile extends Entity implements IChunkLoadHandler, IExplosi
                         // If the missile is commanded to explode before impact
                         if(targetHeight > 0 && motionY < 0)
                         {
-                            // Check the block below it.
-                            Block blockBelow = worldObj.getBlock((int)posX, (int)posY - targetHeight, (int)posZ);
-
-                            if(blockBelow != null)
+                            if(!worldObj.isAirBlock((int)posX, (int)posY - targetHeight, (int)posZ))
                             {
                                 targetHeight = 0;
                                 explode();

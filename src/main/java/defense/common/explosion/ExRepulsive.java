@@ -57,7 +57,6 @@ public class ExRepulsive extends Explosion
         else
         {
             new BlastRepulsive(world, entity, x, y, z, 2f).setDestroyItems().setPushType(2).explode();
-
         }
     }
 }
