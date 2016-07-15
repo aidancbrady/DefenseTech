@@ -65,7 +65,7 @@ public class EntityMissile extends Entity implements IChunkLoadHandler, IExplosi
     public boolean isExpoding = false;
 
     public int targetHeight = 0;
-    public int feiXingTick = -1;
+    public int airborneTicks = -1;
     // Difference
     public double deltaPathX;
     public double deltaPathY;
@@ -207,7 +207,7 @@ public class EntityMissile extends Entity implements IChunkLoadHandler, IExplosi
         targetVector = target;
         targetHeight = (int)targetVector.yPos;
         ((Explosion)ExplosiveRegistry.get(explosiveID)).launch(this);
-        feiXingTick = 0;
+        airborneTicks = 0;
         recalculatePath();
         worldObj.playSoundAtEntity(this, Reference.PREFIX + "missilelaunch", 4F, (1.0F + (worldObj.rand.nextFloat() - worldObj.rand.nextFloat()) * 0.2F) * 0.7F);
         // TODO add an event system here
@@ -243,11 +243,11 @@ public class EntityMissile extends Entity implements IChunkLoadHandler, IExplosi
             // Ground Displacement
             flatDistance = Vector2.distance(new Vector2(startPos), new Vector2(targetVector));
             // Parabolic Height
-            maxHeight = 160 + (int) (flatDistance * 3);
+            maxHeight = 160 + (int)(flatDistance * 3);
             // Flight time
-            missileFlightTime = (float) Math.max(100, 2 * flatDistance) - feiXingTick;
+            missileFlightTime = (float)Math.max(100, 2 * flatDistance) - airborneTicks;
             // Acceleration
-            acceleration = (float) maxHeight * 2 / (missileFlightTime * missileFlightTime);
+            acceleration = (float)maxHeight * 2 / (missileFlightTime * missileFlightTime);
         }
     }
 
@@ -313,7 +313,6 @@ public class EntityMissile extends Entity implements IChunkLoadHandler, IExplosi
         return true;
     }
 
-    /** Called to update the entity's position/logic. */
     @Override
     public void onUpdate()
     {
@@ -324,7 +323,7 @@ public class EntityMissile extends Entity implements IChunkLoadHandler, IExplosi
 
             if(evt.isCanceled())
             {
-                if(feiXingTick >= 0)
+                if(airborneTicks >= 0)
                 {
                     dropMissileAsItem();
                 }
@@ -344,7 +343,7 @@ public class EntityMissile extends Entity implements IChunkLoadHandler, IExplosi
         try {
             if(worldObj.isRemote)
             {
-                feiXingTick = dataWatcher.getWatchableObjectInt(16);
+                airborneTicks = dataWatcher.getWatchableObjectInt(16);
                 int status = dataWatcher.getWatchableObjectInt(17);
 
                 switch(status)
@@ -358,7 +357,7 @@ public class EntityMissile extends Entity implements IChunkLoadHandler, IExplosi
                 }
             }
             else {
-                dataWatcher.updateObject(16, feiXingTick);
+                dataWatcher.updateObject(16, airborneTicks);
             }
         } catch(Exception e) {
             e.printStackTrace();
@@ -376,7 +375,7 @@ public class EntityMissile extends Entity implements IChunkLoadHandler, IExplosi
             return;
         }
 
-        if(feiXingTick >= 0)
+        if(airborneTicks >= 0)
         {
             RadarRegistry.register(this);
 
@@ -384,7 +383,7 @@ public class EntityMissile extends Entity implements IChunkLoadHandler, IExplosi
             {
                 if(missileType == MissileType.CruiseMissile || missileType == MissileType.LAUNCHER)
                 {
-                    if(feiXingTick == 0 && xiaoDanMotion != null)
+                    if(airborneTicks == 0 && xiaoDanMotion != null)
                     {
                         xiaoDanMotion = new Pos3D(deltaPathX / (missileFlightTime * 0.3), deltaPathY / (missileFlightTime * 0.3), deltaPathZ / (missileFlightTime * 0.3));
                         motionX = xiaoDanMotion.xPos;
@@ -401,7 +400,7 @@ public class EntityMissile extends Entity implements IChunkLoadHandler, IExplosi
 
                     Block block = worldObj.getBlock((int)posX, (int)posY, (int)posZ);
 
-                    if(protectionTime <= 0 && ((!worldObj.isAirBlock((int)posX, (int)posY, (int)posZ) && !(block instanceof BlockLiquid)) || posY > 1000 || isCollided || feiXingTick > 20 * 1000 || (motionX == 0 && motionY == 0 && motionZ == 0)))
+                    if(protectionTime <= 0 && ((!worldObj.isAirBlock((int)posX, (int)posY, (int)posZ) && !(block instanceof BlockLiquid)) || posY > 1000 || isCollided || airborneTicks > 20 * 1000 || (motionX == 0 && motionY == 0 && motionZ == 0)))
                     {
                         setExplode();
                         return;
@@ -413,7 +412,7 @@ public class EntityMissile extends Entity implements IChunkLoadHandler, IExplosi
                     // Start the launch
                     if(lockHeight > 0)
                     {
-                        motionY = SPEED * feiXingTick * (feiXingTick / 2);
+                        motionY = SPEED * airborneTicks * (airborneTicks / 2);
                         motionX = 0;
                         motionZ = 0;
                         lockHeight -= motionY;
@@ -471,7 +470,7 @@ public class EntityMissile extends Entity implements IChunkLoadHandler, IExplosi
 
             spawnMissileSmoke();
             protectionTime--;
-            feiXingTick++;
+            airborneTicks++;
         }
         else if(missileType != MissileType.LAUNCHER)
         {
@@ -623,7 +622,7 @@ public class EntityMissile extends Entity implements IChunkLoadHandler, IExplosi
         Pos3D guJiDiDian = new Pos3D(this);
         double tempMotionY = motionY;
 
-        if(feiXingTick > 20)
+        if(airborneTicks > 20)
         {
             for(int i = 0; i < t; i++)
             {
@@ -737,47 +736,45 @@ public class EntityMissile extends Entity implements IChunkLoadHandler, IExplosi
         setDead();
     }
 
-    /** (abstract) Protected helper method to read subclass entity data from NBT. */
     @Override
     protected void readEntityFromNBT(NBTTagCompound nbt)
     {
-        startPos = Pos3D.read(nbt.getCompoundTag("kaiShi"));
-        targetVector = Pos3D.read(nbt.getCompoundTag("muBiao"));
-        launcherPos = Pos3D.read(nbt.getCompoundTag("faSheQi"));
-        acceleration = nbt.getFloat("jiaSu");
-        targetHeight = nbt.getInteger("baoZhaGaoDu");
-        explosiveID = nbt.getInteger("haoMa");
-        feiXingTick = nbt.getInteger("feiXingTick");
-        lockHeight = nbt.getDouble("qiFeiGaoDu");
-        missileType = MissileType.values()[nbt.getInteger("xingShi")];
+        startPos = Pos3D.read(nbt.getCompoundTag("startPos"));
+        targetVector = Pos3D.read(nbt.getCompoundTag("targetVector"));
+        launcherPos = Pos3D.read(nbt.getCompoundTag("launcherPos"));
+        acceleration = nbt.getFloat("acceleration");
+        targetHeight = nbt.getInteger("targetHeight");
+        explosiveID = nbt.getInteger("explosiveID");
+        airborneTicks = nbt.getInteger("airborneTicks");
+        lockHeight = nbt.getDouble("lockHeight");
+        missileType = MissileType.values()[nbt.getInteger("missileType")];
         nbtData = nbt.getCompoundTag("data");
     }
 
-    /** (abstract) Protected helper method to write subclass entity data to NBT. */
     @Override
     protected void writeEntityToNBT(NBTTagCompound nbt)
     {
         if(startPos != null)
         {
-            nbt.setTag("kaiShi", startPos.write(new NBTTagCompound()));
+            nbt.setTag("startPos", startPos.write(new NBTTagCompound()));
         }
         
         if(targetVector != null)
         {
-            nbt.setTag("muBiao", targetVector.write(new NBTTagCompound()));
+            nbt.setTag("targetVector", targetVector.write(new NBTTagCompound()));
         }
 
         if(launcherPos != null)
         {
-            nbt.setTag("faSheQi", launcherPos.write(new NBTTagCompound()));
+            nbt.setTag("launcherPos", launcherPos.write(new NBTTagCompound()));
         }
 
-        nbt.setFloat("jiaSu", acceleration);
-        nbt.setInteger("haoMa", explosiveID);
-        nbt.setInteger("baoZhaGaoDu", targetHeight);
-        nbt.setInteger("feiXingTick", feiXingTick);
-        nbt.setDouble("qiFeiGaoDu", lockHeight);
-        nbt.setInteger("xingShi", missileType.ordinal());
+        nbt.setFloat("acceleration", acceleration);
+        nbt.setInteger("explosiveID", explosiveID);
+        nbt.setInteger("targetHeight", targetHeight);
+        nbt.setInteger("airborneTicks", airborneTicks);
+        nbt.setDouble("lockHeight", lockHeight);
+        nbt.setInteger("missileType", missileType.ordinal());
         nbt.setTag("data", nbtData);
     }
 
@@ -790,7 +787,7 @@ public class EntityMissile extends Entity implements IChunkLoadHandler, IExplosi
     @Override
     public int getTicksInAir()
     {
-        return feiXingTick;
+        return airborneTicks;
     }
 
     @Override

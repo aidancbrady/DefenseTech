@@ -24,7 +24,6 @@ public class DefenseTechItems
     public static Item itemSignalDisrupter = new ItemSignalDisrupter();
     public static Item itemTracker = new ItemTracker();
 
-    public static Item itemSulfurDust = new ItemSulfurDust();
     public static Item itemPoisonPowder = new ItemPoisonPowder();
     
     public static Item itemMissile = new ItemMissile();
@@ -39,7 +38,6 @@ public class DefenseTechItems
 	public static void register()
 	{
 		GameRegistry.registerItem(itemPoisonPowder, "poisonPowder");
-        GameRegistry.registerItem(itemSulfurDust, "sulfur");
         GameRegistry.registerItem(itemAntidote, "antidote");
         GameRegistry.registerItem(itemSignalDisrupter, "signalDisrupter");
         GameRegistry.registerItem(itemTracker, "tracker");

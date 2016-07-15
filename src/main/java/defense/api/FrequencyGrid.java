@@ -27,37 +27,34 @@ public class FrequencyGrid
 
 	public void register(IBlockFrequency tileEntity)
 	{
-		synchronized (frequencyGrid)
+		synchronized(frequencyGrid)
 		{
-			try
-			{
-				Iterator<IBlockFrequency> it = this.frequencyGrid.iterator();
+			try {
+				Iterator<IBlockFrequency> it = frequencyGrid.iterator();
 
-				while (it.hasNext())
+				while(it.hasNext())
 				{
 					IBlockFrequency frequency = it.next();
 
-					if (frequency == null)
+					if(frequency == null)
 					{
 						it.remove();
 						continue;
 					}
 
-					if (((TileEntity) frequency).isInvalid())
+					if(((TileEntity)frequency).isInvalid())
 					{
 						it.remove();
 						continue;
 					}
 
-					if (new Pos3D((TileEntity) frequency).equals(new Pos3D((TileEntity) tileEntity)))
+					if(new Pos3D((TileEntity)frequency).equals(new Pos3D((TileEntity)tileEntity)))
 					{
 						it.remove();
 						continue;
 					}
 				}
-			}
-			catch (Exception e)
-			{
+			} catch(Exception e) {
 				e.printStackTrace();
 			}
 
@@ -67,7 +64,7 @@ public class FrequencyGrid
 
 	public void unregister(IBlockFrequency tileEntity)
 	{
-		synchronized (frequencyGrid)
+		synchronized(frequencyGrid)
 		{
 			frequencyGrid.remove(tileEntity);
 			cleanUp();
@@ -88,11 +85,11 @@ public class FrequencyGrid
 	{
 		Set<IBlockFrequency> set = new HashSet<IBlockFrequency>();
 
-		for (IBlockFrequency tile : this.get())
+		for(IBlockFrequency tile : this.get())
 		{
-			if (tile != null && !((TileEntity) tile).isInvalid())
+			if(tile != null && !((TileEntity) tile).isInvalid())
 			{
-				if (tile.getFrequency() == frequency)
+				if(tile.getFrequency() == frequency)
 				{
 					set.add(tile);
 				}
@@ -107,32 +104,32 @@ public class FrequencyGrid
 		Set<IBlockFrequency> tilesToRemove = new HashSet<IBlockFrequency>();
 		Iterator<IBlockFrequency> it = this.frequencyGrid.iterator();
 
-		while (it.hasNext())
+		while(it.hasNext())
 		{
 			IBlockFrequency frequency = it.next();
 
-			if (frequency == null)
+			if(frequency == null)
 			{
 				tilesToRemove.add(frequency);
 				continue;
 			}
 
-			if (((TileEntity) frequency).isInvalid())
+			if(((TileEntity)frequency).isInvalid())
 			{
 				tilesToRemove.add(frequency);
 				continue;
 			}
 
-			if (((TileEntity) frequency).getWorldObj().getTileEntity(((TileEntity) frequency).xCoord, ((TileEntity) frequency).yCoord, ((TileEntity) frequency).zCoord) != ((TileEntity) frequency))
+			if(((TileEntity)frequency).getWorldObj().getTileEntity(((TileEntity)frequency).xCoord, ((TileEntity)frequency).yCoord, ((TileEntity)frequency).zCoord) != ((TileEntity)frequency))
 			{
 				tilesToRemove.add(frequency);
 				continue;
 			}
 		}
 
-		for (IBlockFrequency tile : tilesToRemove)
+		for(IBlockFrequency tile : tilesToRemove)
 		{
-			this.unregister(tile);
+			unregister(tile);
 		}
 	}
 
@@ -140,18 +137,18 @@ public class FrequencyGrid
 	{
 		Set<IBlockFrequency> set = new HashSet<IBlockFrequency>();
 
-		for (IBlockFrequency tileEntity : this.get(frequency))
+		for(IBlockFrequency tileEntity : get(frequency))
 		{
-			if (((TileEntity) tileEntity).getWorldObj() == world)
+			if(((TileEntity)tileEntity).getWorldObj() == world)
 			{
-				if (new Pos3D((TileEntity) tileEntity).distance(position) <= radius)
+				if(new Pos3D((TileEntity)tileEntity).distance(position) <= radius)
 				{
 					set.add(tileEntity);
 				}
 			}
 		}
+		
 		return set;
-
 	}
 
 	/**

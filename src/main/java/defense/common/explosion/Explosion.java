@@ -19,14 +19,10 @@ public abstract class Explosion extends Explosive
     }
 
     /** Called when launched. */
-    public void launch(EntityMissile missileObj)
-    {
-    }
+    public void launch(EntityMissile missileObj) {}
 
     /** Called every tick while flying. */
-    public void update(EntityMissile missileObj)
-    {
-    }
+    public void update(EntityMissile missileObj) {}
 
     public boolean onInteract(EntityMissile missileObj, EntityPlayer entityPlayer)
     {
@@ -44,11 +40,11 @@ public abstract class Explosion extends Explosive
     @SideOnly(Side.CLIENT)
     public ResourceLocation getMissileResource()
     {
-        if (this.resourceLocation == null)
+        if(resourceLocation == null)
         {
-            this.resourceLocation = new ResourceLocation(Reference.DOMAIN, Reference.MODEL_TEXTURE_PATH + "missile_" + this.getUnlocalizedName() + ".png");
+            resourceLocation = new ResourceLocation(Reference.DOMAIN, Reference.MODEL_TEXTURE_PATH + "missile_" + this.getUnlocalizedName() + ".png");
         }
 
-        return this.resourceLocation;
+        return resourceLocation;
     }
 }

@@ -12,14 +12,15 @@ public abstract class Missile extends Explosion
     public Missile(String name, int tier)
     {
         super(name, tier);
-        this.hasBlock = false;
-        this.hasGrenade = false;
-        this.hasMinecart = false;
+        
+        hasBlock = false;
+        hasGrenade = false;
+        hasMinecart = false;
     }
 
     @Override
     public ItemStack getItemStack()
     {
-        return new ItemStack(DefenseTechItems.itemMissile, 1, this.getID());
+        return new ItemStack(DefenseTechItems.itemMissile, 1, getID());
     }
 }

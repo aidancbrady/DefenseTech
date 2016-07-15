@@ -14,17 +14,16 @@ import defense.common.Reference;
 import defense.common.entity.EntityMissile;
 import defense.common.explosive.blast.BlastRepulsive;
 
-/** Antiballistic missile.
+/** Anti-Ballistic missile.
  * 
  * @author Calclavia */
-public class MissileAnti extends Missile
+public class MissileAntiBallistic extends Missile
 {
     public static final int ABMRange = 30;
 
-    public MissileAnti()
+    public MissileAntiBallistic()
     {
         super("antiBallistic", 2);
-        this.hasBlock = false;
     }
     
     @Override

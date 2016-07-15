@@ -54,7 +54,7 @@ public class MissileHoming extends Missile
     @Override
     public void update(EntityMissile missileObj)
     {
-        if (missileObj.feiXingTick > missileObj.missileFlightTime / 2 && missileObj.missileType == MissileType.MISSILE)
+        if (missileObj.airborneTicks > missileObj.missileFlightTime / 2 && missileObj.missileType == MissileType.MISSILE)
         {
             WorldServer worldServer = (WorldServer) missileObj.worldObj;
             Entity trackingEntity = worldServer.getEntityByID(missileObj.trackingVar);
@@ -94,7 +94,7 @@ public class MissileHoming extends Missile
     @Override
     public boolean onInteract(EntityMissile missileObj, EntityPlayer entityPlayer)
     {
-        if (!missileObj.worldObj.isRemote && missileObj.feiXingTick <= 0)
+        if (!missileObj.worldObj.isRemote && missileObj.airborneTicks <= 0)
         {
             if (entityPlayer.getCurrentEquippedItem() != null)
             {

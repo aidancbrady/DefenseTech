@@ -1,6 +1,5 @@
 package defense.common;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -63,7 +62,6 @@ import cpw.mods.fml.relauncher.Side;
 import defense.api.FrequencyGrid;
 import defense.common.base.IChunkLoadHandler;
 import defense.common.block.BlockMachine.MachineData;
-import defense.common.block.OreGeneratorSulfur;
 import defense.common.entity.EntityBombCart;
 import defense.common.entity.EntityExplosion;
 import defense.common.entity.EntityExplosive;
@@ -73,7 +71,6 @@ import defense.common.entity.EntityGrenade;
 import defense.common.entity.EntityLightBeam;
 import defense.common.entity.EntityMissile;
 import defense.common.explosive.Explosive;
-import defense.common.explosive.ExplosiveHelper;
 import defense.common.explosive.ExplosiveRegistry;
 import defense.common.network.PacketItem;
 import defense.common.network.PacketItem.ItemMessage;
@@ -97,8 +94,6 @@ public final class DefenseTech
 
     public static final ContagiousPoison poisonous_potion = new ContagiousPoison("Chemical", 1, false);
     public static final ContagiousPoison contagios_potion = new ContagiousPoison("Contagious", 1, true);
-
-    public static OreGeneratorSulfur sulfurGenerator;
     
     public static Version versionNumber = Version.get(Reference.VERSION);
     
@@ -126,15 +121,9 @@ public final class DefenseTech
         
         PotionUtility.resizePotionArray();
 
-        sulfurGenerator = new OreGeneratorSulfur(new ItemStack(DefenseTechBlocks.blockSulfurOre), Blocks.air, 0, 40, 20, 4);
-
         /** Decrease Obsidian Resistance */
         Blocks.obsidian.setResistance((float)Settings.REDUCE_OBSIDIAN_RESISTANCE);
         LOGGER.fine("Changed obsidian explosive resistance to: " + Blocks.obsidian.getExplosionResistance(null));
-
-        OreDictionary.registerOre("dustSulfur", new ItemStack(DefenseTechItems.itemSulfurDust, 1, 0));
-        OreDictionary.registerOre("dustSaltpeter", new ItemStack(DefenseTechItems.itemSulfurDust, 1, 1));
-        OreDictionary.registerOre("oreSulfur", new ItemStack(DefenseTechBlocks.blockSulfurOre));
 
         /** Potion Effects */
         PoisonToxin.INSTANCE = new PoisonToxin(PotionUtility.getNextOptimalPotId(), true, 5149489, "toxin");
@@ -245,16 +234,12 @@ public final class DefenseTech
             }
         });
 
-        ExplosiveHelper.explosionManager = ExplosiveRegistry.class;
-
         proxy.preInit();
     }
 
     @EventHandler
     public void init(FMLInitializationEvent event)
     {
-        GameRegistry.registerWorldGenerator(sulfurGenerator, 0);
-
         EntityRegistry.registerGlobalEntityID(EntityFlyingBlock.class, Reference.ENTITY_PREFIX + "GravityBlock", EntityRegistry.findGlobalUniqueEntityId());
         EntityRegistry.registerGlobalEntityID(EntityFragments.class, Reference.ENTITY_PREFIX + "Fragments", EntityRegistry.findGlobalUniqueEntityId());
         EntityRegistry.registerGlobalEntityID(EntityExplosive.class, Reference.ENTITY_PREFIX + "Explosive", EntityRegistry.findGlobalUniqueEntityId());
@@ -284,25 +269,6 @@ public final class DefenseTech
     @EventHandler
     public void postInit(FMLPostInitializationEvent event)
     {
-        /** LOAD. */
-        ArrayList dustCharcoal = OreDictionary.getOres("dustCharcoal");
-        ArrayList dustCoal = OreDictionary.getOres("dustCoal");
-        // Sulfur
-        GameRegistry.addSmelting(DefenseTechBlocks.blockSulfurOre, new ItemStack(DefenseTechItems.itemSulfurDust, 4), 0.8f);
-        GameRegistry.addSmelting(Items.reeds, new ItemStack(DefenseTechItems.itemSulfurDust, 4, 1), 0f);
-        GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(Items.gunpowder, 2), new Object[] { "dustSulfur", "dustSaltpeter", Items.coal }));
-        GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(Items.gunpowder, 2), new Object[] { "dustSulfur", "dustSaltpeter", new ItemStack(Items.coal, 1, 1) }));
-
-        if(dustCharcoal != null && dustCharcoal.size() > 0)
-        {
-            GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(Items.gunpowder, 2), new Object[] { "dustSulfur", "dustSaltpeter", "dustCharcoal" }));
-        }
-        
-        if(dustCoal != null && dustCoal.size() > 0)
-        {
-            GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(Items.gunpowder, 2), new Object[] { "dustSulfur", "dustSaltpeter", "dustCoal" }));
-        }
-
         GameRegistry.addRecipe(new ShapedOreRecipe(Blocks.tnt, new Object[] { "@@@", "@R@", "@@@", '@', Items.gunpowder, 'R', Items.redstone }));
 
         // Poison Powder
@@ -368,7 +334,11 @@ public final class DefenseTech
         {
             explosive.init();
             // Missile
-            CraftingManager.getInstance().getRecipeList().add(new ShapelessOreRecipe(new ItemStack(DefenseTechItems.itemMissile, 1, explosive.getID()), new Object[] { new ItemStack(DefenseTechItems.itemMissile, 1, Explosive.missileModule.getID()), new ItemStack(DefenseTechBlocks.blockExplosive, 1, explosive.getID()) }));
+            
+            if(explosive.hasBlockForm())
+            {
+            	CraftingManager.getInstance().getRecipeList().add(new ShapelessOreRecipe(new ItemStack(DefenseTechItems.itemMissile, 1, explosive.getID()), new Object[] { new ItemStack(DefenseTechItems.itemMissile, 1, Explosive.missileModule.getID()), new ItemStack(DefenseTechBlocks.blockExplosive, 1, explosive.getID()) }));
+            }
            
             if(explosive.getTier() < 2)
             {
@@ -435,7 +405,7 @@ public final class DefenseTech
         {
             if(Settings.CREEPER_DROP_SULFUR)
             {
-                evt.entityLiving.dropItem(DefenseTechItems.itemSulfurDust, 1 + evt.entityLiving.worldObj.rand.nextInt(6));
+                evt.entityLiving.entityDropItem(new ItemStack(MekanismItems.OtherDust, 1 + evt.entityLiving.worldObj.rand.nextInt(6), 3), 0.0F);
             }
         }
     }

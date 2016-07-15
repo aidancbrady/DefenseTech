@@ -7,7 +7,6 @@ import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.GameRegistry.ObjectHolder;
 import defense.common.block.BlockExplosive;
 import defense.common.block.BlockMachine;
-import defense.common.block.BlockSulfurOre;
 import defense.common.item.ItemBlockExplosive;
 import defense.common.item.ItemBlockMachine;
 
@@ -17,14 +16,12 @@ public class DefenseTechBlocks
     public static Block blockExplosive = new BlockExplosive();
     public static Block blockMachine = new BlockMachine();
     
-    public static Block blockSulfurOre = new BlockSulfurOre();
     public static Block blockRadioactive;
     
 	public static void register()
 	{
         GameRegistry.registerBlock(blockExplosive, ItemBlockExplosive.class, "explosives");
         GameRegistry.registerBlock(blockMachine, ItemBlockMachine.class, "machine");
-        GameRegistry.registerBlock(blockSulfurOre, "oreSulfur");
         
         /** Check for existence of radioactive Blocks. If it does not exist, then create it. */
         if(OreDictionary.getOres("blockRadioactive").size() > 0)

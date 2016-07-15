@@ -31,7 +31,7 @@ import defense.common.explosion.ExSMine;
 import defense.common.explosion.ExShrapnel;
 import defense.common.explosion.ExSonic;
 import defense.common.explosion.Explosion;
-import defense.common.explosion.missile.MissileAnti;
+import defense.common.explosion.missile.MissileAntiBallistic;
 import defense.common.explosion.missile.MissileCluster;
 import defense.common.explosion.missile.MissileHoming;
 import defense.common.explosion.missile.MissileModule;
@@ -111,7 +111,7 @@ public abstract class Explosive implements IExplosive
 	        /** Missiles */
 	        missileModule = (Explosion) ExplosiveRegistry.register(new MissileModule());
 	        homing = (Explosion) ExplosiveRegistry.register(new MissileHoming());
-	        antiBallistic = (Explosion) ExplosiveRegistry.register(new MissileAnti());
+	        antiBallistic = (Explosion) ExplosiveRegistry.register(new MissileAntiBallistic());
 	        cluster = (Explosion) ExplosiveRegistry.register(new MissileCluster("cluster", 2));
 	        nuclearCluster = (Explosion) ExplosiveRegistry.register(new MissileNuclearCluster());
     	}

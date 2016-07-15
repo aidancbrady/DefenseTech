@@ -204,7 +204,7 @@ public class TileRadarStation extends TileEntityElectricBlock implements IChunkL
         {
             if(entity instanceof EntityMissile)
             {
-                if(((EntityMissile) entity).feiXingTick > -1)
+                if(((EntityMissile) entity).airborneTicks > -1)
                 {
                     if(!detectedEntities.contains(entity))
                     {
