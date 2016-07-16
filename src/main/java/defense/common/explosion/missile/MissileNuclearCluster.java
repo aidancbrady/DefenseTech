@@ -12,8 +12,7 @@ public class MissileNuclearCluster extends MissileCluster
 {
     public MissileNuclearCluster()
     {
-        super("nuclearCluster", 3);
-        this.hasBlock = false;
+        super("nuclearCluster", 4);
     }
 
     public static final int MAX_CLUSTER = 4;

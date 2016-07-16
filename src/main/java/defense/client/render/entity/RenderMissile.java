@@ -34,7 +34,7 @@ public class RenderMissile extends Render
         EntityMissile entityMissile = (EntityMissile) entity;
         IExplosive e = entityMissile.getExplosiveType();
         
-        if (e instanceof Explosion)
+        if(e instanceof Explosion)
         {
             Explosion missile = (Explosion) e;
 
@@ -43,7 +43,7 @@ public class RenderMissile extends Render
             GL11.glRotatef(entityMissile.prevRotationYaw + (entityMissile.rotationYaw - entityMissile.prevRotationYaw) * partial - 90.0F, 0.0F, 1.0F, 0.0F);
             GL11.glRotatef(entityMissile.prevRotationPitch + (entityMissile.rotationPitch - entityMissile.prevRotationPitch) * partial + 90.0F, 0.0F, 0.0F, 1.0F);
 
-            if (entityMissile.missileType == MissileType.CruiseMissile)
+            if(entityMissile.missileType == MissileType.CruiseMissile)
             {
                 GL11.glScalef(0.5f, 0.5f, 0.5f);
             }

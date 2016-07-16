@@ -98,13 +98,13 @@ public abstract class Explosive implements IExplosive
 	        thermobaric = ExplosiveRegistry.register(new ExNuclear("thermobaric", 2));
 	        sMine = ExplosiveRegistry.register(new ExSMine("sMine", 2));
 	
-	        nuclear = ExplosiveRegistry.register(new ExNuclear("nuclear", 3));
 	        emp = ExplosiveRegistry.register(new ExEMP());
 	        exothermic = ExplosiveRegistry.register(new ExExothermic());
 	        endothermic = ExplosiveRegistry.register(new ExEndothermic());
 	        antiGrav = ExplosiveRegistry.register(new ExAntiGravitational());
 	        hypersonic = ExplosiveRegistry.register(new ExSonic("hypersonic", 3));
 	
+	        nuclear = ExplosiveRegistry.register(new ExNuclear("nuclear", 4));
 	        antimatter = ExplosiveRegistry.register(new ExAntimatter());
 	        redMatter = ExplosiveRegistry.register(new ExRedMatter());
 	
