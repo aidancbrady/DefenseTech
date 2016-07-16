@@ -58,52 +58,53 @@ public class ItemRocketLauncher extends ItemEnergized
     @Override
     public ItemStack onItemRightClick(ItemStack itemStack, World world, EntityPlayer player)
     {
-        if (!world.isRemote)
+        if(!world.isRemote)
         {
             long clickMs = System.currentTimeMillis();
-            if (clickTimePlayer.containsKey(player.getCommandSenderName()))
+            
+            if(clickTimePlayer.containsKey(player.getCommandSenderName()))
             {
-                if (clickMs - clickTimePlayer.get(player.getCommandSenderName()) < firingDelay)
+                if(clickMs - clickTimePlayer.get(player.getCommandSenderName()) < firingDelay)
                 {
                     //TODO play weapon empty click audio to note the gun is reloading
                     return itemStack;
                 }
             }
-            if (this.getEnergy(itemStack) >= ENERGY || player.capabilities.isCreativeMode)
+            
+            if(getEnergy(itemStack) >= ENERGY || player.capabilities.isCreativeMode)
             {
                 // Check the player's inventory and look for missiles.
-                for (int slot = 0; slot < player.inventory.getSizeInventory(); slot++)
+                for(int slot = 0; slot < player.inventory.getSizeInventory(); slot++)
                 {
                     ItemStack inventoryStack = player.inventory.getStackInSlot(slot);
 
-                    if (inventoryStack != null)
+                    if(inventoryStack != null)
                     {
-                        if (inventoryStack.getItem() instanceof ItemMissile)
+                        if(inventoryStack.getItem() instanceof ItemMissile)
                         {
                             int meta = inventoryStack.getItemDamage();
                             Explosive ex = ExplosiveRegistry.get(meta);
 
-                            if (ex instanceof Explosion)
+                            if(ex instanceof Explosion)
                             {
                                 ExplosivePreDetonationEvent evt = new ExplosivePreDetonationEvent(world, player.posX, player.posY, player.posZ, ExplosiveType.AIR, ExplosiveRegistry.get(meta));
                                 MinecraftForge.EVENT_BUS.post(evt);
 
-                                if (((Explosion) ex) != null && !evt.isCanceled())
+                                if(((Explosion)ex) != null && !evt.isCanceled())
                                 {
                                     // Limit the missile to tier two.
-                                    if (((Explosion) ex).getTier() <= Settings.MAX_ROCKET_LAUNCHER_TIER && ((Explosion) ex).isCruise())
+                                    if(((Explosion)ex).getTier() <= Settings.MAX_ROCKET_LAUNCHER_TIER && ((Explosion) ex).isCruise())
                                     {
                                         Pos3D launcher = new Pos3D(player).translate(new Pos3D(0, 0.5, 0));
                                         Pos3D playerAim = new Pos3D(player.getLook(1));
                                         Pos3D start = launcher.clone().translate(playerAim.scale(1.1));
                                         Pos3D target = launcher.clone().translate(playerAim.scale(100));
-                                        //TODO: possible need to fix this, scale is not cloned (aidancbrady)
-
+                                        
                                         //TOD: Fix this rotation when we use the proper model loader.
-                                        EntityMissile entityMissile = new EntityMissile(world, start, ((Explosion) ex).getID(), -player.rotationYaw, -player.rotationPitch);
+                                        EntityMissile entityMissile = new EntityMissile(world, start, ((Explosion)ex).getID(), player.rotationYaw, player.rotationPitch);
                                         world.spawnEntityInWorld(entityMissile);
 
-                                        if (player.isSneaking())
+                                        if(player.isSneaking())
                                         {
                                             player.mountEntity(entityMissile);
                                             player.setSneaking(false);
@@ -112,10 +113,10 @@ public class ItemRocketLauncher extends ItemEnergized
                                         entityMissile.ignore(player);
                                         entityMissile.launch(target);
 
-                                        if (!player.capabilities.isCreativeMode)
+                                        if(!player.capabilities.isCreativeMode)
                                         {
                                             player.inventory.setInventorySlotContents(slot, null);
-                                            this.setEnergy(itemStack, this.getEnergy(itemStack) - ENERGY);
+                                            setEnergy(itemStack, getEnergy(itemStack) - ENERGY);
                                         }
                                         
                                         //Store last time player launched a rocket
@@ -124,12 +125,10 @@ public class ItemRocketLauncher extends ItemEnergized
                                         return itemStack;
                                     }
                                 }
-                                else
-                                {
+                                else {
                                     player.addChatMessage(new ChatComponentText(Reference.CHAT_DESC + EnumColor.GREY + " " + LangUtils.localize("message.launcher.protected")));
                                 }
                             }
-
                         }
                     }
                 }

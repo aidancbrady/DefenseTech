@@ -8,10 +8,10 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
+import net.minecraftforge.client.model.IModelCustom;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import defense.api.IExplosive;
-import defense.client.model.missile.ModelMissileBase;
 import defense.common.DefenseTechBlocks;
 import defense.common.explosion.ExAntiGravitational;
 import defense.common.explosion.ExAntimatter;
@@ -236,20 +236,6 @@ public abstract class Explosive implements IExplosive
 
     @Override
     @SideOnly(Side.CLIENT)
-    public ModelMissileBase getBlockModel()
-    {
-        return null;
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public ResourceLocation getBlockResource()
-    {
-        return null;
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
     public IIcon getIcon()
     {
         return null;
@@ -257,9 +243,16 @@ public abstract class Explosive implements IExplosive
 
     @Override
     @SideOnly(Side.CLIENT)
-    public ModelMissileBase getMissileModel()
+    public IModelCustom getMissileModel()
     {
         return null;
+    }
+    
+    @Override
+    @SideOnly(Side.CLIENT)
+    public ResourceLocation getMissileResource()
+    {
+    	return null;
     }
 
     public boolean hasGrenadeForm()

@@ -1,13 +1,12 @@
 package defense.api;
 
-import net.minecraft.client.model.ModelBase;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
+import net.minecraftforge.client.model.IModelCustom;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import defense.client.model.missile.ModelMissileBase;
 
 /** An interface used to find various types of explosive's information.
  * 
@@ -46,13 +45,10 @@ public interface IExplosive extends ITier
     public void createExplosion(World world, double x, double y, double z, Entity entity);
 
     @SideOnly(Side.CLIENT)
-    public ModelBase getBlockModel();
-
+    public IModelCustom getMissileModel();
+    
     @SideOnly(Side.CLIENT)
-    public ModelMissileBase getMissileModel();
-
-    @SideOnly(Side.CLIENT)
-    public ResourceLocation getBlockResource();
+    public ResourceLocation getMissileResource();
 
     @SideOnly(Side.CLIENT)
     public IIcon getIcon();

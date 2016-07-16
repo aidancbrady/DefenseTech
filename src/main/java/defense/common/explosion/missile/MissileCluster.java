@@ -3,10 +3,6 @@ package defense.common.explosion.missile;
 import mekanism.api.Pos3D;
 import net.minecraft.entity.Entity;
 import net.minecraft.world.World;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-import defense.client.model.missile.ModelClusterMissile;
-import defense.client.model.missile.ModelMissileBase;
 import defense.common.entity.EntityMissile;
 import defense.common.entity.EntityMissile.MissileType;
 import defense.common.explosive.blast.BlastRepulsive;
@@ -20,14 +16,6 @@ public class MissileCluster extends Missile
     public MissileCluster(String name, int tier)
     {
         super(name, tier);
-        this.hasBlock = false;
-    }
-    
-    @Override
-    @SideOnly(Side.CLIENT)
-    public ModelMissileBase getMissileModel()
-    {
-    	return new ModelClusterMissile();
     }
 
     @Override

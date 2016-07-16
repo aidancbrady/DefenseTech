@@ -6,10 +6,6 @@ import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.world.World;
 import cpw.mods.fml.common.registry.GameRegistry;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-import defense.client.model.missile.ModelCondensedMissile;
-import defense.client.model.missile.ModelMissileBase;
 import defense.common.explosive.blast.BlastRepulsive;
 
 public class ExCondensed extends Explosion
@@ -20,13 +16,6 @@ public class ExCondensed extends Explosion
         this.setFuseTime(1);
     }
     
-    @Override
-    @SideOnly(Side.CLIENT)
-    public ModelMissileBase getMissileModel()
-    {
-    	return new ModelCondensedMissile();
-    }
-
     @Override
     public void init()
     {

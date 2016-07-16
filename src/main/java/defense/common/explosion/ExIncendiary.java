@@ -6,10 +6,6 @@ import net.minecraft.entity.Entity;
 import net.minecraft.init.Items;
 import net.minecraft.world.World;
 import cpw.mods.fml.common.registry.GameRegistry;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-import defense.client.model.missile.ModelIncendiaryMissile;
-import defense.client.model.missile.ModelMissileBase;
 import defense.common.explosive.blast.BlastFire;
 
 public class ExIncendiary extends Explosion
@@ -19,13 +15,6 @@ public class ExIncendiary extends Explosion
         super(mingZi, tier);
     }
     
-    @Override
-    @SideOnly(Side.CLIENT)
-    public ModelMissileBase getMissileModel()
-    {
-    	return new ModelIncendiaryMissile();
-    }
-
     @Override
     public void init()
     {

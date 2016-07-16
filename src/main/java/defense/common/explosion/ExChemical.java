@@ -5,11 +5,6 @@ import net.minecraft.entity.Entity;
 import net.minecraft.init.Items;
 import net.minecraft.world.World;
 import cpw.mods.fml.common.registry.GameRegistry;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-import defense.client.model.missile.ModelChemicalMissile;
-import defense.client.model.missile.ModelContagiousMissile;
-import defense.client.model.missile.ModelMissileBase;
 import defense.common.DefenseTechItems;
 import defense.common.explosive.Explosive;
 import defense.common.explosive.blast.BlastChemical;
@@ -21,19 +16,6 @@ public class ExChemical extends Explosion
         super(mingZi, tier);
     }
     
-    @Override
-    @SideOnly(Side.CLIENT)
-    public ModelMissileBase getMissileModel()
-    {
-    	if(this.getTier() == 1)
-    	{
-    		return new ModelChemicalMissile();
-    	}
-    	else {
-    		return new ModelContagiousMissile();
-    	}
-    }
-
     @Override
     public void init()
     {

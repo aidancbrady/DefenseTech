@@ -5,10 +5,6 @@ import mekanism.common.recipe.ShapedMekanismRecipe;
 import net.minecraft.entity.Entity;
 import net.minecraft.world.World;
 import cpw.mods.fml.common.registry.GameRegistry;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-import defense.client.model.missile.ModelAntimatterMissile;
-import defense.client.model.missile.ModelMissileBase;
 import defense.common.Reference;
 import defense.common.Settings;
 import defense.common.explosive.Explosive;
@@ -22,13 +18,6 @@ public class ExAntimatter extends Explosion
         this.setFuseTime(300);
     }
     
-    @Override
-    @SideOnly(Side.CLIENT)
-    public ModelMissileBase getMissileModel()
-    {
-    	return new ModelAntimatterMissile();
-    }
-
     /** Called when the explosive is on fuse and going to explode. Called only when the explosive is
      * in it's TNT form.
      * 

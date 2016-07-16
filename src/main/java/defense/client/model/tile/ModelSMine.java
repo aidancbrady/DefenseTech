@@ -5,11 +5,11 @@ import net.minecraft.entity.Entity;
 import net.minecraft.util.ResourceLocation;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import defense.client.model.missile.ModelMissileBase;
+import defense.client.model.ModelDefenseTech;
 import defense.common.Reference;
 
 @SideOnly(Side.CLIENT)
-public class ModelSMine extends ModelMissileBase
+public class ModelSMine extends ModelDefenseTech
 {
     public static final ModelSMine INSTANCE = new ModelSMine();
     public static final ResourceLocation TEXTURE = new ResourceLocation(Reference.DOMAIN, Reference.MODEL_TEXTURE_PATH + "s-mine.png");

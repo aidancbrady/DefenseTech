@@ -6,10 +6,6 @@ import net.minecraft.entity.Entity;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 import cpw.mods.fml.common.registry.GameRegistry;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-import defense.client.model.missile.ModelExothermicMissile;
-import defense.client.model.missile.ModelMissileBase;
 import defense.common.explosive.Explosive;
 import defense.common.explosive.blast.BlastExothermic;
 
@@ -20,13 +16,6 @@ public class ExExothermic extends Explosion
         super("exothermic", 3);
     }
     
-    @Override
-    @SideOnly(Side.CLIENT)
-    public ModelMissileBase getMissileModel()
-    {
-    	return new ModelExothermicMissile();
-    }
-
     @Override
     public void onDetonation(World worldObj, Pos3D position, int fuseTicks)
     {

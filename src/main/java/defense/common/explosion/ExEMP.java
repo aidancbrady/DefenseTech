@@ -6,10 +6,6 @@ import net.minecraft.entity.Entity;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 import cpw.mods.fml.common.registry.GameRegistry;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-import defense.client.model.missile.ModelEMPMissile;
-import defense.client.model.missile.ModelMissileBase;
 import defense.common.explosive.blast.BlastEMP;
 
 public class ExEMP extends Explosion
@@ -19,13 +15,6 @@ public class ExEMP extends Explosion
         super("emp", 3);
     }
     
-    @Override
-    @SideOnly(Side.CLIENT)
-    public ModelMissileBase getMissileModel()
-    {
-    	return new ModelEMPMissile();
-    }
-
     @Override
     public void doCreateExplosion(World world, double x, double y, double z, Entity entity)
     {

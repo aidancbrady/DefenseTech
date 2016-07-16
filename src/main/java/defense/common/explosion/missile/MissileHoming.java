@@ -6,11 +6,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import defense.api.IItemTracker;
-import defense.client.model.missile.ModelHomingMissile;
-import defense.client.model.missile.ModelMissileBase;
 import defense.common.Vector2;
 import defense.common.entity.EntityMissile;
 import defense.common.entity.EntityMissile.MissileType;
@@ -21,27 +17,19 @@ public class MissileHoming extends Missile
     public MissileHoming()
     {
         super("homing", 1);
-        this.hasBlock = false;
     }
     
     @Override
-    @SideOnly(Side.CLIENT)
-    public ModelMissileBase getMissileModel()
-    {
-    	return new ModelHomingMissile();
-    }
-
-    @Override
     public void launch(EntityMissile missileObj)
     {
-        if (!missileObj.worldObj.isRemote)
+        if(!missileObj.worldObj.isRemote)
         {
             WorldServer worldServer = (WorldServer) missileObj.worldObj;
             Entity trackingEntity = worldServer.getEntityByID(missileObj.trackingVar);
 
-            if (trackingEntity != null)
+            if(trackingEntity != null)
             {
-                if (trackingEntity == missileObj)
+                if(trackingEntity == missileObj)
                 {
                     missileObj.setExplode();
                 }

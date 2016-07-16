@@ -1,7 +1,5 @@
 package defense.client.render.item;
 
-import java.util.HashMap;
-
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.client.IItemRenderer;
 
@@ -10,7 +8,6 @@ import org.lwjgl.opengl.GL11;
 import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import defense.client.model.missile.ModelMissileBase;
 import defense.client.render.entity.RenderMissile;
 import defense.common.explosion.Explosion;
 import defense.common.explosive.ExplosiveRegistry;
@@ -19,12 +16,10 @@ import defense.common.item.ItemMissile;
 @SideOnly(Side.CLIENT)
 public class RenderItemMissile implements IItemRenderer
 {
-    HashMap<Explosion, ModelMissileBase> cache = new HashMap<Explosion, ModelMissileBase>();
-
     @Override
     public boolean handleRenderType(ItemStack item, ItemRenderType type)
     {
-        return this.shouldUseRenderHelper(type, item, null);
+        return shouldUseRenderHelper(type, item, null);
     }
 
     @Override
@@ -36,63 +31,68 @@ public class RenderItemMissile implements IItemRenderer
     @Override
     public void renderItem(ItemRenderType type, ItemStack item, Object... data)
     {
-        if (this.shouldUseRenderHelper(type, item, null))
+        if(shouldUseRenderHelper(type, item, null))
         {
-            Explosion missile = (Explosion) ExplosiveRegistry.get(item.getItemDamage());
+            Explosion missile = (Explosion)ExplosiveRegistry.get(item.getItemDamage());
 
-            float scale = 0.7f;
-			float right = 0f;
+            GL11.glRotatef(180F, 1.0F, 0.0F, 0.0F);
+            
+            float scale = 0.7f*0.25f;
+			float right = -0.8f;
 
-			if (type == ItemRenderType.INVENTORY)
+			if(type == ItemRenderType.INVENTORY)
 			{
-				scale = 0.4f;
-				right = 0.15f;
+				scale = 0.4f*0.4f;
 
-				if (missile.getTier() == 2 || !missile.hasBlockForm())
+				if(missile.getTier() == 2)
 				{
 					scale = scale / 1.5f;
 				}
-				else if (missile.getTier() == 3)
+				else if(missile.getTier() == 3)
 				{
 					scale = scale / 1.7f;
-					right = 0.5f;
 				}
-				else if (missile.getTier() == 4)
+				else if(missile.getTier() == 4)
 				{
-					scale = scale / 1.4f;
-					right = 0.2f;
+					scale = scale / 1.9f;
+					right += 0.1;
+				}
+				else if(missile.getTier() == 1)
+				{
+					scale = scale * 1.5F;
+					right += 0.2;
 				}
 
-				GL11.glTranslatef(right, 0f, 0f);
+				GL11.glTranslatef(right, 0.4f, 0f);
+				GL11.glRotatef(-40, 0, 0, 1);
 			}
 
-			if (type == ItemRenderType.EQUIPPED_FIRST_PERSON || type == ItemRenderType.EQUIPPED)
+			if(type == ItemRenderType.EQUIPPED_FIRST_PERSON || type == ItemRenderType.EQUIPPED)
 			{
 				GL11.glTranslatef(1.15f, 1f, 0.5f);
 				GL11.glRotatef(180, 0, 0, 1f);
 			}
-			else
-			{
+			else {
 				GL11.glRotatef(-90, 0, 0, 1f);
 			}
 
-			if (type == ItemRenderType.ENTITY)
+			if(type == ItemRenderType.ENTITY)
 			{
 				scale = scale / 1.5f;
 			}
 
 			GL11.glScalef(scale, scale, scale);
 
-            FMLClientHandler.instance().getClient().renderEngine.bindTexture(missile.getMissileResource());
+            FMLClientHandler.instance().getClient().renderEngine.bindTexture(RenderMissile.getMissileResource(missile));
 
-            synchronized (RenderMissile.cache)
+            synchronized(RenderMissile.cache)
             {
-                if (!RenderMissile.cache.containsKey(missile))
+                if(!RenderMissile.cache.containsKey(missile))
                 {
-                    RenderMissile.cache.put(missile, missile.getMissileModel());
+                    RenderMissile.cache.put(missile, RenderMissile.getMissileModel(missile));
                 }
 
-                RenderMissile.cache.get(missile).render(0.0625F);
+                RenderMissile.cache.get(missile).renderAll();
             }
         }
     }

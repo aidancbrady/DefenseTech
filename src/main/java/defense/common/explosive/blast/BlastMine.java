@@ -5,7 +5,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import defense.client.model.missile.ModelMissileBase;
+import defense.client.model.ModelDefenseTech;
 import defense.client.model.tile.ModelSMine;
 
 public class BlastMine extends Blast
@@ -73,7 +73,7 @@ public class BlastMine extends Blast
 
     @SideOnly(Side.CLIENT)
     @Override
-    public ModelMissileBase getRenderModel()
+    public ModelDefenseTech getRenderModel()
     {
         return ModelSMine.INSTANCE;
     }
@@ -84,5 +84,4 @@ public class BlastMine extends Blast
     {
         return ModelSMine.TEXTURE;
     }
-
 }
